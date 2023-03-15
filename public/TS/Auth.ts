@@ -94,7 +94,7 @@ class SpotifyAuth {
   
 	/**
 	 * Authenticates the user with the Spotify Web API.
-	 * @returns {Promise<string>} - A Promise that resolves with the access token for the authenticated user.
+	 * @returns {Promise<string>} - A Promise that resolves with the code for the authenticated user.
 	 */
 	async login(): Promise<string> {
 	  const url = `https://accounts.spotify.com/authorize?client_id=${this.clientId}&redirect_uri=${this.redirectUri}&show_dialog=true&scope=${encodeURIComponent(this.scopes.join(' '))}&response_type=code`;
@@ -211,5 +211,13 @@ class SpotifyAuth {
   }
 
 	}
-
-	module.exports.auth =  new SpotifyAuth(CLIENT_ID, REDIRECT_URI, CLIENT_SECRET, SCOPES);
+	
+	/**
+ * A module that provides methods for authenticating a user, refresh access token and making API requests to the Spotify Web API.
+ * @async
+ * @method  login - Authenticates the user with the Spotify Web API.
+ * @method  exchangeAuthorizationCode - Exchanges an authorization code for an access token and refresh token.
+ * @method  refreshAccessToken - Uses the refresh token to get a new access token.
+ * @method  get(url:string) - Makes an authenticated GET request to the Spotify Web API.
+ */
+	export default  new SpotifyAuth(CLIENT_ID, REDIRECT_URI, CLIENT_SECRET, SCOPES);
