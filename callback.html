@@ -1,0 +1,21 @@
+<html>
+<head>
+<script>
+
+function init() {
+	console.log('hash', location);
+	if(location.search.includes('code=') && !location.hash){
+		const code = location.search.replace('?code=', '');
+		window.opener.postMessage(JSON.stringify({
+			type:'code',
+			code: code
+		}), '*');
+	}
+}
+
+</script>
+</head>
+<body onload="init()">
+
+</body>
+</html>
