@@ -36,19 +36,14 @@ const APP = (function (API, UI) {
 
 
 const btn = document.querySelector('.login')!;
-const likedTracks = document.querySelector('.likedTracks')!;
 const init = document.querySelector('.init')!;
-const list = document.querySelector('.accountList')!;
-const search = document.querySelector('.searchBtn')!;
+const search = document.querySelector('.nav-bar__serch-link')!;
 let switcher = false;
 btn.addEventListener('click', async function loginBtn () {
 	if (!switcher) {
 		await Auth.login();
-		likedTracks.removeAttribute('style');
 		init.removeAttribute('style');
-		list.removeAttribute('style');
 		btn.textContent = "Logout";
-		search.removeAttribute('style');
 		switcher = true;
 	}
 	else {
