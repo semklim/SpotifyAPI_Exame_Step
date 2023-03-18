@@ -1,3 +1,4 @@
+// 
 const CLIENT_ID = '797c5434ef7543e7aafc871377f6d903';
 const CLIENT_SECRET = '98995436272647b9bf3623ce6c6a2893';
 const REDIRECT_URI = window.location.href.replace(/\/\w+.html$/, '/') + 'callback.html';
@@ -100,7 +101,7 @@ class SpotifyAuth {
 	  const url = `https://accounts.spotify.com/authorize?client_id=${this.clientId}&redirect_uri=${this.redirectUri}&show_dialog=true&scope=${encodeURIComponent(this.scopes.join(' '))}&response_type=code`;
   
 	  // Open a new popup window for the user to log in.
-	  const popup = window.open(url, 'Spotify Login', 'width=600,height=600')!;
+	  const popup = window.open(url, 'Spotify Login','width=600,height=600')!;
   
 	  // Listen for the "message" event from the popup window.
 	  return new Promise<string>((resolve, reject) => {
@@ -220,4 +221,4 @@ class SpotifyAuth {
  * @method  refreshAccessToken - Uses the refresh token to get a new access token.
  * @method  get(url:string) - Makes an authenticated GET request to the Spotify Web API.
  */
-	export default  new SpotifyAuth(CLIENT_ID, REDIRECT_URI, CLIENT_SECRET, SCOPES);
+export default new SpotifyAuth(CLIENT_ID!, REDIRECT_URI, CLIENT_SECRET!, SCOPES);

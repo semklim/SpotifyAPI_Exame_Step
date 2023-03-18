@@ -23,7 +23,7 @@ const API = (function () {
             + `?country=UA`
             + '&locale=uk-UA'
             + `&limit=50`
-            + '&offset=5';
+            + '&offset=0';
     }
     return {
         getUserProfile() {
