@@ -35,30 +35,64 @@ html, body {
   display: flex;
 }
 .main-content {
-  width: 75%;
+  width: 80%;
   overflow-y: auto;
 }
 
 .nav-bar {
-  width: 25%;
+  width: 20%;
   height: 100%;
   background-color: #000;
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 24px;
+  
 }
+
+.nav-bar__main-lists {
+  margin-bottom: 30px;
+}
+
+.nav-bar__main-list {
+  padding: 5px 5px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  /* margin-bottom: 30px; */
+}
+
 
 .nav-bar__logo {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   width: 100%;
-  margin-bottom: 18px;
+  padding-right: 20px;
+  margin-bottom: 36px;
 }
 
 .nav-bar__logo--img {
-  width: 100%;
+  max-width: 70%;
 }
+
+.nav-bar__main-list-link {
+  display: flex;
+  text-decoration: none;
+  color: white;
+  transition: 0.2s;
+}
+
+.nav-bar--icon {
+  margin-right: 16px; 
+}
+
+.decor-line {
+  width: 100%;
+  border: 1px solid rgb(108, 106, 106);
+}
+
 
 /* ------------Search page------------ */
 
