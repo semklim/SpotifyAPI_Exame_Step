@@ -10,6 +10,20 @@ html, body {
   background-color: #121212;
   
 }
+
+button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -48,6 +62,8 @@ html, body {
   padding-left: 16px;
   padding-right: 16px;
   padding-top: 24px;
+  padding-bottom: 40px;
+  position: relative;
   
 }
 
@@ -60,6 +76,7 @@ html, body {
   height: 40px;
   display: flex;
   align-items: center;
+  text-align: left;
   /* margin-bottom: 30px; */
 }
 
@@ -88,10 +105,74 @@ html, body {
   margin-right: 16px; 
 }
 
+.nav-bar-livrarys {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.nav-bar-livrary__box {
+  width: 100%;
+}
+
+.nav-bar-livrary__add-button{
+  width: 100%;
+}
+.nav-bar-livrary__box-img {
+  background-color: white;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+  padding: 4px;
+  margin-right: 16px;
+}
+
+.nav-bar-livrary-link-box {
+  width: 100%;
+  text-decoration: none;
+  color: white;
+}
+
+.nav-bar-livrary__box-img-two {
+  background: linear-gradient(135deg,#450af5,#c4efd9);
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+  padding: 4px;
+  margin-right: 16px;
+}
+
 .decor-line {
   width: 100%;
-  border: 1px solid rgb(108, 106, 106);
+  border: 1px solid rgb(32, 32, 32);
+  margin-bottom: 16px;
 }
+
+.dowload-link {
+  position: absolute;
+  bottom: 0px;
+  height: 40px;
+  /* padding-left: 16px; */
+  padding-right: 20px;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  text-align: left;
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.dowload-link__img-box {
+  margin-right: 16px;
+}
+
+
 
 
 /* ------------Search page------------ */
