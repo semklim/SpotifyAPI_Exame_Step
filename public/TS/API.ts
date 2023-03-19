@@ -16,6 +16,37 @@ interface APIClient {
   }
 
 /**
+  An interface representing a Spotify user object.
+@interface
+@property {string} country - The country of the user's account.
+@property {string} display_name - The user's display name.
+@property {string} email - The user's email address.
+@property {object} explicit_content - A object containing information about the user's explicit content settings.
+@property {object} external_urls - A object containing information about external URLs related to the user.
+@property {object} followers - A object containing information about the user's followers.
+@property {string} href - The Spotify web API endpoint for the user.
+@property {string} id - The Spotify user ID for the user.
+@property {Array<object>} images - An array of objects containing information about the user's profile images.
+@property {string} product - The user's Spotify subscription level.
+@property {string} type - The type of Spotify object, which is always set to "user".
+@property {string} uri - The Spotify URI for the user.
+*/
+interface User{
+country: string;
+display_name: string;
+email: string;
+explicit_content: object;
+external_urls: object;
+followers: object;
+href: string;
+id: string;
+images: Array<object>;
+product: string;
+type: string;
+uri: string;
+}
+
+/**
  * A class that implements the APIClient interface and sends requests to the Spotify API.
  *
  * @class
@@ -32,10 +63,17 @@ class SpotifyAPI implements APIClient {
 
 	/**
 	 * The expires_in for the authenticated user.
-	 * @type {string | null}
+	 * @type {Date | null}
 	 * @private
 	 */
 	private expires_in: Date | null = null;
+
+	/**
+	 * The User data for get request.
+	 * @type {object | null}
+	 * @private
+	 */
+	public user: User | null = null;
 
 	/**
 	 * Creates a new SpotifyAPI instance.
@@ -43,20 +81,21 @@ class SpotifyAPI implements APIClient {
 	constructor() {
 		this.accessToken;
 		this.expires_in;
+		this.user;
 	}
 	UserProfile() {
 		return 'https://api.spotify.com/v1/me';
 	}
 
 	UserSavedTracks() {
-		return 'https://api.spotify.com/v1/me/tracks?limit=20&offset=0';
+		return 'https://api.spotify.com/v1/me/tracks?limit=50&offset=0';
 	}
 	UserRecentlyPlayedTracks() {
 		return 'https://api.spotify.com/v1/me/player/recently-played?after=0';
 	}
 
 	Recomm(genres: string) {
-		const market = 'UA';
+		const market = this.user!.country || 'ES';
 		genres = genres || 'dance/electronic,rock,chill';
 		return 'https://api.spotify.com/v1/recommendations'
 			+ `?limit=50`
@@ -67,8 +106,8 @@ class SpotifyAPI implements APIClient {
 	}
 	Genres() {
 		return 'https://api.spotify.com/v1/browse/categories'
-			+ `?country=UA`
-			+ '&locale=uk-UA'
+			+ `?country=${this.user!.country || 'ES'}`
+			+ `&locale=${this.user!.country || 'ES'}`
 			+ `&limit=50`
 			+ '&offset=0';
 	}

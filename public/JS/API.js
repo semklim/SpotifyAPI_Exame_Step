@@ -18,24 +18,31 @@ class SpotifyAPI {
         this.accessToken = null;
         /**
          * The expires_in for the authenticated user.
-         * @type {string | null}
+         * @type {Date | null}
          * @private
          */
         this.expires_in = null;
+        /**
+         * The User data for get request.
+         * @type {object | null}
+         * @private
+         */
+        this.user = null;
         this.accessToken;
         this.expires_in;
+        this.user;
     }
     UserProfile() {
         return 'https://api.spotify.com/v1/me';
     }
     UserSavedTracks() {
-        return 'https://api.spotify.com/v1/me/tracks?limit=20&offset=0';
+        return 'https://api.spotify.com/v1/me/tracks?limit=50&offset=0';
     }
     UserRecentlyPlayedTracks() {
         return 'https://api.spotify.com/v1/me/player/recently-played?after=0';
     }
     Recomm(genres) {
-        const market = 'UA';
+        const market = this.user.country || 'ES';
         genres = genres || 'dance/electronic,rock,chill';
         return 'https://api.spotify.com/v1/recommendations'
             + `?limit=50`
@@ -46,8 +53,8 @@ class SpotifyAPI {
     }
     Genres() {
         return 'https://api.spotify.com/v1/browse/categories'
-            + `?country=UA`
-            + '&locale=uk-UA'
+            + `?country=${this.user.country || 'ES'}`
+            + `&locale=${this.user.country || 'ES'}`
             + `&limit=50`
             + '&offset=0';
     }
