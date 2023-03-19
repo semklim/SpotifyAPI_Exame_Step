@@ -54,9 +54,8 @@ class SpotifyAuth {
 	/**
 	 * The access token for the authenticated user.
 	 * @type {string | null}
-	 * @private
 	 */
-	private accessToken: string | null = null;
+	accessToken: string | null = null;
 
 	/**
    * The refresh token for the authenticated user.
@@ -68,9 +67,8 @@ class SpotifyAuth {
 	/**
 	 * The expires_in for the authenticated user.
 	 * @type {string | null}
-	 * @private
 	 */
-	private expires_in: Date | null = null;
+	expires_in: Date | null = null;
 
 		/**
 	 * The authorization scopes for your Spotify application.
@@ -158,10 +156,11 @@ class SpotifyAuth {
 
   	/**
    * Uses the refresh token to get a new access token.
-   * @returns {Promise<void>} - A Promise that resolves when the access token has been refreshed.
-   * @private
+   * @returns {Promise<Object>} - A Promise that resolves when the access token has been refreshed.
    */
-	private async refreshAccessToken(): Promise<void> {
+  
+	async refreshAccessToken(): Promise<Object> {
+
 		const response = await fetch('https://accounts.spotify.com/api/token', {
 		  method: 'POST',
 		  headers: {
@@ -176,40 +175,41 @@ class SpotifyAuth {
 		  throw new Error(`${error}: ${error_description}`);
 		}
 	
-		const a = await response.json();
-		const { access_token, expires_in } = a;
+		const access = await response.json();
+		const { access_token, expires_in } = access;
 		this.accessToken = access_token;
 		this.expires_in = new Date(Date.now() + (expires_in * 1000));
+		return access;
 	  }
 
-  /**
-   * Makes an authenticated GET request to the Spotify Web API.
-   * @param {string} url - The URL to make the request to.
-   * @returns {Promise<Object>} - A Promise that resolves with the response data.
-   */
-  async get(url: string): Promise<any> {
-    if (!this.accessToken) {
-      throw new Error('You must be logged in to make this request.');
-    }
+//   /**
+//    * Makes an authenticated GET request to the Spotify Web API.
+//    * @param {string} url - The URL to make the request to.
+//    * @returns {Promise<Object>} - A Promise that resolves with the response data.
+//    */
+//   async get(url: string): Promise<any> {
+//     if (!this.accessToken) {
+//       throw new Error('You must be logged in to make this request.');
+//     }
 
-    if (this.expires_in && this.expires_in < new Date()) {
-      // The access token has expired, so use the refresh token to get a new access token.
-      await this.refreshAccessToken();
-    }
+//     if (this.expires_in && this.expires_in < new Date()) {
+//       // The access token has expired, so use the refresh token to get a new access token.
+//       await this.refreshAccessToken();
+//     }
 
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+//     const response = await fetch(url, {
+//       headers: {
+//         Authorization: `Bearer ${this.accessToken}`,
+//       },
+//     });
 
-    if (!response.ok) {
-      const { error, error_description } = await response.json();
-      throw new Error(`${error}: ${error_description}`);
-    }
+//     if (!response.ok) {
+//       const { error, error_description } = await response.json();
+//       throw new Error(`${error}: ${error_description}`);
+//     }
 
-    return response.json();
-  }
+//     return response.json();
+//   }
 
 	}
 	
@@ -219,6 +219,5 @@ class SpotifyAuth {
  * @method  login - Authenticates the user with the Spotify Web API.
  * @method  exchangeAuthorizationCode - Exchanges an authorization code for an access token and refresh token.
  * @method  refreshAccessToken - Uses the refresh token to get a new access token.
- * @method  get(url:string) - Makes an authenticated GET request to the Spotify Web API.
  */
 export default new SpotifyAuth(CLIENT_ID!, REDIRECT_URI, CLIENT_SECRET!, SCOPES);

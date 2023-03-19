@@ -331,6 +331,7 @@ a {
   min-width: 400px;
 }
 .genres {
+  cursor: pointer;
   border: none;
   border-radius: 8px;
   overflow: hidden;

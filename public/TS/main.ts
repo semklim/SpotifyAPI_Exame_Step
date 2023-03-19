@@ -3,26 +3,19 @@
 import Auth from './Auth.js'
 import API from './API.js'
 import UI from './UI.js'
-
+import { Search, QueryFormatter } from './search/search.js';
 
 const APP = (function (API, UI) {
 	const UserProfile = async () => {
-		const user = await Auth.get(API.getUserProfile());
+		const user = await API.get(API.UserProfile());
 		UI.createAccount(user);
 	}
 	const PageSearch = async () => {
-		const genres = await Auth.get(API.getGenres());
+		const genres = await API.get(API.Genres());
 		UI.createGenres(genres);
-		const input = document.querySelector('.searchbox')!;
-
-		let query: string = '';
-		input.addEventListener('input', async function SearchInput (e: any) {
-			query += e.data;
-			const url = `https://api.spotify.com/v1/search?q=${query}&type=playlist&market=ES&limit=50&offset=0`;
-			const res = await Auth.get(url);
-			console.log(res);
-			
-		})
+		const searchBox = document.querySelector('.searchbox') as HTMLInputElement;
+		const queryFormatter = new QueryFormatter();
+		const SearchAPP = new Search(searchBox, queryFormatter, API);
 	}
 	return {
 		UserProfile() {
@@ -36,13 +29,11 @@ const APP = (function (API, UI) {
 
 
 const btn = document.querySelector('.login')!;
-const init = document.querySelector('.init')!;
 const search = document.querySelector('.nav-bar__serch-link')!;
 let switcher = false;
 btn.addEventListener('click', async function loginBtn () {
 	if (!switcher) {
 		await Auth.login();
-		init.removeAttribute('style');
 		btn.textContent = "Logout";
 		switcher = true;
 	}
@@ -51,9 +42,6 @@ btn.addEventListener('click', async function loginBtn () {
 		switcher = false;
 	}
 });
-
-init.addEventListener('click', () => APP.UserProfile());
-
 search.addEventListener('click', () => {
 	APP.PageSearch();
 });

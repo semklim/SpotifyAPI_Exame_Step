@@ -1,4 +1,3 @@
-"use strict";
 class UserInterface {
     constructor() {
         this.logo = document.querySelector('.logo>img');
@@ -59,12 +58,12 @@ class UserInterface {
         items.forEach((el) => {
             const urlImg = el.icons[0].url;
             genres += `
-			<a href="" class="genres" id="${el.id}" style="background-color:${picColor.next().value}">
+			<div class="genres" id="${el.id}" style="background-color:${picColor.next().value}">
 				<div class="genres__box">
 					<span class="nameOfGenres">${el.name}</span>
 					<img aria-hidden="false" draggable="false" loading="lazy" src="${urlImg}" class="imgOfGenres" alt="">
 				</div>
-			</a>`;
+			</div>`;
         });
         const box = `
 			<div class="wrapper">
