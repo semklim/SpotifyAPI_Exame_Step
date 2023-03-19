@@ -53,6 +53,7 @@ async function loginBtn () {
 	   localStorage.setItem('accessToken', `${Auth.accessToken}`);
 	   localStorage.setItem('expires_in', `${Auth.expires_in}`);
 	   Cookie.set('accessToken', Auth.accessToken!, 15);
+	   Cookie.set('refreshToken', JSON.stringify(Auth.refreshToken!), 15);
 	   Cookie.set('expires_in', JSON.stringify(Auth.expires_in!), 15);
 	   Cookie.set('userProfile', JSON.stringify(API.user!), 15);
 	   
@@ -69,8 +70,9 @@ async function loginBtn () {
 const btn = document.querySelector('.login')!;
 const search = document.querySelector('.nav-bar__serch-link')!;
 let switcher = false;
-if(Cookie.get('accessToken') && !switcher){
+if((Cookie.get('accessToken')) && !switcher){
 	Auth.accessToken = Cookie.get('accessToken');
+	Auth.refreshToken = Cookie.get('refreshToken')!;
 	Auth.expires_in = new Date(Cookie.get('expires_in')!);
 	API.user = JSON.parse(Cookie.get('userProfile')!);
 	btn.textContent = "Logout";

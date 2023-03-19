@@ -62,7 +62,7 @@ class SpotifyAuth {
    * @type {string | null}
    * @private
    */
-	  private refreshToken: string | null = null;
+	refreshToken: string | null = null;
 
 	/**
 	 * The expires_in for the authenticated user.
@@ -72,7 +72,7 @@ class SpotifyAuth {
 
 		/**
 	 * The authorization scopes for your Spotify application.
-	 * @type {string | null}
+	 * @type {string[]}
 	 * @private
 	 */
 	private readonly scopes: string[];
