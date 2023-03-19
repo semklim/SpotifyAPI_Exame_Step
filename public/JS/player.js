@@ -10,5 +10,4 @@ playPauseButton.addEventListener('click', function () {
 const volumeSlider = document.getElementById('volumeSlider');
 volumeSlider.addEventListener('input', () => {
     const volumeValue = volumeSlider.value;
-    console.log(volumeValue);
 });

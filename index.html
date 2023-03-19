@@ -153,13 +153,14 @@
 		</div>
 		<div class='options'>
 			<div class="play-pause">
-				<svg class="play" viewBox="0 0 85 100">
-					<polygon points="0,0 80,50 0,100" />
-				</svg>
-				<svg class="pause" viewBox="0 0 100 100">
-					<rect x="0" y="0" width="30" height="100" />
-					<rect x="70" y="0" width="30" height="100" />
-				</svg>
+				<button class = 'prevTrackBtn'></button>
+				<button class = 'play-pauseBtn'></button>
+				<button class = 'nextTrackBtn'></button>
+			</div>
+			<div class = 'songCurrTime'>
+				<span class = 'songOnPlayCurrTime'>0:00</span>
+				<input type="range" min="0" max="100" value="0" class="slider currTimeSlider" id="volumeSlider">
+				<span class = 'songOnEndCurrTime'>3:24</span>
 			</div>
 		</div>
 		<div class="volume">
