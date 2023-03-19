@@ -50,7 +50,7 @@ class SpotifyAuth {
         this.refreshToken = null;
         /**
          * The expires_in for the authenticated user.
-         * @type {string | null}
+         * @type {Date | null}
          */
         this.expires_in = null;
         this.clientId = clientId;

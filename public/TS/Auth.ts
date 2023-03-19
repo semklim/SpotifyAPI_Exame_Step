@@ -66,7 +66,7 @@ class SpotifyAuth {
 
 	/**
 	 * The expires_in for the authenticated user.
-	 * @type {string | null}
+	 * @type {Date | null}
 	 */
 	expires_in: Date | null = null;
 
@@ -181,35 +181,6 @@ class SpotifyAuth {
 		this.expires_in = new Date(Date.now() + (expires_in * 1000));
 		return access;
 	  }
-
-//   /**
-//    * Makes an authenticated GET request to the Spotify Web API.
-//    * @param {string} url - The URL to make the request to.
-//    * @returns {Promise<Object>} - A Promise that resolves with the response data.
-//    */
-//   async get(url: string): Promise<any> {
-//     if (!this.accessToken) {
-//       throw new Error('You must be logged in to make this request.');
-//     }
-
-//     if (this.expires_in && this.expires_in < new Date()) {
-//       // The access token has expired, so use the refresh token to get a new access token.
-//       await this.refreshAccessToken();
-//     }
-
-//     const response = await fetch(url, {
-//       headers: {
-//         Authorization: `Bearer ${this.accessToken}`,
-//       },
-//     });
-
-//     if (!response.ok) {
-//       const { error, error_description } = await response.json();
-//       throw new Error(`${error}: ${error_description}`);
-//     }
-
-//     return response.json();
-//   }
 
 	}
 	

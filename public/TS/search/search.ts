@@ -1,4 +1,3 @@
-// import API from '../API.js';
 
 interface APIClient {
 	/**
@@ -9,11 +8,6 @@ interface APIClient {
 	 */
 	get(url: string): Promise<any>;
   }
-
-// function formattingQuery(query:string) {
-// 	const reg = new RegExp(/^\s+$|\s+/, 'g');
-// 	return query.replace(reg, '');
-// }
 
 /**
  * Formats a given query string by removing whitespace
@@ -87,10 +81,18 @@ class Search {
 	private waitTime: number;
 
 	/**
+	 * The result of the search request.
+	 *
+	 * @private
+	 * @type {number}
+	 */
+		private result: object;
+
+	/**
 	 * Creates a new instance of the Search class.
 	 *
 	 * @constructor
-	 * @param {HTMLInputElement} input - The search input HTMLElement.
+	 * @param {HTMLInputElement} input - The search input HTMLInputElement.
 	 * @param {QueryFormatter} queryFormatter - An instance of the QueryFormatter class used to format the search query.
 	 * @param {APIClient} apiClient - An instance of the APIClient interface used to send requests to the Spotify API.
 	 */
@@ -101,20 +103,32 @@ class Search {
 	  this.query = '';
 	  this.waitTime = 0;
 	  this.input.addEventListener('input', this.handleInput.bind(this));
+	  this.result = {};
 	}
   
 	/**
 	 * Event listener callback function for the input event on the search box element
 	 */
 	handleInput() {
+		interface searchResult {
+			href: string;
+			items: Array<object>;
+			limit: number;
+			next: string | null;
+			offset: number;
+			previous: string | null;
+			total: number;
+		}
 	  clearTimeout(this.waitTime);
 	  this.query += this.queryFormatter.format(this.input.value);
 	  if (this.query === '') return undefined;
 	  this.waitTime = setTimeout(async () => {
 		const url = `https://api.spotify.com/v1/search?q=${this.query}&type=playlist&market=ES&limit=50&offset=0`;
-		const search = await this.apiClient.get(url);
-		console.log(search);
+		this.result = await this.apiClient.get(url) as searchResult;
 	  }, 300);
+	}
+	getResult(){
+		return this.result;
 	}
   }
   
