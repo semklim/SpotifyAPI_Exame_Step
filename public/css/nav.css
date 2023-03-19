@@ -63,7 +63,7 @@ a {
 .nav-bar {
   min-width: 241px;
   max-width: 241px;
-  height: 100%;
+  height: 102%;
   background-color: #000;
   display: flex;
   flex-direction: column;
