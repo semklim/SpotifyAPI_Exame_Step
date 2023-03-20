@@ -100,7 +100,7 @@ class SpotifyAPI implements APIClient {
 		return 'https://api.spotify.com/v1/recommendations'
 			+ `?limit=50`
 			+ `&market=${market}`
-			+ '&seed_artists=4NHQUGzhtTLFvgF5SZesLK'
+			+ '&=4NHQUGzhtTLFvgF5SZesLK'
 			+ `&seed_genres= ${encodeURI(genres)}`
 			+ 'seed_tracks=0c6xIDDpzE81m2q797ordA';
 	}

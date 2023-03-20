@@ -65,17 +65,27 @@ class UserInterface {
 				</div>
 			</div>`;
         });
+        const searchBox = `
+		  <div class="wrapper">
+			  <div class="searchTrack">
+				  <input maxlength="800" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="What do you want to listen to?" type="text" name="" id="" class="searchbox">
+			  </div>
+		  </div>`;
         const box = `
-			<div class="wrapper">
-				<div class="searchTrack">
-					<input maxlength="800" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="What do you want to listen to?" type="text" name="" id="" class="searchbox">
-				</div>
-			</div>
+		<div class="requestBox">
 			<h2 class="nameOfList">Browse all</h2>
 			<div class="collectionGenres">
 				${genres}
-			</div>`;
-        (document.querySelector('.main-content')).innerHTML = box;
+			</div>
+		</div>`;
+        const btn__history = document.querySelector('.btn-controls-contents');
+        if (btn__history.nextElementSibling.className !== 'wrapper') {
+            btn__history.insertAdjacentHTML("afterend", searchBox);
+        }
+        const root__top_bar = document.querySelector('.root__top-bar');
+        if (root__top_bar.nextElementSibling === null) {
+            (document.querySelector('.main-content')).innerHTML += box;
+        }
     }
 }
 const UI = new UserInterface();

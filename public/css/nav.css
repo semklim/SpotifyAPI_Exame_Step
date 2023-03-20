@@ -219,11 +219,12 @@ a {
 }
 
 .btn-controls-contents{
+	margin-right: auto;
   height: 64px;
   display: flex;
   gap: 16px;
   align-items: center;
-  position: absolute;
+  /* position: absolute; */
   /* width: 80px; */
   top: 0px;
   left: 32px;
@@ -290,7 +291,7 @@ a {
 	z-index: 2;
 	display: flex;
 	align-items: center;
-	background-color: #121212;
+	/* background-color: #121212; */
 	width: 100%;
 	height: 64px;
 	gap: 16px;
@@ -319,6 +320,7 @@ a {
 }
 .nameOfList {
 	padding-top: 48px;
+	padding-left: 20px;
 	letter-spacing: -0.08em;
 	color: white;
 }
