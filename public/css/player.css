@@ -10,6 +10,8 @@
   bottom: 0;
   padding-left: 1.5vw;
   padding-right: 1.5vw;
+  min-height: 65px;
+  min-width: 100vw;
 }
 
 .currSong {
@@ -66,15 +68,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .play-pauseBtn {
-  background-image: url('..//img/btn-play.png');
-  height: 80%;
-  width: 6%;
-  background-repeat: no-repeat;
-  background-size: contain;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  height: auto;
+  width: auto;
+  min-width: 32px;
+  min-height: 32px;
+  text-align: center;
 }
 
 .slider {
@@ -120,30 +128,55 @@
 }
 
 .songOnPlayCurrTime {
-  padding-right: 1vw;
+  padding-right: 0.8vw;
   color: #707070;
   font-size: 0.9vw;
 }
 
 .songOnEndCurrTime {
-  padding-left: 1vw;
+  padding-left: 0.8vw;
   color: #707070;
   font-size: 0.9vw;
 }
 
 .prevTrackBtn {
-  background-image: url(..//img/btn-prev.png);
-  height: 100%;
-  width: 7%;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-.nextTrackBtn {
-  background-image: url(..//img/btn-next.png);
+  fill:#909090;
   height: 100%;
   width: 6%;
   background-repeat: no-repeat;
   background-size: contain;
+  margin-right: 1vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  min-height: 30px;
+  opacity: 0.7;
 }
 
+.nextTrackBtn {
+  fill:#909090;
+  height: 100%;
+  width: 6%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-left: 1vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  min-height: 30px;
+  opacity: 0.7;
+}
+
+.nextTrackBtn:hover {
+  opacity: 1;
+}
+
+.prevTrackBtn:hover {
+  opacity: 1;
+}
+
+.play-pauseBtn :hover {
+  transform: scale(1.1)
+}
