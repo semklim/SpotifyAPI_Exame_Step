@@ -67,6 +67,7 @@ class Search {
         this.waitTime = setTimeout(async () => {
             const url = `https://api.spotify.com/v1/search?q=${this.query}&type=playlist&market=ES&limit=50&offset=0`;
             this.result = await this.apiClient.get(url);
+            console.log(this.result);
         }, 300);
     }
     getResult() {
