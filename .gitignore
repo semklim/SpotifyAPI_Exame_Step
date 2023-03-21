@@ -7,3 +7,4 @@ app.js
 server.js
 AuthServer.js
 test.*
+.vscode
