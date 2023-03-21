@@ -17,6 +17,15 @@ const APP = (function (API, UI) {
 		const searchBox = document.querySelector('.searchbox') as HTMLInputElement;
 		const queryFormatter = new QueryFormatter();
 		const SearchAPP = new Search(searchBox, queryFormatter, API);
+		SearchAPP.input.addEventListener('input',async () => {
+			const result = await SearchAPP.handleInput().then(() => {
+				const res = SearchAPP.getResult();
+				if(!res) return undefined;
+				return res;
+			});
+			console.log(result);
+			
+		})
 	}
 	return {
 		UserProfile() {

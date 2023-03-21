@@ -15,6 +15,15 @@ const APP = (function (API, UI) {
         const searchBox = document.querySelector('.searchbox');
         const queryFormatter = new QueryFormatter();
         const SearchAPP = new Search(searchBox, queryFormatter, API);
+        SearchAPP.input.addEventListener('input', async () => {
+            const result = await SearchAPP.handleInput().then(() => {
+                const res = SearchAPP.getResult();
+                if (!res)
+                    return undefined;
+                return res;
+            });
+            console.log(result);
+        });
     };
     return {
         UserProfile() {
@@ -62,13 +71,5 @@ else {
 search.addEventListener('click', () => {
     APP.PageSearch();
 });
-async function test() {
-    const genres = API.Recomm('рок');
-    console.log(await API.get("https://api.spotify.com/v1/tracks/6OtjXmAe3pGZxcrT1Cx2Br", "GET"));
-    console.log('Recomm rocks', genres);
-    // console.log("Жанр один із  ", genres.categories.items[0]);
-}
-test();
-// API.get(API.Recomm('dance/electronic,rock,chill')).then(data => console.log("Рекомендації ", data));
 API.UserSavedTracks().then(data => console.log("User Liked Tracks  ", data));
 API.UserRecentlyPlayedTracks().then(data => console.log("User Recently Played Tracks  ", data));
