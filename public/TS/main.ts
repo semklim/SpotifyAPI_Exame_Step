@@ -14,6 +14,25 @@ const APP = (function (API, UI) {
 	const PageSearch = async () => {
 		const genres = await API.Genres();
 		UI.createGenres(genres);
+		const collectionGenres = document.querySelector('.collectionGenres');
+		collectionGenres?.addEventListener('click', async ({target}: Event) => {
+			const className: string = (target as HTMLElement)!.className;
+			if(className === 'genres'){
+				const id = (target as HTMLElement).getAttribute('id')!;
+				const playlist = await API.GetCategoryPlaylists(id);
+				
+				console.log(playlist.playlists.items);
+
+				const playlistID = playlist.playlists.items[0].id;
+				console.log(playlistID);
+				
+				const tracks = await API.GetPlaylist(playlistID);
+				console.log(tracks);
+				
+
+				
+			}
+		})
 		const searchBox = document.querySelector('.searchbox') as HTMLInputElement;
 		const queryFormatter = new QueryFormatter();
 		const SearchAPP = new Search(searchBox, queryFormatter, API);
