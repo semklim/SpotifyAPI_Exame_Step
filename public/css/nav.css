@@ -334,7 +334,7 @@ a {
 .nameOfList {
 	padding-top: 48px;
 	padding-left: 20px;
-	letter-spacing: -0.08em;
+	/* letter-spacing: -0.08em; */
 	color: white;
 }
 .collectionGenres {
