@@ -1,3 +1,11 @@
+@font-face {
+	font-family: 'MyWebFont';
+	src:  url('../font/Gotham-Spotify-Font/Gotham-Black.ttf') format('truetype'),
+		  url('../font/Gotham-Spotify-Font/Gotham-Bold.ttf') format('truetype'),
+		  url('../font/Gotham-Spotify-Font/Gotham-Book.ttf') format('truetype');
+  }
+
+
 /* ......................общие настройки............................. */
 * {
   box-sizing: border-box;
