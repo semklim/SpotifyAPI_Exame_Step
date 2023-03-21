@@ -6,4 +6,5 @@ app.js
 .env.local
 server.js
 AuthServer.js
+test.*
 .vscode

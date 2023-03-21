@@ -42,12 +42,12 @@ class SpotifyAPI {
         return 'https://api.spotify.com/v1/me/player/recently-played?after=0';
     }
     Recomm(genres) {
-        const market = this.user.country || 'ES';
+        const market = this.user ? this.user.country : 'ES';
         genres = genres || 'dance/electronic,rock,chill';
         return 'https://api.spotify.com/v1/recommendations'
             + `?limit=50`
             + `&market=${market}`
-            + '&=4NHQUGzhtTLFvgF5SZesLK'
+            + '&seed_artists=4NHQUGzhtTLFvgF5SZesLK'
             + `&seed_genres= ${encodeURI(genres)}`
             + 'seed_tracks=0c6xIDDpzE81m2q797ordA';
     }
