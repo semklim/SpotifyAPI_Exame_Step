@@ -62,3 +62,6 @@ else {
 search.addEventListener('click', () => {
     APP.PageSearch();
 });
+API.get(API.Recomm('dance/electronic,rock,chill')).then(data => console.log("Рекомендації ", data));
+API.get(API.UserSavedTracks()).then(data => console.log("User Liked Tracks  ", data));
+API.get(API.UserRecentlyPlayedTracks()).then(data => console.log("User Recently Played Tracks  ", data));

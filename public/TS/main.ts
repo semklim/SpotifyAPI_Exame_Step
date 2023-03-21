@@ -50,7 +50,6 @@ async function loginBtn () {
    }
 }
 
-
 const btn = document.querySelector('.login')!;
 const search = document.querySelector('.nav-bar__serch-link')!;
 let switcher = false;
@@ -60,7 +59,7 @@ if((Cookie.get('accessToken')) && !switcher){
 	Auth.expires_in = new Date(Cookie.get('expires_in')!);
 	API.user = JSON.parse(Cookie.get('userProfile')!);
 	btn.textContent = "Logout";
-	btn.addEventListener('click', () => location.href = "https://accounts.spotify.com/en/logout");
+		btn.addEventListener('click', () => location.href = "https://accounts.spotify.com/en/logout");
 }else{
 	btn.addEventListener('click', loginBtn);
 }
@@ -68,3 +67,9 @@ if((Cookie.get('accessToken')) && !switcher){
 search.addEventListener('click', () => {
 	APP.PageSearch();
 });
+
+
+
+API.get(API.Recomm('dance/electronic,rock,chill')).then(data => console.log("Рекомендації ", data));
+API.get(API.UserSavedTracks()).then(data => console.log("User Liked Tracks  ",data));
+API.get(API.UserRecentlyPlayedTracks()).then(data => console.log("User Recently Played Tracks  ",data));
