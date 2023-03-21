@@ -6,11 +6,11 @@ import Cookie from './Cookies.js';
 import { Search, QueryFormatter } from './search/search.js';
 const APP = (function (API, UI) {
     const UserProfile = async () => {
-        const user = await API.get(API.UserProfile());
+        const user = await API.UserProfile();
         UI.createAccount(user);
     };
     const PageSearch = async () => {
-        const genres = await API.get(API.Genres());
+        const genres = await API.Genres();
         UI.createGenres(genres);
         const searchBox = document.querySelector('.searchbox');
         const queryFormatter = new QueryFormatter();
@@ -28,7 +28,7 @@ const APP = (function (API, UI) {
 async function loginBtn() {
     if (!switcher) {
         await Auth.login();
-        API.user = await API.get(API.UserProfile());
+        API.user = await API.UserProfile();
         localStorage.setItem('accessToken', `${Auth.accessToken}`);
         localStorage.setItem('expires_in', `${Auth.expires_in}`);
         Cookie.set('accessToken', Auth.accessToken, 15);
@@ -62,6 +62,13 @@ else {
 search.addEventListener('click', () => {
     APP.PageSearch();
 });
-API.get(API.Recomm('dance/electronic,rock,chill')).then(data => console.log("Рекомендації ", data));
-API.get(API.UserSavedTracks()).then(data => console.log("User Liked Tracks  ", data));
-API.get(API.UserRecentlyPlayedTracks()).then(data => console.log("User Recently Played Tracks  ", data));
+async function test() {
+    const genres = API.Recomm('рок');
+    console.log(await API.get("https://api.spotify.com/v1/tracks/6OtjXmAe3pGZxcrT1Cx2Br", "GET"));
+    console.log('Recomm rocks', genres);
+    // console.log("Жанр один із  ", genres.categories.items[0]);
+}
+test();
+// API.get(API.Recomm('dance/electronic,rock,chill')).then(data => console.log("Рекомендації ", data));
+API.UserSavedTracks().then(data => console.log("User Liked Tracks  ", data));
+API.UserRecentlyPlayedTracks().then(data => console.log("User Recently Played Tracks  ", data));

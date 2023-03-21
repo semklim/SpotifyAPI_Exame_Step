@@ -33,37 +33,39 @@ class SpotifyAPI {
         this.user;
     }
     UserProfile() {
-        return 'https://api.spotify.com/v1/me';
+        return this.get('https://api.spotify.com/v1/me');
     }
     UserSavedTracks() {
-        return 'https://api.spotify.com/v1/me/tracks?limit=50&offset=0';
+        return this.get('https://api.spotify.com/v1/me/tracks?limit=50&offset=0');
     }
     UserRecentlyPlayedTracks() {
-        return 'https://api.spotify.com/v1/me/player/recently-played?after=0';
+        return this.get('https://api.spotify.com/v1/me/player/recently-played?after=0');
     }
-    Recomm(genres) {
+    async Recomm(genres) {
         const market = this.user ? this.user.country : 'ES';
         genres = genres || 'dance/electronic,rock,chill';
-        return 'https://api.spotify.com/v1/recommendations'
+        const url = 'https://api.spotify.com/v1/recommendations'
             + `?limit=50`
             + `&market=${market}`
             + '&seed_artists=4NHQUGzhtTLFvgF5SZesLK'
             + `&seed_genres= ${encodeURI(genres)}`
             + 'seed_tracks=0c6xIDDpzE81m2q797ordA';
+        return this.get(url);
     }
     Genres() {
-        return 'https://api.spotify.com/v1/browse/categories'
+        const url = 'https://api.spotify.com/v1/browse/categories'
             + `?country=${this.user.country || 'ES'}`
-            + `&locale=${this.user.country || 'ES'}`
+            + `&locale=uk_${this.user.country || 'ES'}`
             + `&limit=50`
             + '&offset=0';
+        return this.get(url);
     }
     /**
  * Makes an authenticated GET request to the Spotify Web API.
  * @param {string} url - The URL to make the request to Spotify Web API.
  * @returns {Promise<any>} - A Promise that resolves with the response data.
  */
-    async get(url) {
+    async get(url, methodReq) {
         if (!this.accessToken) {
             if (Auth.accessToken) {
                 this.accessToken = Auth.accessToken;
@@ -81,6 +83,7 @@ class SpotifyAPI {
             this.expires_in = new Date(Date.now() + (expires_in * 1000));
         }
         const response = await fetch(url, {
+            method: methodReq ? methodReq.toUpperCase() : 'GET',
             headers: {
                 Authorization: `Bearer ${this.accessToken}`,
             },
