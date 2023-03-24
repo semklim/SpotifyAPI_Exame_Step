@@ -20,9 +20,9 @@ html, body {
   height: 100%;
   background-color: #121212;
   font-family: var(--fontVariants);
-  font-weight: 900;
+  font-weight: 630;
   font-style: normal;
-  font-size: 15px;
+  font-size: 14px;
   
 }
 
@@ -59,7 +59,7 @@ a {
 /* ................left-bar-and-nav.............. */
 
 .nav-text-decor-800 {
-  font-weight: 600;
+  font-weight: 630;
 }
 
 
@@ -271,7 +271,7 @@ a {
   align-items: center;
   border-radius: 500px;
   color: white;
-  font-weight: 700;
+  font-weight: 630;
   padding: 8px 32px 8px 8px;
   font-size: 16px;
   line-height: 1.6;
@@ -288,7 +288,7 @@ a {
   justify-content: center;
   align-items: center;
   border-radius: 500px;
-  font-weight: 700;
+  font-weight: 630;
   padding: 10px 32px;
   line-height: 1.6;
   background-color: white;
@@ -358,7 +358,7 @@ a {
 	margin-block: 0px;
 	font-family: var(--fontVariants);
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 630;
 	color: white;
 	padding: 16px;
   position: absolute;
