@@ -167,19 +167,18 @@ class SpotifyAPI implements APIClient {
 			  this.accessToken = access_token;
 			  this.expires_in = new Date(Date.now() + (expires_in * 1000));
 		}
-
 		const response = await fetch(url, {
 		  method: methodReq ? methodReq.toUpperCase() : 'GET',
 		  headers: {
 			Authorization: `Bearer ${this.accessToken}`,
 		  },
 		});
-	
 		if (!response.ok) {
-		  const { error, error_description } = await response.json();
-		  throw new Error(`${error}: ${error_description}`);
-		}
-	
+			const { error, error_description } = await response.json();
+			throw new Error(`${error}: ${error_description}`);
+		  }
+
+		  	
 		return response.json();
 	  }
 }

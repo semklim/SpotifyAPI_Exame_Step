@@ -5,7 +5,9 @@
   }
 
   :root{
-	--fontVariants: 'Gotham', Helvetica, system-ui, 'Segoe UI', sans-serif
+	--fontVariants: 'Gotham', Helvetica, system-ui, 'Segoe UI', sans-serif;
+    --content-max-width: 1955px;
+	--content-spacing: 32px;
   }
 
 /* ......................общие настройки............................. */
@@ -23,7 +25,8 @@ html, body {
   font-weight: 900;
   font-style: normal;
   font-size: 15px;
-  
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 button {

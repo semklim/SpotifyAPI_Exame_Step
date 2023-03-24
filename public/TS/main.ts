@@ -5,34 +5,42 @@ import API from './API.js';
 import UI from './UI.js';
 import Cookie from './Cookies.js';
 import { Search, QueryFormatter } from './search/search.js';
+import playlistByGenres from './selectedGenres/selectedGenres.js';
 
 const APP = (function (API, UI) {
 	const UserProfile = async () => {
 		const user = await API.UserProfile();
 		UI.createAccount(user);
 	}
-	const PageSearch = async () => {
+
+	const genGenres = async () => {
 		const genres = await API.Genres();
 		UI.createGenres(genres);
 		const collectionGenres = document.querySelector('.collectionGenres');
 		collectionGenres?.addEventListener('click', async ({target}: Event) => {
 			const className: string = (target as HTMLElement)!.className;
 			if(className === 'genres'){
+				const genresName = ((target as HTMLElement).querySelector('.nameOfGenres')!).textContent!;
 				const id = (target as HTMLElement).getAttribute('id')!;
 				const playlist = await API.GetCategoryPlaylists(id);
 				
-				console.log(playlist.playlists.items);
+				console.log(playlist);
+				const html = playlistByGenres(genresName, playlist.playlists.items);
+				const requestBox = document.querySelector('.requestBox')!;
+				requestBox.innerHTML = html;
+
 
 				const playlistID = playlist.playlists.items[0].id;
 				console.log(playlistID);
 				
 				const tracks = await API.GetPlaylist(playlistID);
 				console.log(tracks);
-				
-
-				
 			}
 		})
+	}
+
+	const PageSearch = async () => {
+		
 		const searchBox = document.querySelector('.searchbox') as HTMLInputElement;
 		const queryFormatter = new QueryFormatter();
 		const SearchAPP = new Search(searchBox, queryFormatter, API);
@@ -52,7 +60,8 @@ const APP = (function (API, UI) {
 		},
 		PageSearch(){
 			PageSearch();
-		}
+		},
+		genGenres: genGenres
 	};
 })(API, UI);
 
@@ -79,7 +88,7 @@ async function loginBtn () {
 }
 
 const btn = document.querySelector('.login')!;
-const search = document.querySelector('.nav-bar__serch-link')!;
+const nav_bar__search = document.querySelector('.nav-bar__serch-link')!;
 let switcher = false;
 if((Cookie.get('accessToken')) && !switcher){
 	Auth.accessToken = Cookie.get('accessToken');
@@ -92,9 +101,11 @@ if((Cookie.get('accessToken')) && !switcher){
 	btn.addEventListener('click', loginBtn);
 }
 
-search.addEventListener('click', () => {
-	APP.PageSearch();
-});
+function searchListener() {
+	// APP.PageSearch();
+	APP.genGenres();
+}
+nav_bar__search.addEventListener('click', searchListener);
 
 API.UserSavedTracks().then(data => console.log("User Liked Tracks  ",data));
 API.UserRecentlyPlayedTracks().then(data => console.log("User Recently Played Tracks  ",data));

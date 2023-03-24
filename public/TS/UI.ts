@@ -120,8 +120,11 @@ interface Icon {
 		}
 
 		const root__top_bar = document.querySelector('.root__top-bar')!;
+		const requestBox = document.querySelector('.requestBox');
 		if(root__top_bar.nextElementSibling === null){
 			(document.querySelector('.main-content')!).innerHTML += box;
+		}else if(requestBox){
+			requestBox.innerHTML = box;
 		}
 	}
 }
