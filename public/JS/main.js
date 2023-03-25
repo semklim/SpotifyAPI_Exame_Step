@@ -62,13 +62,10 @@ else {
 search.addEventListener('click', () => {
     APP.PageSearch();
 });
-async function test() {
-    const genres = API.Recomm('рок');
-    console.log(await API.get("https://api.spotify.com/v1/tracks/6OtjXmAe3pGZxcrT1Cx2Br", "GET"));
-    console.log('Recomm rocks', genres);
-    // console.log("Жанр один із  ", genres.categories.items[0]);
-}
-test();
-// API.get(API.Recomm('dance/electronic,rock,chill')).then(data => console.log("Рекомендації ", data));
 API.UserSavedTracks().then(data => console.log("User Liked Tracks  ", data));
 API.UserRecentlyPlayedTracks().then(data => console.log("User Recently Played Tracks  ", data));
+///favorite-tracks
+const favorite_track_button = document.querySelector(`.nav-bar-library-link-box`);
+favorite_track_button.addEventListener(`click`, () => {
+    UI.createFavTracks();
+});

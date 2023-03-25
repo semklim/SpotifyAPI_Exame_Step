@@ -13,6 +13,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  line-height: 1.6;
 }
 
 html, body {
@@ -129,19 +130,19 @@ a {
   margin-right: 16px; 
 }
 
-.nav-bar-livrarys {
+.nav-bar-librarys {
   width: 100%;
   margin-bottom: 16px;
 }
 
-.nav-bar-livrary__box {
+.nav-bar-library__box {
   width: 100%;
 }
 
-.nav-bar-livrary__add-button{
+.nav-bar-library__add-button{
   width: 100%;
 }
-.nav-bar-livrary__box-img {
+.nav-bar-library__box-img {
   background-color: white;
   border-radius: 2px;
   display: flex;
@@ -153,13 +154,13 @@ a {
   margin-right: 16px;
 }
 
-.nav-bar-livrary-link-box {
+.nav-bar-library-link-box {
   width: 100%;
   text-decoration: none;
   color: white;
 }
 
-.nav-bar-livrary__box-img-two {
+.nav-bar-library__box-img-two {
   background: linear-gradient(135deg,#450af5,#c4efd9);
   border-radius: 2px;
   display: flex;

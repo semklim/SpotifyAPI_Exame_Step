@@ -1,3 +1,5 @@
+import funcUI from "./fav-tracks/fav-tracks.js";
+
 
 interface Icon {
 	height: number;
@@ -124,8 +126,16 @@ interface Icon {
 			(document.querySelector('.main-content')!).innerHTML += box;
 		}
 	}
-}
 
+	public createFavTracks (obj?:object): void {
+			const mainContent = document.querySelector(`.main-content`)!;
+			const defaulbox = document.createElement("div");
+			defaulbox.classList.add("requestBox");
+			mainContent.appendChild(defaulbox);
+			defaulbox.innerHTML = funcUI()
+	}
+}
 const UI = new UserInterface();
+
 
 export default UI;

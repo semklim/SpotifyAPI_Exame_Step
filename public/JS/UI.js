@@ -1,3 +1,4 @@
+import funcUI from "./fav-tracks/fav-tracks.js";
 class UserInterface {
     constructor() {
         this.logo = document.querySelector('.logo>img');
@@ -86,6 +87,13 @@ class UserInterface {
         if (root__top_bar.nextElementSibling === null) {
             (document.querySelector('.main-content')).innerHTML += box;
         }
+    }
+    createFavTracks(obj) {
+        const mainContent = document.querySelector(`.main-content`);
+        const defaulbox = document.createElement("div");
+        defaulbox.classList.add("requestBox");
+        mainContent.appendChild(defaulbox);
+        defaulbox.innerHTML = funcUI();
     }
 }
 const UI = new UserInterface();

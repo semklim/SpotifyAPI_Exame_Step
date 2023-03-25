@@ -1,0 +1,115 @@
+.favorite-tracks-box {
+  /* margin-top: 64px; */
+  width: 100%;
+  height: 100%;
+  color: white;
+}
+
+.presentation-favorite-tracks {
+  /* padding-left: 16px;
+  padding-right: 16px; */
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-bottom: 24px; 
+  height: 30vh;
+  max-height: 500px;
+  min-height: 340px;
+  background-color: rgb(80, 56, 160);
+  display: flex;
+  align-items: end;
+}
+
+.favorite-tracks__play-list{
+  width: 232px;
+  height: 232px;
+  /* width: 192px;
+  height: 192px; */
+  margin-right: 24px;
+  background-image: url("../img/default-playList-img.png");
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.favorite-tracks__info{
+  display: flex;
+  flex-direction: column;
+}
+
+.favorite-tracks__track-or-playList{
+  font-size: 0.85rem;
+}
+
+.favorite-tracks__track__name-play-list {
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  font-size: 6rem;
+}
+
+.favorite-tracks__info {
+  margin-top: 6px;
+  font-size: 0.85rem;
+}
+
+.play-favorite-track-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 232px;
+  padding-bottom: 64px;
+  background-color: rgb(80, 56, 160);
+  --background-noise: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=);
+  background-image: linear-gradient(rgba(0,0,0,.6) 0,#121212 100%),var(--background-noise);
+  color: #b3b3b3;
+}
+
+.play-favorite-track {
+  padding: 24px 32px;
+  width: 100%;
+}
+
+.play-favorite-track__button {
+  border-radius: 500px;
+  margin-right: 32px;
+  width: 56px;
+  height: 56px;
+  background-color: #1ed760;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.favorite-tracks-contents {
+  width: 100%;
+  padding: 0 50px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  /* display: flex; */
+  /* align-items: center; */
+}
+
+.favorite-tracks-contents-title {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid #2f2c3a;
+  padding-bottom: 10px;
+}
+
+/* зарметка блока плейлиста любимых теков */
+.favorite-tracks--one-size,
+.favorite-tracks--two-size,
+.favorite-tracks--tree-size{
+  width: 30%;
+}
+
+.favorite-tracks--four-size {
+  width: 10%;
+  display: flex;
+  justify-content: end;
+}

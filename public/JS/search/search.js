@@ -64,6 +64,7 @@ class Search {
         this.query += this.queryFormatter.format(this.input.value);
         if (this.query === '')
             return undefined;
+        //@ts-ignore
         this.waitTime = setTimeout(async () => {
             const url = `https://api.spotify.com/v1/search?q=${this.query}&type=playlist&market=ES&limit=50&offset=0`;
             this.result = await this.apiClient.get(url);
