@@ -1,6 +1,5 @@
 //volume
 const volumeSlider = document.getElementById('volumeSlider') as HTMLInputElement;
-console.log(volumeSlider.value)
 const muteBtn = document.getElementsByClassName('volume-icon')[0] as SVGElement;
 let muteConditon: boolean = false;
 let volume = volumeSlider.value as unknown as number;

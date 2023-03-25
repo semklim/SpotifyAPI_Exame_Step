@@ -1,7 +1,6 @@
 "use strict";
 //volume
 const volumeSlider = document.getElementById('volumeSlider');
-console.log(volumeSlider.value);
 const muteBtn = document.getElementsByClassName('volume-icon')[0];
 let muteConditon = false;
 let volume = volumeSlider.value;
