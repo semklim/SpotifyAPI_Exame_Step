@@ -88,12 +88,12 @@ class UserInterface {
             (document.querySelector('.main-content')).innerHTML += box;
         }
     }
-    createFavTracks(obj) {
+    async createFavTracks(obj) {
         const mainContent = document.querySelector(`.main-content`);
         const defaulbox = document.createElement("div");
         defaulbox.classList.add("requestBox");
         mainContent.appendChild(defaulbox);
-        defaulbox.innerHTML = funcUI();
+        defaulbox.innerHTML = await funcUI();
     }
 }
 const UI = new UserInterface();

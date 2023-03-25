@@ -37,7 +37,7 @@
 }
 
 .favorite-tracks__track-or-playList{
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 
 .favorite-tracks__track__name-play-list {
@@ -50,7 +50,7 @@
 
 .favorite-tracks__info {
   margin-top: 6px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 
 .play-favorite-track-box {

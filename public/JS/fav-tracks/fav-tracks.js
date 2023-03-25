@@ -1,11 +1,16 @@
-const funcUI = () => {
+"use strict";
+import API from '../API.js';
+async function funcUI() {
+    const userProfile = await API.UserProfile();
+    const userSaveTracks = await API.UserSavedTracks();
+    console.log(API.UserProfile());
     return `<div class="favorite-tracks-box">
         <div class="presentation-favorite-tracks">
           <div class="favorite-tracks__play-list"></div>
           <div class="favorite-tracks__info">
             <h3 class="favorite-tracks__track-or-playList">Плейлист</h3>
             <h1 class="favorite-tracks__track__name-play-list">Любимые треки</h1>
-            <h3 class="favorite-tracks__info">Имя Фамилия и сколько треков</h3>
+            <h3 class="favorite-tracks__info">${userProfile.display_name} · ${userSaveTracks.total} трэка</h3>
           </div>
         </div>
         <div class="play-favorite-track-box">
@@ -35,5 +40,5 @@ const funcUI = () => {
           </div>
         </div>
       </div>`;
-};
+}
 export default funcUI;

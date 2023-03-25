@@ -69,3 +69,5 @@ const favorite_track_button = document.querySelector(`.nav-bar-library-link-box`
 favorite_track_button.addEventListener(`click`, () => {
     UI.createFavTracks();
 });
+
+API. UserSavedTracks().then(data => console.log(data.total));

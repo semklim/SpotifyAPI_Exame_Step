@@ -1,11 +1,20 @@
- const funcUI = (): string => {
+"use strict";
+import Auth from '../Auth.js';
+import API from '../API.js';
+import UI from '../UI.js';
+import Cookie from '../Cookies.js'; 
+
+ 
+async function funcUI ():Promise<any>  {
+      const userProfile = await API.UserProfile();
+      const userSaveTracks = await API.UserSavedTracks();
       return `<div class="favorite-tracks-box">
         <div class="presentation-favorite-tracks">
           <div class="favorite-tracks__play-list"></div>
           <div class="favorite-tracks__info">
             <h3 class="favorite-tracks__track-or-playList">Плейлист</h3>
             <h1 class="favorite-tracks__track__name-play-list">Любимые треки</h1>
-            <h3 class="favorite-tracks__info">Имя Фамилия и сколько треков</h3>
+            <h3 class="favorite-tracks__info">${userProfile.display_name} · ${userSaveTracks.total} трэка</h3>
           </div>
         </div>
         <div class="play-favorite-track-box">
