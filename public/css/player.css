@@ -109,10 +109,10 @@
 .slider::-webkit-slider-thumb {
   display: none;
   appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
-  background: #4caf50;
+  background: #ffffff;
   cursor: pointer;
 }
 
@@ -121,12 +121,11 @@ input[type=range]:hover::-webkit-slider-thumb {
 }
 
 
-
 .slider::-moz-range-thumb {
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
-  background: #4caf50;
+  background: #ffffff;
   cursor: pointer;
 }
 
@@ -192,7 +191,7 @@ input[type=range]:hover::-webkit-slider-thumb {
 }
 
 .play-pauseBtn :hover {
-  transform: scale(1.1)
+  transform: scale(1.05)
 }
 
 .randTrackBtn {
