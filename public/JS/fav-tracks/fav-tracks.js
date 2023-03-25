@@ -3,7 +3,6 @@ import API from '../API.js';
 async function funcUI() {
     const userProfile = await API.UserProfile();
     const userSaveTracks = await API.UserSavedTracks();
-    console.log(API.UserProfile());
     return `<div class="favorite-tracks-box">
         <div class="presentation-favorite-tracks">
           <div class="favorite-tracks__play-list"></div>
