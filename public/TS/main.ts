@@ -5,7 +5,7 @@ import API from './API.js';
 import UI from './UI.js';
 import Cookie from './Cookies.js';
 import { Search, QueryFormatter } from './search/search.js';
-import playlistByGenres from './selectedGenres/selectedGenres.js';
+
 
 const APP = (function (API, UI) {
 	const UserProfile = async () => {
@@ -16,27 +16,27 @@ const APP = (function (API, UI) {
 	const genGenres = async () => {
 		const genres = await API.Genres();
 		UI.createGenres(genres);
+
 		const collectionGenres = document.querySelector('.collectionGenres');
+
 		collectionGenres?.addEventListener('click', async ({target}: Event) => {
 			const className: string = (target as HTMLElement)!.className;
+
 			if(className === 'genres'){
 				const genresName = ((target as HTMLElement).querySelector('.nameOfGenres')!).textContent!;
 				const id = (target as HTMLElement).getAttribute('id')!;
 				const playlist = await API.GetCategoryPlaylists(id);
-				
 				console.log(playlist);
-				const html = playlistByGenres(genresName, playlist.playlists.items);
-				const requestBox = document.querySelector('.requestBox')!;
-				requestBox.innerHTML = html;
-
+				UI.createGenresRes(genresName, playlist.playlists.items);
 
 				const playlistID = playlist.playlists.items[0].id;
-				console.log(playlistID);
+				// console.log(playlistID);
 				
 				const tracks = await API.GetPlaylist(playlistID);
-				console.log(tracks);
+				// console.log(tracks);
 			}
-		})
+		});
+		APP.PageSearch();
 	}
 
 	const PageSearch = async () => {
@@ -61,7 +61,9 @@ const APP = (function (API, UI) {
 		PageSearch(){
 			PageSearch();
 		},
-		genGenres: genGenres
+		genGenres(){
+			genGenres();
+		}
 	};
 })(API, UI);
 

@@ -4,7 +4,6 @@ import API from './API.js';
 import UI from './UI.js';
 import Cookie from './Cookies.js';
 import { Search, QueryFormatter } from './search/search.js';
-import playlistByGenres from './selectedGenres/selectedGenres.js';
 const APP = (function (API, UI) {
     const UserProfile = async () => {
         const user = await API.UserProfile();
@@ -21,15 +20,14 @@ const APP = (function (API, UI) {
                 const id = target.getAttribute('id');
                 const playlist = await API.GetCategoryPlaylists(id);
                 console.log(playlist);
-                const html = playlistByGenres(genresName, playlist.playlists.items);
-                const requestBox = document.querySelector('.requestBox');
-                requestBox.innerHTML = html;
+                UI.createGenresRes(genresName, playlist.playlists.items);
                 const playlistID = playlist.playlists.items[0].id;
-                console.log(playlistID);
+                // console.log(playlistID);
                 const tracks = await API.GetPlaylist(playlistID);
-                console.log(tracks);
+                // console.log(tracks);
             }
         });
+        APP.PageSearch();
     };
     const PageSearch = async () => {
         const searchBox = document.querySelector('.searchbox');
@@ -52,7 +50,9 @@ const APP = (function (API, UI) {
         PageSearch() {
             PageSearch();
         },
-        genGenres: genGenres
+        genGenres() {
+            genGenres();
+        }
     };
 })(API, UI);
 async function loginBtn() {
