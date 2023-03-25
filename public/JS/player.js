@@ -38,10 +38,15 @@ volumeSlider.addEventListener('input', () => {
     }
 });
 //like
+const likeWrap = document.getElementsByClassName('likeWrap')[0];
 const like = document.getElementsByClassName('like')[0];
 const path = document.getElementById('path');
 let likeCondition = false;
 like.addEventListener('click', () => {
+    like.classList.add("shake");
+    setTimeout(function () {
+        like.classList.remove("shake");
+    }, 800);
     switch (likeCondition) {
         case false:
             like.style.width = '19';
