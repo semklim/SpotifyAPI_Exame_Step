@@ -42,6 +42,7 @@
   justify-content: center;
 }
 
+
 .likeWrap {
   width: 7%;
   height: auto;
@@ -64,9 +65,6 @@
   color: #707070;
 }
 
-/* .like {
-
-} */
 .hover:hover path{
   stroke-opacity: 1;
 }
@@ -228,4 +226,9 @@ input[type=range]:hover::-webkit-slider-thumb {
 
 .volume-icon{
   margin-right: 0.4vw;
+  opacity: 0.8;
+}
+
+.volume-icon:hover {
+  opacity: 1;
 }
