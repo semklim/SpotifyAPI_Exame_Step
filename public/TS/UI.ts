@@ -133,13 +133,18 @@ import funcUI from "./fav-tracks/fav-tracks.js";
 		requestBox.innerHTML = html;
 	}
 
-	public async createFavTracks (obj?:object): Promise<any> {
+	public async createFavTracks (obj?:object): Promise<any> {	
+		const root__top_bar = document.querySelector('.root__top-bar')!;
 		const mainContent = document.querySelector(`.main-content`)!;
-		const defaulbox = document.createElement("div");
-		defaulbox.classList.add("requestBox");
-		mainContent.appendChild(defaulbox);
-		defaulbox.innerHTML = await funcUI();
-	}
+    const requestBox = document.querySelector('.requestBox');
+
+    if(root__top_bar.nextElementSibling === null){
+			mainContent.appendChild(requestBox as Element) as Element
+      (requestBox!).innerHTML += await funcUI();
+    }else if(requestBox){
+      requestBox.innerHTML = await funcUI();
+    }
+  }
 }
 
 const UI = new UserInterface();
