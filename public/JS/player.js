@@ -89,3 +89,6 @@ playBtn.addEventListener('click', () => {
 // audio.addEventListener("canplaythrough", (event) => {
 //   // audio.play();
 // });
+//chosed song
+function onPlay() {
+}

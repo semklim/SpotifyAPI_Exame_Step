@@ -8,8 +8,8 @@
   flex-wrap: wrap;
   position: fixed;
   bottom: 0;
-  padding-left: 1.5vw;
-  padding-right: 1.5vw;
+  /* padding-left: 1vw;
+  padding-right: 1vw; */
   min-height: 65px;
   min-width: 100vw;
   border-top:  0.5px solid rgb(40, 40, 40);
@@ -18,7 +18,7 @@
 .currSong {
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   width: 20vw;
   height: 5vh;
 }
@@ -55,6 +55,7 @@
 
 .song {
   display: inline-block;
+  margin-left: 1.5vw;
 }
 
 .songName {
@@ -255,4 +256,11 @@ input[type=range]:hover::-webkit-slider-thumb {
   animation-name: shake;
   animation-duration: 0.8s;
   animation-timing-function: ease-in-out;
+}
+
+.albumCover {
+  height: 3.5vw;
+  width: 3.5vw;
+  background-color: #ffffff;
+  margin-left: 1.5vw;
 }

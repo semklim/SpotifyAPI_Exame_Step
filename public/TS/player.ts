@@ -76,7 +76,7 @@ playBtn.addEventListener('click', () => {
       // audio.pause()
       break;
     case true: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
-    // audio.play()
+      // audio.play()
       pauseCondition = false;
       break;
   }
@@ -87,3 +87,9 @@ playBtn.addEventListener('click', () => {
 // audio.addEventListener("canplaythrough", (event) => {
 //   // audio.play();
 // });
+
+//chosed song
+
+function onPlay(track:object) {
+  // track.artists
+}
