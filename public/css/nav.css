@@ -15,6 +15,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  line-height: 1.6;
 }
 
 html, body {
@@ -22,11 +23,10 @@ html, body {
   height: 100%;
   background-color: #121212;
   font-family: var(--fontVariants);
-  font-weight: 900;
+  font-weight: 630;
   font-style: normal;
-  font-size: 15px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  
 }
 
 button {
@@ -62,7 +62,7 @@ a {
 /* ................left-bar-and-nav.............. */
 
 .nav-text-decor-800 {
-  font-weight: 600;
+  font-weight: 630;
 }
 
 
@@ -132,19 +132,19 @@ a {
   margin-right: 16px; 
 }
 
-.nav-bar-livrarys {
+.nav-bar-librarys {
   width: 100%;
   margin-bottom: 16px;
 }
 
-.nav-bar-livrary__box {
+.nav-bar-library__box {
   width: 100%;
 }
 
-.nav-bar-livrary__add-button{
+.nav-bar-library__add-button{
   width: 100%;
 }
-.nav-bar-livrary__box-img {
+.nav-bar-library__box-img {
   background-color: white;
   border-radius: 2px;
   display: flex;
@@ -156,13 +156,13 @@ a {
   margin-right: 16px;
 }
 
-.nav-bar-livrary-link-box {
+.nav-bar-library-link-box {
   width: 100%;
   text-decoration: none;
   color: white;
 }
 
-.nav-bar-livrary__box-img-two {
+.nav-bar-library__box-img-two {
   background: linear-gradient(135deg,#450af5,#c4efd9);
   border-radius: 2px;
   display: flex;
@@ -274,7 +274,7 @@ a {
   align-items: center;
   border-radius: 500px;
   color: white;
-  font-weight: 700;
+  font-weight: 630;
   padding: 8px 32px 8px 8px;
   font-size: 16px;
   line-height: 1.6;
@@ -291,7 +291,7 @@ a {
   justify-content: center;
   align-items: center;
   border-radius: 500px;
-  font-weight: 700;
+  font-weight: 630;
   padding: 10px 32px;
   line-height: 1.6;
   background-color: white;
@@ -363,7 +363,7 @@ a {
 	margin-block: 0px;
 	font-family: var(--fontVariants);
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 630;
 	color: white;
 	padding: 16px;
   position: absolute;

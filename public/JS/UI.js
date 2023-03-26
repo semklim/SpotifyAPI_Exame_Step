@@ -6,6 +6,7 @@ Represents the Assets of html pages class.
 @method genGenres()
 */
 import Assets from "./htmlAssets/htmlPageAssets.js";
+import funcUI from "./fav-tracks/fav-tracks.js";
 class UserInterface {
     /**
 
@@ -99,6 +100,13 @@ class UserInterface {
         const html = Assets.tracksByPlaylist(playlist);
         const requestBox = document.querySelector('.requestBox');
         requestBox.innerHTML = html;
+    }
+    async createFavTracks(obj) {
+        const mainContent = document.querySelector(`.main-content`);
+        const defaulbox = document.createElement("div");
+        defaulbox.classList.add("requestBox");
+        mainContent.appendChild(defaulbox);
+        defaulbox.innerHTML = await funcUI();
     }
 }
 const UI = new UserInterface();

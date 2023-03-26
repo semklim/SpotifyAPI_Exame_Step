@@ -132,3 +132,9 @@ nav_bar__search.addEventListener('click', searchListener);
 
 API.UserSavedTracks().then(data => console.log("User Liked Tracks  ",data));
 API.UserRecentlyPlayedTracks().then(data => console.log("User Recently Played Tracks  ",data));
+
+///favorite-tracks
+const favorite_track_button = document.querySelector(`.nav-bar-library-link-box`)!
+favorite_track_button.addEventListener(`click`,  () => {
+	UI.createFavTracks()
+})

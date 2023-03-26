@@ -42,11 +42,12 @@
   justify-content: center;
 }
 
+
 .likeWrap {
   width: 7%;
   height: auto;
   display: inline-block;
-  margin-left: 4vw;
+  margin-left: 1vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,9 +65,6 @@
   color: #707070;
 }
 
-/* .like {
-
-} */
 .hover:hover path{
   stroke-opacity: 1;
 }
@@ -77,8 +75,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .play-pauseBtn {
@@ -97,9 +95,9 @@
 .slider {
   appearance: none;
   width: 50%;
-  height: 0.5vh;
+  height: 0.4vh;
   border-radius: 5px;
-  background: #d3d3d3;
+  background: #888686;
   outline: none;
   opacity: 0.7;
   -webkit-transition: .2s;
@@ -107,19 +105,25 @@
 }
 
 .slider::-webkit-slider-thumb {
+  display: none;
   appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
-  background: #4caf50;
+  background: #ffffff;
   cursor: pointer;
 }
 
+input[type=range]:hover::-webkit-slider-thumb {
+  display: block;
+}
+
+
 .slider::-moz-range-thumb {
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
-  background: #4caf50;
+  background: #ffffff;
   cursor: pointer;
 }
 
@@ -139,17 +143,17 @@
 .songOnPlayCurrTime {
   padding-right: 0.8vw;
   color: #707070;
-  font-size: 0.9vw;
+  font-size: 0.87vw;
 }
 
 .songOnEndCurrTime {
   padding-left: 0.8vw;
   color: #707070;
-  font-size: 0.9vw;
+  font-size: 0.87vw;
 }
 
 .prevTrackBtn {
-  fill:#909090;
+  fill:#a2a2a2;
   height: 100%;
   width: 6%;
   background-repeat: no-repeat;
@@ -164,7 +168,7 @@
 }
 
 .nextTrackBtn {
-  fill:#909090;
+  fill:#a2a2a2;
   height: 100%;
   width: 6%;
   margin-left: 1vw;
@@ -185,7 +189,7 @@
 }
 
 .play-pauseBtn :hover {
-  transform: scale(1.1)
+  transform: scale(1.05)
 }
 
 .randTrackBtn {
@@ -218,4 +222,37 @@
 
 .repeatTrackBtn:hover {
   opacity: 1;
+}
+
+.volume-icon{
+  margin-right: 0.4vw;
+  opacity: 0.8;
+}
+
+.volume-icon:hover {
+  opacity: 1;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(1px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-3px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(3px, 0, 0);
+  }
+}
+
+.shake {
+  animation-name: shake;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
 }
