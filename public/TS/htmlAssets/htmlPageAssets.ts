@@ -77,19 +77,22 @@ class Assets {
 	}
 	private static getTracks(list: object[]){
 		let html = '';
+		console.log(list);
+		
 		list.forEach((el: any, i: number) => {
-
-			const { album:{ images }, name, artists, duration_ms, preview_url } = el.track;
-
+			if(!el || !el.track) return undefined;
+			const track = el.track;
+			const {album:{ images }, name, artists, duration_ms, preview_url } = track;
+			// const images = track.album.images;
 			html += `
-			<div class="tracksBoxMain" href="${preview_url}">
+			<div class="tracksBoxMain">
 				<div class="tracksGrid">
 					<div class="trackNO">
 						<div class="trackNO__box">
 							<span class="numberTrackNO">
 								${i}
 							</span>
-							<button class="trackPlayBtn" aria-label="" tabindex="-1" aria-expanded="false">
+							<button class="trackPlayBtn" href="${preview_url}" aria-label="" tabindex="-1" aria-expanded="false">
 								<svg role="img" height="24" width="24" aria-hidden="true" class="svgTrackPlayBtn" viewBox="0 0 24 24" data-encore-id="icon">
 									<path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"></path>
 								</svg>

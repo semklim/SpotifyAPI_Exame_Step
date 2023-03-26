@@ -25,24 +25,25 @@ const APP = (function (API, UI) {
                 shelf__content.addEventListener('click', (e) => {
                     const target = e.target;
                     if (target.className === "shelf__content__playlist") {
-                        APP.PageTracks();
+                        APP.PageTracks(target.id);
                     }
                 });
             }
         });
         APP.PageSearch();
     };
-    const PageTracks = async () => {
-        const id = document.querySelector('.shelf__content__playlist');
-        const playlist = await API.GetPlaylist(id.id);
+    const PageTracks = async (id) => {
+        const playlist = await API.GetPlaylist(id);
         UI.createTracks(playlist);
         const mainbox = document.querySelector('.favorite-tracks-contents');
         mainbox?.addEventListener('click', (e) => {
             const target = e.target;
-            if (target.className === "tracksBoxMain") {
+            if (target.className === "trackPlayBtn") {
                 const url = target.getAttribute('href');
-                const audio = new Audio(url);
-                audio.play();
+                if (url) {
+                    const audio = new Audio(url);
+                    audio.play();
+                }
             }
         });
     };
@@ -67,8 +68,8 @@ const APP = (function (API, UI) {
         PageSearch() {
             PageSearch();
         },
-        PageTracks() {
-            PageTracks();
+        PageTracks(id) {
+            PageTracks(id);
         },
         genGenres() {
             genGenres();
@@ -110,7 +111,6 @@ else {
     btn.addEventListener('click', loginBtn);
 }
 function searchListener() {
-    // APP.PageSearch();
     APP.genGenres();
 }
 nav_bar__search.addEventListener('click', searchListener);

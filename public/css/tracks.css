@@ -1,11 +1,13 @@
+a{
+	color: white;
+}
 .tracksBoxMain {
-	height: 1848px;
+	height: 60px;
     --row-height: 56px;
 	contain: layout size;
     position: relative;
 }
 .tracksGrid {
-	pointer-events: none;
 	-webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -17,7 +19,6 @@
     border-radius: 4px;
     height: 56px;
     position: relative;
-	/* pointer-events: none; */
     width: 100%;
 	grid-template-columns: [index] 16px [first] 4fr [var1] 2fr [last] minmax(120px,1fr);
 }
@@ -90,9 +91,13 @@
     width: 100%;
 }
 .svgTrackPlayBtn {
+	pointer-events: none;
 	fill: currentcolor;
     height: 24;
     width: 24;
+}
+path{
+	pointer-events: none;
 }
 .trackPreview {
 	user-select: none;
@@ -223,6 +228,7 @@
 	/* color: #1ed760; */
 }
 .svgTrackLikeBtn {
+	pointer-events: none;
 	fill: currentcolor;
 	color: hsla(0,0%,100%,.7);
 	background: transparent;
