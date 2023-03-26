@@ -1,10 +1,25 @@
+/**
+
+Represents the Assets of html pages class.
+@class
+@method playlistByGenres()
+@method genGenres()
+*/
 import Assets from "./htmlAssets/htmlPageAssets.js";
 class UserInterface {
+    /**
+
+    Creates an instance of UserInterface.
+    */
     constructor() {
         this.logo = document.querySelector('.logo>img');
         this.accountLink = document.querySelector('.accountLink');
         this.accountInfo = document.querySelector('.account>ul');
     }
+    /**
+    Creates the account info section.
+    @param {object} data - The user data object.
+    */
     createAccount({ display_name, email, external_urls: { spotify }, images }) {
         this.logo.setAttribute('src', images[0].url);
         this.accountLink.setAttribute('href', spotify);
@@ -13,6 +28,11 @@ class UserInterface {
 		<li>${email}</li>
 	  `;
     }
+    /**
+
+    Creates the genres section.
+    @param {object} obj - The genres data object.
+    */
     createGenres(obj) {
         const { box, searchBox } = Assets.genGenres(obj);
         const btn__history = document.querySelector('.btn-controls-contents');
@@ -28,6 +48,13 @@ class UserInterface {
             requestBox.innerHTML = box;
         }
     }
+    /**
+
+    Creates the playlists section for a specific genre, and attaches event listener to window resize event.
+    @param {string} genresName - The name of the selected genre
+
+    @param {object[]} playlists - An array of objects representing the playlists of the genre
+    */
     createGenresRes(genresName, playlists) {
         const html = Assets.playlistByGenres(genresName, playlists);
         const requestBox = document.querySelector('.requestBox');
@@ -38,6 +65,9 @@ class UserInterface {
         let count = Math.round((contentSize.offsetWidth - gap) / (shelf__content__playlist.offsetWidth < 180 ? 180 : shelf__content__playlist.offsetWidth + gap));
         gap = count < 3 ? 12 : 24;
         contentSize.setAttribute('style', `--column-count: ${count}; --grid-gap: ${gap}px;`);
+        /**
+         * Sets the number of grid columns based on the width of the shelf content playlist
+         */
         function setNumberOfGridColumns() {
             if (shelf__content__playlist.offsetWidth < 180) {
                 if ((count -= 1) < 3) {
@@ -67,4 +97,8 @@ class UserInterface {
     }
 }
 const UI = new UserInterface();
+/**
+ * A module for handling the user interface of a music app.
+ * @module UserInterface
+ */
 export default UI;
