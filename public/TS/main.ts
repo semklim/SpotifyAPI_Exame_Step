@@ -30,10 +30,10 @@ const APP = (function (API, UI) {
 				UI.createGenresRes(genresName, playlist.playlists.items);
 
 				const playlistID = playlist.playlists.items[0].id;
-				// console.log(playlistID);
+				console.log(playlistID);
 				
 				const tracks = await API.GetPlaylist(playlistID);
-				// console.log(tracks);
+				console.log(tracks);
 			}
 		});
 		APP.PageSearch();

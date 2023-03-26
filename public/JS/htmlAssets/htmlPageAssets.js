@@ -53,7 +53,7 @@ class Assets {
 				<div class="shelf__name">
 					<h2 draggable="false" class="shelf__name__title">
 						<span class="shelf__txt">
-							All Things Pop
+							All Things ${genres}
 						</span>
 					</h2>
 				</div>

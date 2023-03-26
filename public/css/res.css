@@ -1,6 +1,6 @@
 
 .contentSpacing{
-	margin: 0;
+	margin: 0 auto;
     max-width: var(--content-max-width);
     padding: 0 var(--content-spacing);
 	color: white;

@@ -32,6 +32,38 @@ class UserInterface {
         const html = Assets.playlistByGenres(genresName, playlists);
         const requestBox = document.querySelector('.requestBox');
         requestBox.innerHTML = html;
+        const contentSize = document.querySelector('.shelf__content');
+        const shelf__content__playlist = document.querySelector('.shelf__content__playlist');
+        let gap = 24;
+        let count = Math.round((contentSize.offsetWidth - gap) / (shelf__content__playlist.offsetWidth < 180 ? 180 : shelf__content__playlist.offsetWidth + gap));
+        gap = count < 3 ? 12 : 24;
+        contentSize.setAttribute('style', `--column-count: ${count}; --grid-gap: ${gap}px;`);
+        function setNumberOfGridColumns() {
+            if (shelf__content__playlist.offsetWidth < 180) {
+                if ((count -= 1) < 3) {
+                    gap = 12;
+                }
+                count = count < 2 ? 2 : count;
+                contentSize.setAttribute('style', `--column-count: ${count}; --grid-gap: ${gap}px;`);
+            }
+            const rise = (180 + gap) * (count + 1);
+            if (rise < contentSize.offsetWidth && rise < 1800) {
+                if ((count += 1) > 3)
+                    gap = 24;
+                contentSize.setAttribute('style', `--column-count: ${count};  --grid-gap: ${gap}px;`);
+            }
+        }
+        // prevents of stacking the same eventlistener
+        if (!UserInterface.EventHandlers) {
+            UserInterface.EventHandlers = new Map();
+            UserInterface.EventHandlers.set('setNumberOfGridColumns', setNumberOfGridColumns);
+            window.addEventListener('resize', setNumberOfGridColumns);
+        }
+        else {
+            window.removeEventListener('resize', UserInterface.EventHandlers.get('setNumberOfGridColumns'));
+            UserInterface.EventHandlers.set('setNumberOfGridColumns', setNumberOfGridColumns);
+            window.addEventListener('resize', setNumberOfGridColumns);
+        }
     }
 }
 const UI = new UserInterface();
