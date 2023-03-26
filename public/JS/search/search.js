@@ -53,23 +53,26 @@ class Search {
         this.apiClient = apiClient;
         this.query = '';
         this.waitTime = 0;
-        this.input.addEventListener('input', this.handleInput.bind(this));
-        this.result = {};
+        this.result = null;
     }
     /**
      * Event listener callback function for the input event on the search box element
      */
-    handleInput() {
+    async handleInput() {
         clearTimeout(this.waitTime);
-        this.query += this.queryFormatter.format(this.input.value);
-        if (this.query === '')
+        this.query = this.queryFormatter.format(this.input.value);
+        if (this.query === '') {
+            this.result = null;
             return undefined;
-        //@ts-ignore
-        this.waitTime = setTimeout(async () => {
-            const url = `https://api.spotify.com/v1/search?q=${this.query}&type=playlist&market=ES&limit=50&offset=0`;
-            this.result = await this.apiClient.get(url);
-            console.log(this.result);
-        }, 300);
+        }
+        ;
+        await new Promise((res, reject) => {
+            this.waitTime = setTimeout(async () => {
+                const url = `https://api.spotify.com/v1/search?q=${this.query}&type=playlist&market=ES&limit=50&offset=0`;
+                this.result = await this.apiClient.get(url);
+                res(true);
+            }, 500);
+        });
     }
     getResult() {
         return this.result;
