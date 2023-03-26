@@ -107,12 +107,36 @@ class SpotifyAPI implements APIClient {
 	}
 	Genres() {
 		const url = 'https://api.spotify.com/v1/browse/categories'
-			+ `?country=${this.user!.country || 'ES'}`
-			+ `&locale=uk_${this.user!.country || 'ES'}`
+			+ `?country=${this.user ? this.user.country : 'ES'}`
+			+ `&locale=${this.user ? this.user.country : 'ES'}`
 			+ `&limit=50`
 			+ '&offset=0';
 			return this.get(url);
 	}
+
+	GetCategoryPlaylists(id:string){
+		const url = `https://api.spotify.com/v1/browse/categories/${id}/playlists`
+		+ `?country=${this.user ? this.user.country : 'ES'}`
+		+ '&limit=50'
+		+ '&offset=0';
+		return this.get(url);
+	}
+	/**
+	 * Get data of playlist using ID from Spotify Web API; 
+	 * @param {string} id - The ID of playlist;
+	 * @param {string} fields - Filters for the query: a comma-separated list of the fields to return. If omitted, all fields are returned. For example, to get just the playlist''s description and URI: fields=description,uri. A dot separator can be used to specify non-reoccurring fields, while parentheses can be used to specify reoccurring fields within objects. For example, to get just the added date and user ID of the adder: fields=tracks.items(added_at,added_by.id). Use multiple parentheses to drill down into nested objects, for example: fields=tracks.items(track(name,href,album(name,href))). Fields can be excluded by prefixing them with an exclamation mark, for example: fields=tracks.items(track(name,href,album(!name,href)))
+
+	Example value:
+	"items(track(name,href,album(name,href),preview_url))"
+	 */
+	GetPlaylist(id:string, fields?: string){
+		const url = `https://api.spotify.com/v1/playlists/${id}`
+		+ `?market=${this.user ? this.user.country : 'ES'}`
+		+ `${fields ? '&' + fields : ''}`
+		+ '&offset=0';
+		return this.get(url);
+	}
+
 	  /**
    * Makes an authenticated GET request to the Spotify Web API.
    * @param {string} url - The URL to make the request to Spotify Web API.
@@ -143,19 +167,18 @@ class SpotifyAPI implements APIClient {
 			  this.accessToken = access_token;
 			  this.expires_in = new Date(Date.now() + (expires_in * 1000));
 		}
-
 		const response = await fetch(url, {
 		  method: methodReq ? methodReq.toUpperCase() : 'GET',
 		  headers: {
 			Authorization: `Bearer ${this.accessToken}`,
 		  },
 		});
-	
 		if (!response.ok) {
-		  const { error, error_description } = await response.json();
-		  throw new Error(`${error}: ${error_description}`);
-		}
-	
+			const { error, error_description } = await response.json();
+			throw new Error(`${error}: ${error_description}`);
+		  }
+
+		  	
 		return response.json();
 	  }
 }

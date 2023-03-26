@@ -9,12 +9,57 @@ const APP = (function (API, UI) {
         const user = await API.UserProfile();
         UI.createAccount(user);
     };
-    const PageSearch = async () => {
+    const genGenres = async () => {
         const genres = await API.Genres();
         UI.createGenres(genres);
+        const collectionGenres = document.querySelector('.collectionGenres');
+        collectionGenres?.addEventListener('click', async ({ target }) => {
+            const className = target.className;
+            if (className === 'genres') {
+                const genresName = (target.querySelector('.nameOfGenres')).textContent;
+                const id = target.getAttribute('id');
+                const playlist = await API.GetCategoryPlaylists(id);
+                console.log(playlist);
+                UI.createGenresRes(genresName, playlist.playlists.items);
+                const shelf__content = document.querySelector('.shelf__content');
+                shelf__content.addEventListener('click', (e) => {
+                    const target = e.target;
+                    if (target.className === "shelf__content__playlist") {
+                        APP.PageTracks(target.id);
+                    }
+                });
+            }
+        });
+        APP.PageSearch();
+    };
+    const PageTracks = async (id) => {
+        const playlist = await API.GetPlaylist(id);
+        UI.createTracks(playlist);
+        const mainbox = document.querySelector('.favorite-tracks-contents');
+        mainbox?.addEventListener('click', (e) => {
+            const target = e.target;
+            if (target.className === "trackPlayBtn") {
+                const url = target.getAttribute('href');
+                if (url) {
+                    const audio = new Audio(url);
+                    audio.play();
+                }
+            }
+        });
+    };
+    const PageSearch = async () => {
         const searchBox = document.querySelector('.searchbox');
         const queryFormatter = new QueryFormatter();
         const SearchAPP = new Search(searchBox, queryFormatter, API);
+        SearchAPP.input.addEventListener('input', async () => {
+            const result = await SearchAPP.handleInput().then(() => {
+                const res = SearchAPP.getResult();
+                if (!res)
+                    return undefined;
+                return res;
+            });
+            console.log(result);
+        });
     };
     return {
         UserProfile() {
@@ -22,6 +67,12 @@ const APP = (function (API, UI) {
         },
         PageSearch() {
             PageSearch();
+        },
+        PageTracks(id) {
+            PageTracks(id);
+        },
+        genGenres() {
+            genGenres();
         }
     };
 })(API, UI);
@@ -46,7 +97,7 @@ async function loginBtn() {
     }
 }
 const btn = document.querySelector('.login');
-const search = document.querySelector('.nav-bar__serch-link');
+const nav_bar__search = document.querySelector('.nav-bar__serch-link');
 let switcher = false;
 if ((Cookie.get('accessToken')) && !switcher) {
     Auth.accessToken = Cookie.get('accessToken');
@@ -59,9 +110,10 @@ if ((Cookie.get('accessToken')) && !switcher) {
 else {
     btn.addEventListener('click', loginBtn);
 }
-search.addEventListener('click', () => {
-    APP.PageSearch();
-});
+function searchListener() {
+    APP.genGenres();
+}
+nav_bar__search.addEventListener('click', searchListener);
 API.UserSavedTracks().then(data => console.log("User Liked Tracks  ", data));
 API.UserRecentlyPlayedTracks().then(data => console.log("User Recently Played Tracks  ", data));
 ///favorite-tracks
@@ -69,5 +121,3 @@ const favorite_track_button = document.querySelector(`.nav-bar-library-link-box`
 favorite_track_button.addEventListener(`click`, () => {
     UI.createFavTracks();
 });
-
-API. UserSavedTracks().then(data => console.log(data.total));

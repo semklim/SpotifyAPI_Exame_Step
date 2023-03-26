@@ -6,17 +6,72 @@ import UI from './UI.js';
 import Cookie from './Cookies.js';
 import { Search, QueryFormatter } from './search/search.js';
 
+
 const APP = (function (API, UI) {
 	const UserProfile = async () => {
 		const user = await API.UserProfile();
 		UI.createAccount(user);
 	}
-	const PageSearch = async () => {
+
+	const genGenres = async () => {
 		const genres = await API.Genres();
 		UI.createGenres(genres);
+
+		const collectionGenres = document.querySelector('.collectionGenres');
+
+		collectionGenres?.addEventListener('click', async ({target}: Event) => {
+			const className: string = (target as HTMLElement)!.className;
+
+			if(className === 'genres'){
+				const genresName = ((target as HTMLElement).querySelector('.nameOfGenres')!).textContent!;
+				const id = (target as HTMLElement).getAttribute('id')!;
+				const playlist = await API.GetCategoryPlaylists(id);
+				console.log(playlist);
+				UI.createGenresRes(genresName, playlist.playlists.items);
+
+				const shelf__content = document.querySelector('.shelf__content')!;
+				shelf__content.addEventListener('click', (e: Event) => {
+					const target = (e.target as HTMLElement);
+					if(target.className === "shelf__content__playlist"){
+						APP.PageTracks(target.id)
+					}
+				});
+			}
+		});
+		APP.PageSearch();
+	}
+
+	const PageTracks = async (id: string) => {
+		const playlist = await API.GetPlaylist(id);
+		UI.createTracks(playlist);
+		const mainbox = document.querySelector('.favorite-tracks-contents');
+			mainbox?.addEventListener('click', (e: Event) => {
+				const target = (e.target as HTMLElement);
+				if(target.className === "trackPlayBtn"){
+					const url = target.getAttribute('href');
+					if(url){
+						const audio = new Audio(url!);
+						audio.play();
+					}
+				}
+			});
+
+	}
+
+	const PageSearch = async () => {
+		
 		const searchBox = document.querySelector('.searchbox') as HTMLInputElement;
 		const queryFormatter = new QueryFormatter();
 		const SearchAPP = new Search(searchBox, queryFormatter, API);
+		SearchAPP.input.addEventListener('input',async () => {
+			const result = await SearchAPP.handleInput().then(() => {
+				const res = SearchAPP.getResult();
+				if(!res) return undefined;
+				return res;
+			});
+			console.log(result);
+			
+		})
 	}
 	return {
 		UserProfile() {
@@ -24,6 +79,12 @@ const APP = (function (API, UI) {
 		},
 		PageSearch(){
 			PageSearch();
+		},
+		PageTracks(id: string){
+			PageTracks(id);
+		},
+		genGenres(){
+			genGenres();
 		}
 	};
 })(API, UI);
@@ -51,7 +112,7 @@ async function loginBtn () {
 }
 
 const btn = document.querySelector('.login')!;
-const search = document.querySelector('.nav-bar__serch-link')!;
+const nav_bar__search = document.querySelector('.nav-bar__serch-link')!;
 let switcher = false;
 if((Cookie.get('accessToken')) && !switcher){
 	Auth.accessToken = Cookie.get('accessToken');
@@ -64,9 +125,10 @@ if((Cookie.get('accessToken')) && !switcher){
 	btn.addEventListener('click', loginBtn);
 }
 
-search.addEventListener('click', () => {
-	APP.PageSearch();
-});
+function searchListener() {
+	APP.genGenres();
+}
+nav_bar__search.addEventListener('click', searchListener);
 
 API.UserSavedTracks().then(data => console.log("User Liked Tracks  ",data));
 API.UserRecentlyPlayedTracks().then(data => console.log("User Recently Played Tracks  ",data));
