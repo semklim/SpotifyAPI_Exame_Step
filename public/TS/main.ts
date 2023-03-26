@@ -29,14 +29,32 @@ const APP = (function (API, UI) {
 				console.log(playlist);
 				UI.createGenresRes(genresName, playlist.playlists.items);
 
-				const playlistID = playlist.playlists.items[0].id;
-				console.log(playlistID);
-				
-				const tracks = await API.GetPlaylist(playlistID);
-				console.log(tracks);
+				const shelf__content = document.querySelector('.shelf__content')!;
+				shelf__content.addEventListener('click', (e: Event) => {
+					const target = (e.target as HTMLElement);
+					if(target.className === "shelf__content__playlist"){
+						APP.PageTracks()
+					}
+				});
 			}
 		});
 		APP.PageSearch();
+	}
+
+	const PageTracks = async () => {
+		const id = document.querySelector('.shelf__content__playlist')!;
+		const playlist = await API.GetPlaylist(id.id);
+		UI.createTracks(playlist);
+		const mainbox = document.querySelector('.favorite-tracks-contents');
+			mainbox?.addEventListener('click', (e: Event) => {
+				const target = (e.target as HTMLElement);
+				if(target.className === "tracksBoxMain"){
+					const url = target.getAttribute('href');
+					const audio = new Audio(url!);
+					audio.play();
+				}
+			});
+
 	}
 
 	const PageSearch = async () => {
@@ -60,6 +78,9 @@ const APP = (function (API, UI) {
 		},
 		PageSearch(){
 			PageSearch();
+		},
+		PageTracks(){
+			PageTracks();
 		},
 		genGenres(){
 			genGenres();

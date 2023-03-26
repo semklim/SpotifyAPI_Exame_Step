@@ -1,0 +1,249 @@
+.tracksBoxMain {
+	height: 1848px;
+    --row-height: 56px;
+	contain: layout size;
+    position: relative;
+}
+.tracksGrid {
+	pointer-events: none;
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	grid-gap: 16px;
+    display: grid;
+    padding: 0 16px;
+	border: 1px solid transparent;
+    border-radius: 4px;
+    height: 56px;
+    position: relative;
+	/* pointer-events: none; */
+    width: 100%;
+	grid-template-columns: [index] 16px [first] 4fr [var1] 2fr [last] minmax(120px,1fr);
+}
+
+.tracksGrid:hover{
+	background-color: hsla(0,0%,100%,.1);
+}
+.tracksGrid:hover .numberTrackNO{
+	display: none;
+}
+.tracksGrid:hover .trackPlayBtn{
+	opacity: 1;
+    pointer-events: auto;
+    position: absolute;
+}
+
+.tracksGrid:hover .trackPreview__description, 
+.tracksGrid:hover .trackNameBox{
+	color: white;
+}
+
+.trackNO {
+	margin-right: 16px;
+	-webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-self: end;
+}
+.trackNO__box {
+	color: #b3b3b3;
+    display: inline-block;
+    height: 16px;
+    min-height: 16px;
+    min-width: 16px;
+    position: relative;
+    width: 16px;
+}
+.numberTrackNO {
+	position: absolute;
+    top: -4px;
+	-webkit-tap-highlight-color: transparent;
+    margin-block: 0px;
+    font-size: 1rem;
+    font-weight: 400;
+	font-variant: tabular-nums;
+    right: 0.25em;
+}
+.trackPlayBtn {
+	touch-action: manipulation;
+	opacity: 0;
+    pointer-events: none;
+    position: absolute;
+	-webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+}
+.svgTrackPlayBtn {
+	fill: currentcolor;
+    height: 24;
+    width: 24;
+}
+.trackPreview {
+	user-select: none;
+	-webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+	justify-self: start;
+}
+.trackPreview__img {
+	margin-right: 16px;
+	background-color: #282828;
+    flex-shrink: 0;
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	-o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center center;
+    object-position: center center;
+}
+.trackPreview__name {
+	padding-right: 8px;
+	-webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-column-gap: 8px;
+    -moz-column-gap: 8px;
+    column-gap: 8px;
+    display: grid;
+    grid-template:
+        "title title"
+        "badges subtitle"/auto 1fr;
+}
+.trackPreview__name__link {
+	color: #fff;
+    grid-area: title;
+    justify-self: start;
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	text-decoration: none;
+	touch-action: manipulation;
+	-webkit-user-drag: none;
+	cursor: pointer;
+}
+.trackPreview__name__txt {
+	color: #6a6a6a;
+	-webkit-tap-highlight-color: transparent;
+    margin-block: 0px;
+    font-size: 1rem;
+    font-weight: 400;
+	-webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    white-space: unset;
+    word-break: break-all;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.trackPreview__description {
+	color: #6a6a6a;
+	grid-column-start: subtitle;
+	-webkit-tap-highlight-color: transparent;
+    margin-block: 0px;
+    font-size: 0.8125rem;
+    font-weight: 400;
+	grid-area: subtitle;
+    grid-column-start: badges;
+	-webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    white-space: unset;
+    word-break: break-all;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.trackNameBox {
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	-webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-self: start;
+}
+.Type__TypeElement-sc-goli3j-0 {
+	-webkit-tap-highlight-color: transparent;
+    margin-block: 0px;
+    font-size: 0.8125rem;
+    font-weight: 400;
+}
+
+
+.trackLikeAndDuration {
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	-webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    grid-column: last;
+    justify-self: end;
+}
+.trackLikeBtn {
+	background: transparent;
+    border: 0;
+    color: hsla(0,0%,100%,.7);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0;
+	/* color: #1ed760; */
+}
+.svgTrackLikeBtn {
+	fill: currentcolor;
+	color: hsla(0,0%,100%,.7);
+	background: transparent;
+    border: 0;
+    color: hsla(0,0%,100%,.7);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0;
+}
+.trackDurationTxt {
+	-webkit-tap-highlight-color: transparent;
+    margin-block: 0px;
+    font-size: 0.8125rem;
+    font-weight: 400;
+	-webkit-box-pack: end;
+    -ms-flex-pack: end;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-variant-numeric: tabular-nums;
+    justify-content: flex-end;
+    width: 5ch
+}

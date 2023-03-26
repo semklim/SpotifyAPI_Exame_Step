@@ -126,6 +126,12 @@ import Assets from "./htmlAssets/htmlPageAssets.js";
 			window.addEventListener('resize', setNumberOfGridColumns);
 		}
 	}
+
+	public createTracks(playlist: any){
+		const html = Assets.tracksByPlaylist(playlist);
+		const requestBox = document.querySelector('.requestBox')!;
+		requestBox.innerHTML = html;
+	}
 }
 
 const UI = new UserInterface();

@@ -95,6 +95,11 @@ class UserInterface {
             window.addEventListener('resize', setNumberOfGridColumns);
         }
     }
+    createTracks(playlist) {
+        const html = Assets.tracksByPlaylist(playlist);
+        const requestBox = document.querySelector('.requestBox');
+        requestBox.innerHTML = html;
+    }
 }
 const UI = new UserInterface();
 /**

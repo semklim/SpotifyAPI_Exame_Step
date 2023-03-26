@@ -182,6 +182,7 @@
 }
 
 .playlist__imgBox {
+	pointer-events: none;
 	height: 100%;
 	-webkit-user-select: none;
     -moz-user-select: none;
@@ -189,6 +190,7 @@
     user-select: none;
 }
 .imgBox__img {
+	pointer-events: none;
 	--card-image-border-radius: clamp(4px,(var(--column-width,0px) - 32px) * 0.025,8px);
     background-color: var(--card-color,#333);
     border-radius: var(--card-image-border-radius);
