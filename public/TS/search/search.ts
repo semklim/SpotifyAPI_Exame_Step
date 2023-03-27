@@ -76,9 +76,9 @@ class Search {
 	 * The ID of the timeout set by setTimeout to delay the search request.
 	 *
 	 * @private
-	 * @type {number}
+	 * @type {Timeout}
 	 */
-	private waitTime: number;
+	private waitTime: NodeJS.Timeout | null = null;
 
 	/**
 	 * The result of the search request.
@@ -101,7 +101,7 @@ class Search {
 	  this.queryFormatter = queryFormatter;
 	  this.apiClient = apiClient;
 	  this.query = '';
-	  this.waitTime = 0;
+	  this.waitTime;
 	  this.result = null;
 	}
   
@@ -118,7 +118,7 @@ class Search {
 			previous: string | null;
 			total: number;
 		}
-	  clearTimeout(this.waitTime);
+	  clearTimeout(this.waitTime!);
 	this.query = this.queryFormatter.format(this.input.value);
 	  if (this.query === ''){
 		this.result = null;

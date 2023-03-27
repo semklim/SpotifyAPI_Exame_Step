@@ -48,11 +48,18 @@ class Search {
          * @type {string}
          */
         this.query = '';
+        /**
+         * The ID of the timeout set by setTimeout to delay the search request.
+         *
+         * @private
+         * @type {Timeout}
+         */
+        this.waitTime = null;
         this.input = input;
         this.queryFormatter = queryFormatter;
         this.apiClient = apiClient;
         this.query = '';
-        this.waitTime = 0;
+        this.waitTime;
         this.result = null;
     }
     /**
