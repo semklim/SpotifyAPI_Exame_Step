@@ -79,8 +79,15 @@ class SpotifyAPI {
         const url = `https://api.spotify.com/v1/playlists/${id}`
             + `?market=${this.user ? this.user.country : 'ES'}`
             + `${fields ? '&' + fields : ''}`
-            + '&limits=100'
+            + '&limits=50'
             + '&offset=0';
+        return this.get(url);
+    }
+    CheckUserSavedTracks(arr) {
+        arr.length = 50;
+        const tracks = arr.join(',');
+        const url = 'https://api.spotify.com/v1/me/tracks/contains'
+            + `?ids=${decodeURIComponent(tracks)}`;
         return this.get(url);
     }
     /**

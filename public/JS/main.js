@@ -35,6 +35,16 @@ const APP = (function (API, UI) {
     const PageTracks = async (id) => {
         const playlist = await API.GetPlaylist(id);
         const tracks = playlist.tracks.next ? playlist.tracks : playlist.tracks.items;
+        // logic of adding info about liked track or not
+        let idTracks = [];
+        tracks.forEach((el) => {
+            idTracks.push(el.track.id);
+        });
+        const isLiked = await API.CheckUserSavedTracks(idTracks);
+        tracks.map((el, i) => {
+            el.track.isLiked = isLiked[i];
+        });
+        // end of logic
         UI.createTracks(playlist);
         const mainbox = document.querySelector('.favorite-tracks-contents');
         mainbox?.addEventListener('click', (e) => {
