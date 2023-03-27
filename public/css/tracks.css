@@ -20,7 +20,7 @@ a{
     height: 56px;
     position: relative;
     width: 100%;
-	grid-template-columns: [index] 16px [first] 4fr [var1] 2fr [last] minmax(120px,1fr);
+    grid-template-columns: [index] 16px [first] 6fr [var1] 4fr [var2] 3fr [last] minmax(120px,1fr);
 }
 
 .tracksGrid:hover{
@@ -200,6 +200,24 @@ path{
     margin-block: 0px;
     font-size: 0.8125rem;
     font-weight: 400;
+}
+
+.trackDate {
+	-webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-self: start;
+	
+}
+.trackDate__txt {
+	-webkit-tap-highlight-color: transparent;
+    margin-block: 0px;
+    font-size: 0.8125rem;
+    font-weight: 400;
+	color: #6a6a6a;
 }
 
 

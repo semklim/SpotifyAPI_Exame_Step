@@ -122,6 +122,11 @@ class Assets {
 							</a>
 						</span>
 					</div>
+					<div class="trackDate">
+						<span class="trackDate__txt">
+							GIVE ME Funcktion
+						</span>
+					</div>
 					<div class="trackLikeAndDuration">
 						<button type="button" role="switch" aria-checked="true" aria-label="Add to Your Library" class="trackLikeBtn" data-testid="add-button" tabindex="-1">
 							<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="svgTrackLikeBtn">
