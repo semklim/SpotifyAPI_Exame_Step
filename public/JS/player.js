@@ -90,5 +90,6 @@ playBtn.addEventListener('click', () => {
 //   // audio.play();
 // });
 //chosed song
-function onPlay() {
+function onPlay(track) {
+    // track.artists
 }

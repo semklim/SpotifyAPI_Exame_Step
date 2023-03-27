@@ -2,13 +2,17 @@
 import Auth from '../Auth.js';
 import API from '../API.js';
 import UI from '../UI.js';
-import Cookie from '../Cookies.js'; 
+import Cookie from '../Cookies.js';
+import funcUIList from './fav-tracks-list.js';
+
 
  
 async function funcUI ():Promise<any>  {
       const userProfile = await API.UserProfile();
       const userSaveTracks = await API.UserSavedTracks();
-      return `<div class="favorite-tracks-box">
+      const addList = await funcUIList();
+      try {
+        return `<div class="favorite-tracks-box">
         <div class="presentation-favorite-tracks">
           <div class="favorite-tracks__play-list"></div>
           <div class="favorite-tracks__info">
@@ -41,9 +45,15 @@ async function funcUI ():Promise<any>  {
               </div>
               <div class="favorite-tracks__decor-line"></div>
             </div>
+            ${addList}
           </div>
         </div>
-      </div>`
+      </div>
+      `
+      }catch(err) {
+        return;
+      }
+      
     }
 
     export default funcUI

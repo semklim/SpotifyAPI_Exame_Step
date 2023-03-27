@@ -1,9 +1,12 @@
 "use strict";
 import API from '../API.js';
+import funcUIList from './fav-tracks-list.js';
 async function funcUI() {
     const userProfile = await API.UserProfile();
     const userSaveTracks = await API.UserSavedTracks();
-    return `<div class="favorite-tracks-box">
+    const addList = await funcUIList();
+    try {
+        return `<div class="favorite-tracks-box">
         <div class="presentation-favorite-tracks">
           <div class="favorite-tracks__play-list"></div>
           <div class="favorite-tracks__info">
@@ -36,8 +39,14 @@ async function funcUI() {
               </div>
               <div class="favorite-tracks__decor-line"></div>
             </div>
+            ${addList}
           </div>
         </div>
-      </div>`;
+      </div>
+      `;
+    }
+    catch (err) {
+        return;
+    }
 }
 export default funcUI;
