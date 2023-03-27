@@ -37,20 +37,23 @@ class Assets {
     }
     static getTracks(list) {
         let html = '';
-        console.log(list);
+        html += `
+		<script class="AllTracks">
+		const ListTracks = ${JSON.stringify(list)};
+		</script>`;
         list.forEach((el, i) => {
             if (!el || !el.track)
                 return undefined;
             const track = el.track;
-            const { album: { images }, name, artists, duration_ms, preview_url } = track;
+            const { album: { images }, name, artists, duration_ms, preview_url, id } = track;
             // const images = track.album.images;
             html += `
-			<div class="tracksBoxMain">
+			<div class="tracksBoxMain" id="${id}">
 				<div class="tracksGrid">
 					<div class="trackNO">
 						<div class="trackNO__box">
 							<span class="numberTrackNO">
-								${i}
+								${i + 1}
 							</span>
 							<button class="trackPlayBtn" href="${preview_url}" aria-label="" tabindex="-1" aria-expanded="false">
 								<svg role="img" height="24" width="24" aria-hidden="true" class="svgTrackPlayBtn" viewBox="0 0 24 24" data-encore-id="icon">
@@ -213,7 +216,7 @@ class Assets {
 		  <div class="favorite-tracks__info">
 			<h3 class="favorite-tracks__track-or-playList">Плейлист</h3>
 			<h1 class="favorite-tracks__track__name-play-list">${obj.name}</h1>
-			<h3 class="favorite-tracks__info">${obj.description}<br> ${obj.followers.total} likes | ${tracks.length} songs</h3>
+			<h3 class="favorite-tracks__info">${obj.description}<br> ${new Intl.NumberFormat('en-UA').format(obj.followers.total)} likes | ${tracks.length} songs</h3>
 		  </div>
 		</div>
 		<div class="play-favorite-track-box">

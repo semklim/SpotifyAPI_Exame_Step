@@ -43,6 +43,7 @@ const APP = (function (API, UI) {
 
 	const PageTracks = async (id: string) => {
 		const playlist = await API.GetPlaylist(id);
+		const tracks = playlist.tracks.next ? playlist.tracks : playlist.tracks.items;
 		UI.createTracks(playlist);
 		const mainbox = document.querySelector('.favorite-tracks-contents');
 			mainbox?.addEventListener('click', (e: Event) => {
@@ -50,6 +51,13 @@ const APP = (function (API, UI) {
 				if(target.className === "trackPlayBtn"){
 					const url = target.getAttribute('href');
 					if(url){
+						console.log(tracks);
+						/*
+						якщо в об'єкті playlist.tracks є посилання на наступну сторінку з треками, то об'єкт tracks в середину буде мати не [] музики,
+						а додаткові поля і поле items з масивот треків.
+						Врахуй це при розробці.
+						Nikita_Function(tracks);
+						*/ 
 						const audio = new Audio(url!);
 						audio.play();
 					}

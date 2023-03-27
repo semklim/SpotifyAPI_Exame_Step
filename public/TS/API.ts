@@ -133,6 +133,7 @@ class SpotifyAPI implements APIClient {
 		const url = `https://api.spotify.com/v1/playlists/${id}`
 		+ `?market=${this.user ? this.user.country : 'ES'}`
 		+ `${fields ? '&' + fields : ''}`
+		+ '&limits=100'
 		+ '&offset=0';
 		return this.get(url);
 	}
