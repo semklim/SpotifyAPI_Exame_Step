@@ -37,16 +37,11 @@ class Assets {
     }
     static getTracks(list) {
         let html = '';
-        html += `
-		<script class="AllTracks">
-		const ListTracks = ${JSON.stringify(list)};
-		</script>`;
         list.forEach((el, i) => {
             if (!el || !el.track)
                 return undefined;
             const track = el.track;
             const { album: { images }, name, artists, duration_ms, preview_url, id } = track;
-            // const images = track.album.images;
             html += `
 			<div class="tracksBoxMain" id="${id}">
 				<div class="tracksGrid">

@@ -106,6 +106,8 @@ class UserInterface {
         const mainContent = document.querySelector(`.main-content`);
         const requestBox = document.querySelector('.requestBox');
         if (root__top_bar.nextElementSibling === null) {
+            const requestBox = document.createElement('div');
+            requestBox.classList.add('requestBox');
             mainContent.appendChild(requestBox);
             (requestBox).innerHTML += await funcUI();
         }

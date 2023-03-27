@@ -139,7 +139,9 @@ import funcUI from "./fav-tracks/fav-tracks.js";
     const requestBox = document.querySelector('.requestBox');
 
     if(root__top_bar.nextElementSibling === null){
-			mainContent.appendChild(requestBox as Element) as Element
+		const requestBox = document.createElement('div');
+			requestBox.classList.add('requestBox');
+			mainContent.appendChild(requestBox);
       (requestBox!).innerHTML += await funcUI();
     }else if(requestBox){
       requestBox.innerHTML = await funcUI();

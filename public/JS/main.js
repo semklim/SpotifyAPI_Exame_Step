@@ -35,7 +35,6 @@ const APP = (function (API, UI) {
     const PageTracks = async (id) => {
         const playlist = await API.GetPlaylist(id);
         const tracks = playlist.tracks.next ? playlist.tracks : playlist.tracks.items;
-        console.log(tracks);
         UI.createTracks(playlist);
         const mainbox = document.querySelector('.favorite-tracks-contents');
         mainbox?.addEventListener('click', (e) => {
