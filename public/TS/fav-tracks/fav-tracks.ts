@@ -10,7 +10,7 @@ import funcUIList from './fav-tracks-list.js';
 async function funcUI ():Promise<any>  {
       const userProfile = await API.UserProfile();
       const userSaveTracks = await API.UserSavedTracks();
-      const addList = await funcUIList();
+      const addListTracks = await funcUIList();
       try {
         return `<div class="favorite-tracks-box">
         <div class="presentation-favorite-tracks">
@@ -18,7 +18,7 @@ async function funcUI ():Promise<any>  {
           <div class="favorite-tracks__info">
             <h3 class="favorite-tracks__track-or-playList">Плейлист</h3>
             <h1 class="favorite-tracks__track__name-play-list">Любимые треки</h1>
-            <h3 class="favorite-tracks__info">${userProfile.display_name} · ${userSaveTracks.total} трэка</h3>
+            <h3 class="favorite-tracks__info">${userProfile.display_name} · ${userSaveTracks.total} трэков</h3>
           </div>
         </div>
         <div class="play-favorite-track-box">
@@ -45,7 +45,7 @@ async function funcUI ():Promise<any>  {
               </div>
               <div class="favorite-tracks__decor-line"></div>
             </div>
-            ${addList}
+            ${addListTracks}
           </div>
         </div>
       </div>
