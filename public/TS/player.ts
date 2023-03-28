@@ -90,6 +90,8 @@ playBtn.addEventListener('click', () => {
 
 //chosed song
 
-function onPlay(track:object) {
-  // track.artists
+export function onPlay(tracks: any[], track: object) {
+  //@ts-ignore
+  const audio = new Audio(tracks.track.preview_url!)
+  audio.play();
 }

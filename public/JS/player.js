@@ -1,4 +1,3 @@
-"use strict";
 //volume
 const volumeSlider = document.getElementById('volumeSlider');
 const muteBtn = document.getElementsByClassName('volume-icon')[0];
@@ -90,6 +89,8 @@ playBtn.addEventListener('click', () => {
 //   // audio.play();
 // });
 //chosed song
-function onPlay(track) {
-    // track.artists
+export function onPlay(tracks, track) {
+    //@ts-ignore
+    const audio = new Audio(track.track.preview_url);
+    audio.play();
 }
