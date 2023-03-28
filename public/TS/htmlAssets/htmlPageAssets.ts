@@ -108,9 +108,6 @@ class Assets {
 						<span class="trackPreview__description" data-encore-id="type">
 							<a draggable="true" dir="auto" href="" tabindex="-1">
 								${artists[0].name}
-							</a>, 
-							<a draggable="true" dir="auto" href="" tabindex="-1">
-								Khrystyna Soloviy
 							</a>
 						</span>
 					</div>
