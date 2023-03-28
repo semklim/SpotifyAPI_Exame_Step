@@ -35,6 +35,11 @@ a{
     position: absolute;
 }
 
+/* .tracksGrid:active{
+	opacity: 1;
+    background-color: #5a595a;
+} */
+
 .tracksGrid:hover .trackPreview__description, 
 .tracksGrid:hover .trackNameBox{
 	color: white;
@@ -149,7 +154,7 @@ path{
 	cursor: pointer;
 }
 .trackPreview__name__txt {
-	color: #6a6a6a;
+	color: #fff;
 	-webkit-tap-highlight-color: transparent;
     margin-block: 0px;
     font-size: 1rem;
@@ -182,6 +187,10 @@ path{
     white-space: nowrap;
 }
 
+.trackPreview__description a {
+    color: #b3b3b3;
+}
+
 .trackNameBox {
 	-webkit-user-select: none;
     -moz-user-select: none;
@@ -195,6 +204,11 @@ path{
     display: flex;
     justify-self: start;
 }
+
+.trackNameBox span a {
+    color: #b3b3b3;
+}
+
 .Type__TypeElement-sc-goli3j-0 {
 	-webkit-tap-highlight-color: transparent;
     margin-block: 0px;
