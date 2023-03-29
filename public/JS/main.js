@@ -59,11 +59,16 @@ const APP = (function (API, UI) {
             }
         }
         const mainbox = document.querySelector('.favorite-tracks-contents');
+        let playingAudio;
         mainbox?.addEventListener('click', (e) => {
+            if (playingAudio != null) {
+                // playingAudio!.currentTime = 0
+                // playingAudio!.volume = 0;
+                playingAudio.pause();
+            }
             const target = e.target;
             if (target.className === "trackPlayBtn") {
                 const url = target.getAttribute('href');
-                console.log(target);
                 if (url) {
                     /*
                     якщо в об'єкті playlist.tracks є посилання на наступну сторінку з треками, то об'єкт tracks в середину буде мати не [] музики,
@@ -72,9 +77,9 @@ const APP = (function (API, UI) {
                     Nikita_Function(tracks,findObjectByParam(tracks, url));
                     */
                     //@ts-ignore
-                    onPlay(tracks, findObjectByParam(tracks, url));
-                    // const audio = new Audio(url!);
-                    // audio.play();
+                    playingAudio = onPlay(tracks, findObjectByParam(tracks, url));
+                    // playingAudio!.src = url;
+                    // playingAudio!.play();
                 }
             }
         });

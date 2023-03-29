@@ -83,14 +83,11 @@ playBtn.addEventListener('click', () => {
             break;
     }
 });
-// const audio = new Audio('https://p.scdn.co/mp3-preview/4bb0e70e72e2ac4060c43fbc6f9226dea50afcf0?cid=797c5434ef7543e7aafc871377f6d903');
-// audio.volume = 0.5;
-// audio.addEventListener("canplaythrough", (event) => {
-//   // audio.play();
-// });
-//chosed song
+//chosen song
+let audio;
 export function onPlay(tracks, track) {
     //@ts-ignore
-    const audio = new Audio(track.track.preview_url);
+    audio = new Audio(track.track.preview_url);
     audio.play();
+    return audio;
 }
