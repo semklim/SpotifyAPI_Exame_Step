@@ -83,11 +83,26 @@ playBtn.addEventListener('click', () => {
 })
 
 //chosen song
+let audioCurrTime = document.getElementsByClassName('songOnPlayCurrTime')[0] as HTMLSpanElement;
+let audioFullDuration = document.getElementsByClassName('songOnEndCurrTime')[0] as HTMLSpanElement;
+let albumCover = document.getElementsByClassName('albumCover')[0] as HTMLDivElement;
+let artist = document.getElementsByClassName('artist')[0] as HTMLDivElement;
+let songName = document.getElementsByClassName('songName')[0] as HTMLDivElement;
 let audio: string | HTMLAudioElement;
 export function onPlay(tracks: any[], track: object) {
+
   //@ts-ignore
   audio = new Audio(track.track.preview_url!);
-
+  //@ts-ignore
+  console.log(track.track)
   audio.play();
+  //@ts-ignore
+  artist.textContent = track.track.artists[0].name
+  //@ts-ignore
+  songName.textContent = track.track.name;
+  //@ts-ignore
+  albumCover.style.backgroundImage = `url("${track.track.album.images[0].url}")`;
+
+
   return audio;
 }

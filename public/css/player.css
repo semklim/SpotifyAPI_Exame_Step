@@ -12,7 +12,7 @@
   padding-right: 1vw; */
   min-height: 65px;
   min-width: 100vw;
-  border-top:  0.5px solid rgb(40, 40, 40);
+  border-top: 0.5px solid rgb(40, 40, 40);
 }
 
 .currSong {
@@ -66,7 +66,7 @@
   color: #707070;
 }
 
-.hover:hover path{
+.hover:hover path {
   stroke-opacity: 1;
 }
 
@@ -154,7 +154,7 @@ input[type=range]:hover::-webkit-slider-thumb {
 }
 
 .prevTrackBtn {
-  fill:#a2a2a2;
+  fill: #a2a2a2;
   height: 100%;
   width: 6%;
   background-repeat: no-repeat;
@@ -169,7 +169,7 @@ input[type=range]:hover::-webkit-slider-thumb {
 }
 
 .nextTrackBtn {
-  fill:#a2a2a2;
+  fill: #a2a2a2;
   height: 100%;
   width: 6%;
   margin-left: 1vw;
@@ -194,7 +194,7 @@ input[type=range]:hover::-webkit-slider-thumb {
 }
 
 .randTrackBtn {
-  fill:#909090;
+  fill: #909090;
   height: 100%;
   width: 6%;
   display: flex;
@@ -205,8 +205,8 @@ input[type=range]:hover::-webkit-slider-thumb {
   opacity: 0.7;
 }
 
-.repeatTrackBtn{
-  fill:#909090;
+.repeatTrackBtn {
+  fill: #909090;
   height: 100%;
   width: 6%;
   display: flex;
@@ -225,7 +225,7 @@ input[type=range]:hover::-webkit-slider-thumb {
   opacity: 1;
 }
 
-.volume-icon{
+.volume-icon {
   margin-right: 0.4vw;
   opacity: 0.8;
 }
@@ -235,19 +235,25 @@ input[type=range]:hover::-webkit-slider-thumb {
 }
 
 @keyframes shake {
-  10%, 90% {
+
+  10%,
+  90% {
     transform: translate3d(-1px, 0, 0);
   }
-  
-  20%, 80% {
+
+  20%,
+  80% {
     transform: translate3d(1px, 0, 0);
   }
 
-  30%, 50%, 70% {
+  30%,
+  50%,
+  70% {
     transform: translate3d(-3px, 0, 0);
   }
 
-  40%, 60% {
+  40%,
+  60% {
     transform: translate3d(3px, 0, 0);
   }
 }
@@ -259,6 +265,9 @@ input[type=range]:hover::-webkit-slider-thumb {
 }
 
 .albumCover {
+  background-size: cover;
+  min-height: 40px;
+  min-width: 40px;
   height: 3.5vw;
   width: 3.5vw;
   background-color: #ffffff;
