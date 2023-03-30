@@ -1,13 +1,9 @@
-"use strict";
-import API from '../API.js';
 //${userTracks[1].track.album.images[2].url}  //мелкая картинка альбома
 //${userTracks[1].track.name}                 //имя трека
 //${userTracks[1].track.artists[0].name}      //имя артиста
 //${ msToTime(userTracks[1].track.duration_ms)} //время трека
-async function funcUIList() {
-    const userProfile = await API.UserProfile();
-    const userSaveTracks = await API.UserSavedTracks();
-    let userTracks = await userSaveTracks.items;
+function funcUIList(userSaveTracks) {
+    let userTracks = userSaveTracks.items;
     //функция конвертации времени трека
     function msToTime(duration) {
         let seconds = Math.floor((duration / 1000) % 60);
@@ -23,8 +19,19 @@ async function funcUIList() {
         const start = Date.parse(startTime);
         const elapsedMilliseconds = now - start;
         const elapsedMinutes = Math.floor(elapsedMilliseconds / (1000 * 60));
-        return elapsedMinutes;
+        if (elapsedMinutes < 59 || elapsedMinutes < 0) {
+            return `${elapsedMinutes} минут назад`;
+        }
+        else if (elapsedMinutes < 23 * 60) {
+            const elapsedHours = Math.floor(elapsedMinutes / 60);
+            return `${elapsedHours} часов назад`;
+        }
+        else {
+            const elapsedDays = Math.floor(elapsedMinutes / (60 * 24));
+            return `${elapsedDays} дней назад`;
+        }
     }
+    ;
     console.log(minutesSince(userTracks[1].added_at));
     //////////
     let htmlString = "";
@@ -75,7 +82,7 @@ async function funcUIList() {
       </div>
 	  <div class="trackDate">
 	  	  <span class="trackDate__txt">
-		  	GIVE ME Funcktion
+		  	${minutesSince(userTracks[i].added_at)}
 	  	  </span>
   	  </div>
       <div class="trackLikeAndDuration">

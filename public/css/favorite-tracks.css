@@ -102,14 +102,26 @@
 }
 
 /* зарметка блока плейлиста любимых теков */
-.favorite-tracks--one-size,
-.favorite-tracks--two-size,
+.favorite-tracks--one-size {
+  width: 30%;
+}
+
+.favorite-tracks--two-size {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  margin-left: 1%;
+}
 .favorite-tracks--tree-size{
   width: 30%;
+  display: flex;
+  justify-content: center;
+  margin-right: 1%;
 }
 
 .favorite-tracks--four-size {
   width: 10%;
   display: flex;
   justify-content: end;
+  margin-right: 2%;
 }

@@ -1,10 +1,9 @@
-"use strict";
 import API from '../API.js';
 import funcUIList from './fav-tracks-list.js';
 async function funcUI() {
-    const userProfile = await API.UserProfile();
+    const userProfile = API.user;
     const userSaveTracks = await API.UserSavedTracks();
-    const addListTracks = await funcUIList();
+    const addListTracks = funcUIList(userSaveTracks);
     try {
         return `<div class="favorite-tracks-box">
         <div class="presentation-favorite-tracks">

@@ -1,19 +1,11 @@
-"use strict";
-import Auth from '../Auth.js';
-import API from '../API.js';
-import UI from '../UI.js';
-import Cookie from '../Cookies.js'; 
-
 //${userTracks[1].track.album.images[2].url}  //мелкая картинка альбома
 //${userTracks[1].track.name}                 //имя трека
 //${userTracks[1].track.artists[0].name}      //имя артиста
 //${ msToTime(userTracks[1].track.duration_ms)} //время трека
 
 
-async function funcUIList():Promise<any> {
-  const userProfile = await API.UserProfile();
-  const userSaveTracks = await API.UserSavedTracks();
-  let userTracks = await userSaveTracks.items;
+ function funcUIList(userSaveTracks:any) {
+  let userTracks = userSaveTracks.items;
 
   //функция конвертации времени трека
   function msToTime(duration: number): string {
@@ -27,13 +19,22 @@ async function funcUIList():Promise<any> {
   }
   /////////
   //функция вышитывает время - сколько минут назад добавлет трек
-  function minutesSince(startTime: string): number {
+  function minutesSince(startTime: string): number | string {
     const now: number = Date.now();
     const start: number = Date.parse(startTime);
     const elapsedMilliseconds: number = now - start;
     const elapsedMinutes: number = Math.floor(elapsedMilliseconds / (1000 * 60));
-    return elapsedMinutes;
-  }
+    
+    if (elapsedMinutes < 59 || elapsedMinutes < 0) {
+      return `${elapsedMinutes} минут назад`;
+    } else if (elapsedMinutes < 23 * 60) {
+      const elapsedHours: number = Math.floor(elapsedMinutes / 60);
+      return `${elapsedHours} часов назад`;
+    } else {
+      const elapsedDays: number = Math.floor(elapsedMinutes / (60 * 24));
+      return `${elapsedDays} дней назад`;
+    }
+  };
   console.log(minutesSince(userTracks[1].added_at));
   //////////
   
@@ -85,7 +86,7 @@ async function funcUIList():Promise<any> {
       </div>
 	  <div class="trackDate">
 	  	  <span class="trackDate__txt">
-		  	GIVE ME Funcktion
+		  	${minutesSince(userTracks[i].added_at)}
 	  	  </span>
   	  </div>
       <div class="trackLikeAndDuration">
