@@ -148,53 +148,43 @@ function searchListener() {
     APP.genGenres();
 }
 nav_bar__search.addEventListener('click', searchListener);
+//////////////
+const ifPrevNull = async function (obj, token) {
+    const modifiedTracks = await Promise.all(obj.map(async (el) => {
+        if (el.track.preview_url === null) {
+            console.log(`Замена превью юрл: ${el.track.name}`);
+            const trackName = el.track.name;
+            const albumName = el.track.artists[0].name;
+            const searchString = (`album:${albumName} track:${trackName}`).replace(/ /g, `%20`);
+            const response = await fetch(`https://api.spotify.com/v1/search?q=${searchString}&type=track&limit=1`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            const previewUrl = data.tracks.items[0]?.preview_url || null;
+            const modifiedTrack = { ...el, track: { ...el.track, preview_url: previewUrl } };
+            console.log(`Обновленый трек:`, modifiedTrack);
+            return modifiedTrack;
+        }
+        return el;
+    }));
+    return modifiedTracks;
+};
 ///favorite-tracks
 const favorite_track_button = document.querySelector(`.nav-bar-library-link-box`);
 favorite_track_button.addEventListener(`click`, async () => {
     const userSaveTracks = await API.UserSavedTracks();
     UI.createFavTracks(userSaveTracks);
     const tracks = userSaveTracks.items;
-    console.log(userSaveTracks.items);
-    console.log(await API.get('https://api.spotify.com/v1/playlists/37i9dQZEVXcUFtDf8lplTK/tracks'));
-    // нікіта, цце твій обєкт музики userSaveTracks
-    //function that finds same url's
+    console.log(tracks);
     //@ts-ignore
-    function findObjectByParam(array, value) {
-        for (let i = 0; i < array.length; i += 1) {
-            //@ts-ignore
-            if (array[i].track.preview_url === value) {
-                //@ts-ignore
-                return array[i];
-            }
-        }
-    }
-    const mainbox = document.querySelector('.favorite-tracks-contents');
-    let playingAudio;
-    mainbox?.addEventListener('click', (e) => {
-        if (playingAudio != null) {
-            // playingAudio!.currentTime = 0
-            // playingAudio!.volume = 0;
-            playingAudio.pause();
-        }
-        const target = e.target;
-        if (target.className === "trackPlayBtn") {
-            const url = target.getAttribute('href');
-            if (url !== 'null') {
-                /*
-                якщо в об'єкті playlist.tracks є посилання на наступну сторінку з треками, то об'єкт tracks в середину буде мати не [] музики,
-                а додаткові поля і поле items з масивот треків.
-                Врахуй це при розробці.
-                Nikita_Function(tracks,findObjectByParam(tracks, url));
-                */
-                //@ts-ignore
-                playingAudio = onPlay(tracks, findObjectByParam(tracks, url));
-                // playingAudio!.src = url;
-                // playingAudio!.play();
-            }
-            else {
-                console.log('Sorry track is not found');
-            }
-        }
-    });
+    const modifiedTracks = await ifPrevNull(tracks, API.accessToken);
+    console.log(modifiedTracks);
+    // нікіта, цце твій обєкт музики userSaveTracks
+    // нікіта, это сразу масив с котором обьекты tracks
+    // нікіта, это я перебераю массив и если превью нет он обращаеться в поиск, находит из поиска и заменяет превью значение у обькта modifiedTracks
+    //иногда все равно возвращает null
 });
+//////////////////////////////////
 document.body.addEventListener('click', mainHandler);

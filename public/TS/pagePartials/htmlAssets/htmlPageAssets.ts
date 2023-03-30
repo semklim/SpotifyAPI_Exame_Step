@@ -1,3 +1,5 @@
+import { minutesSince } from "../../helpers/tracks/trackBoxFunc/trackBoxFunc.js";
+
 type result = {
 	name: string;
 	description: string;
@@ -120,8 +122,9 @@ class Assets {
 						</span>
 					</div>
 					<div class="trackDate">
-						<span class="trackDate__txt">
-							GIVE ME Funcktion
+						<span class="trackDate__txt">			
+							${//@ts-ignore
+								minutesSince(list[i].added_at)}
 						</span>
 					</div>
 					<div class="trackLikeAndDuration">

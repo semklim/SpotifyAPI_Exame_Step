@@ -110,13 +110,13 @@
   width: 30%;
   display: flex;
   justify-content: center;
-  margin-left: 1%;
+  margin-left: 2%;
 }
 .favorite-tracks--tree-size{
   width: 30%;
   display: flex;
   justify-content: center;
-  margin-right: 1%;
+  margin-right: 2%;
 }
 
 .favorite-tracks--four-size {

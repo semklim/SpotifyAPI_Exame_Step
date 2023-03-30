@@ -3,40 +3,11 @@
 //${userTracks[1].track.artists[0].name}      //имя артиста
 //${ msToTime(userTracks[1].track.duration_ms)} //время трека
 
+import { minutesSince, msToTime } from "../../helpers/tracks/trackBoxFunc/trackBoxFunc.js";
+
 
  function funcUIList(userSaveTracks:any) {
   let userTracks = userSaveTracks.items;
-
-  //функция конвертации времени трека
-  function msToTime(duration: number): string {
-    let seconds: number = Math.floor((duration / 1000) % 60);
-    let minutes: number = Math.floor((duration / (1000 * 60)) % 60);
-  
-    minutes = (minutes < 10) ? (0 + minutes) : minutes;
-    seconds = (seconds < 10) ? (0 + seconds) : seconds;
-  
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }
-  /////////
-  //функция вышитывает время - сколько минут назад добавлет трек
-  function minutesSince(startTime: string): number | string {
-    const now: number = Date.now();
-    const start: number = Date.parse(startTime);
-    const elapsedMilliseconds: number = now - start;
-    const elapsedMinutes: number = Math.floor(elapsedMilliseconds / (1000 * 60));
-    
-    if (elapsedMinutes < 59 || elapsedMinutes < 0) {
-      return `${elapsedMinutes} минут назад`;
-    } else if (elapsedMinutes < 23 * 60) {
-      const elapsedHours: number = Math.floor(elapsedMinutes / 60);
-      return `${elapsedHours} часов назад`;
-    } else {
-      const elapsedDays: number = Math.floor(elapsedMinutes / (60 * 24));
-      return `${elapsedDays} дней назад`;
-    }
-  };
-  console.log(minutesSince(userTracks[1].added_at));
-  //////////
   
   let htmlString = "";
   //////////
@@ -86,15 +57,17 @@
       </div>
 	  <div class="trackDate">
 	  	  <span class="trackDate__txt">
-		  	${minutesSince(userTracks[i].added_at)}
+		  	${minutesSince(userTracks[i].added_at) }
 	  	  </span>
   	  </div>
       <div class="trackLikeAndDuration">
-        <button type="button" role="switch" aria-checked="true" aria-label="Add to Your Library" class="trackLikeBtn" data-testid="add-button" tabindex="-1">
-          <svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="svgTrackLikeBtn">
-            <path d="M15.724 4.22A4.313 4.313 0 0 0 12.192.814a4.269 4.269 0 0 0-3.622 1.13.837.837 0 0 1-1.14 0 4.272 4.272 0 0 0-6.21 5.855l5.916 7.05a1.128 1.128 0 0 0 1.727 0l5.916-7.05a4.228 4.228 0 0 0 .945-3.577z"></path>
+        <div type="button" role="switch" aria-checked="true" aria-label="Add to Your Library" class="trackLikeBtn" data-testid="add-button" tabindex="-1">
+          <svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="like hover">
+            <path id="path" stroke="lightgrey" stroke-width="2" stroke-opacity="0.7" 
+              d="M15.724 4.22A4.313 4.313 0 0 0 12.192.814a4.269 4.269 0 0 0-3.622 1.13.837.837 0 0 1-1.14 0 4.272 4.272 0 0 0-6.21 5.855l5.916 7.05a1.128 1.128 0 0 0 1.727 0l5.916-7.05a4.228 4.228 0 0 0 .945-3.577z">
+            </path>
           </svg>
-        </button>
+        </div>
         <div class="trackDurationTxt" data-encore-id="type">
           ${msToTime(userTracks[i].track.duration_ms)}
         </div>
