@@ -249,18 +249,20 @@ class Assets {
 			return {searchBox, box};
 	}
 	static tracksByPlaylist(obj: any){
+		console.log(obj);
 		const tracks = obj.tracks.items;
+		const color = 'hsl(' + 360 * Math.random() + ', 50%, 50%)';
 		const html = `
 		<div class="favorite-tracks-box">
-		<div class="presentation-favorite-tracks">
-		  <div class="favorite-tracks__play-list"></div>
+		<div class="presentation-favorite-tracks" style="background-color: ${color};">
+		  <div class="favorite-tracks__play-list" style="background-image: url(${obj.images[0].url});"></div>
 		  <div class="favorite-tracks__info">
 			<h3 class="favorite-tracks__track-or-playList">Плейлист</h3>
 			<h1 class="favorite-tracks__track__name-play-list">${obj.name}</h1>
 			<h3 class="favorite-tracks__info">${obj.description}<br> ${new Intl.NumberFormat('en-UA').format(obj.followers.total)} likes | ${tracks.length} songs</h3>
 		  </div>
 		</div>
-		<div class="play-favorite-track-box">
+		<div class="play-favorite-track-box"  style="background-color: ${color};">
 		  <div class="play-favorite-track">
 			<button class="play-favorite-track__button">
 			  <svg role="img" height="28" width="28" aria-hidden="true" viewBox="0 0 24 24" data-encore-id="icon" class="play-favorite-track__button--img" fill="black">

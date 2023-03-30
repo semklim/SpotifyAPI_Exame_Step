@@ -5,6 +5,7 @@ import API from './API.js';
 import UI from './UI.js';
 import Cookie from './Cookies.js';
 import { Search, QueryFormatter } from './search/search.js';
+import prepareTracks from './service/prepareTracksObj.js';
 const APP = (function (API, UI) {
     const UserProfile = async () => {
         const user = await API.UserProfile();
@@ -35,16 +36,7 @@ const APP = (function (API, UI) {
     };
     const PageTracks = async (id) => {
         const playlist = await API.GetPlaylist(id);
-        const tracks = playlist.tracks.next ? playlist.tracks : playlist.tracks.items;
-        // logic of adding info about liked track or not
-        let idTracks = [];
-        tracks.forEach((el) => {
-            idTracks.push(el.track.id);
-        });
-        const isLiked = await API.CheckUserSavedTracks(idTracks);
-        tracks.map((el, i) => {
-            el.track.isLiked = isLiked[i];
-        });
+        const tracks = prepareTracks(playlist, API);
         // end of logic
         UI.createTracks(playlist);
         //function that finds same url's
@@ -69,7 +61,7 @@ const APP = (function (API, UI) {
             const target = e.target;
             if (target.className === "trackPlayBtn") {
                 const url = target.getAttribute('href');
-                if (url) {
+                if (url !== 'null') {
                     /*
                     якщо в об'єкті playlist.tracks є посилання на наступну сторінку з треками, то об'єкт tracks в середину буде мати не [] музики,
                     а додаткові поля і поле items з масивот треків.
@@ -80,6 +72,9 @@ const APP = (function (API, UI) {
                     playingAudio = onPlay(tracks, findObjectByParam(tracks, url));
                     // playingAudio!.src = url;
                     // playingAudio!.play();
+                }
+                else {
+                    console.log('Sorry track is not found');
                 }
             }
         });
