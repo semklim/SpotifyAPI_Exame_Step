@@ -101,7 +101,7 @@ class UserInterface {
         const requestBox = document.querySelector('.requestBox');
         requestBox.innerHTML = html;
     }
-    async createFavTracks(obj) {
+    createFavTracks(obj) {
         const root__top_bar = document.querySelector('.root__top-bar');
         const mainContent = document.querySelector(`.main-content`);
         const requestBox = document.querySelector('.requestBox');
@@ -109,10 +109,10 @@ class UserInterface {
             const requestBox = document.createElement('div');
             requestBox.classList.add('requestBox');
             mainContent.appendChild(requestBox);
-            (requestBox).innerHTML += await funcUI();
+            (requestBox).innerHTML += funcUI(obj);
         }
         else if (requestBox) {
-            requestBox.innerHTML = await funcUI();
+            requestBox.innerHTML = funcUI(obj);
         }
     }
 }

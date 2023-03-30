@@ -48,7 +48,8 @@ const APP = (function (API, UI) {
 		const playlist = await API.GetPlaylist(id);
 		
 		const tracks = await prepareTracks(playlist, API);
-
+		console.log(tracks);
+		
 		// end of logic
 		UI.createTracks(playlist);
 		//function that finds same url's
@@ -167,8 +168,55 @@ nav_bar__search.addEventListener('click', searchListener);
 
 ///favorite-tracks
 const favorite_track_button = document.querySelector(`.nav-bar-library-link-box`)!
-favorite_track_button.addEventListener(`click`, () => {
-	UI.createFavTracks()
+favorite_track_button.addEventListener(`click`, async () => {
+	const userSaveTracks = await API.UserSavedTracks();
+	UI.createFavTracks(userSaveTracks);
+	const tracks = userSaveTracks.items;
+	console.log(userSaveTracks.items);
+		console.log(await API.get('https://api.spotify.com/v1/playlists/37i9dQZEVXcUFtDf8lplTK/tracks'));
+		
+	// нікіта, цце твій обєкт музики userSaveTracks
+
+		//function that finds same url's
+		//@ts-ignore
+		function findObjectByParam(array: any[], value: string) {
+			for (let i = 0; i < array.length; i += 1) {
+				//@ts-ignore
+				if (array[i].track.preview_url === value) {
+					//@ts-ignore
+					return array[i] as object;
+				}
+			}
+		}
+	const mainbox = document.querySelector('.favorite-tracks-contents');
+	let playingAudio: HTMLAudioElement | null;
+	mainbox?.addEventListener('click', (e: Event) => {
+		if (playingAudio != null) {
+			// playingAudio!.currentTime = 0
+			// playingAudio!.volume = 0;
+			playingAudio!.pause()
+		}
+		const target = (e.target as HTMLElement);
+		if (target.className === "trackPlayBtn") {
+			const url = target.getAttribute('href');
+			if (url !== 'null') {
+				/*
+				якщо в об'єкті playlist.tracks є посилання на наступну сторінку з треками, то об'єкт tracks в середину буде мати не [] музики,
+				а додаткові поля і поле items з масивот треків.
+				Врахуй це при розробці.
+				Nikita_Function(tracks,findObjectByParam(tracks, url));
+				*/
+				//@ts-ignore
+				playingAudio = onPlay(tracks, findObjectByParam(tracks, url));
+				// playingAudio!.src = url;
+				// playingAudio!.play();
+			}else{
+				console.log('Sorry track is not found')
+			}
+		}
+	});
+
+
 });
 
 

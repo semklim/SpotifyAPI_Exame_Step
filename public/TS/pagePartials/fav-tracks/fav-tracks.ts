@@ -1,9 +1,9 @@
 import API from '../../API.js';
 import funcUIList from './fav-tracks-list.js';
 
-async function funcUI ():Promise<any>  {
-      const userProfile = API.user!
-      const userSaveTracks = await API.UserSavedTracks();
+function funcUI (userSaveTracks: any)  {
+      const userProfile = API.user!;
+    //   const userSaveTracks = await API.UserSavedTracks();
       const addListTracks = funcUIList(userSaveTracks);
       
       try {

@@ -133,7 +133,7 @@ import funcUI from "./pagePartials/fav-tracks/fav-tracks.js";
 		requestBox.innerHTML = html;
 	}
 
-	public async createFavTracks (obj?:object): Promise<any> {	
+	public createFavTracks (obj:object) {	
 		const root__top_bar = document.querySelector('.root__top-bar')!;
 		const mainContent = document.querySelector(`.main-content`)!;
     const requestBox = document.querySelector('.requestBox');
@@ -142,9 +142,9 @@ import funcUI from "./pagePartials/fav-tracks/fav-tracks.js";
 		const requestBox = document.createElement('div');
 			requestBox.classList.add('requestBox');
 			mainContent.appendChild(requestBox);
-      (requestBox!).innerHTML += await funcUI();
+      (requestBox!).innerHTML += funcUI(obj)!;
     }else if(requestBox){
-      requestBox.innerHTML = await funcUI();
+      requestBox.innerHTML = funcUI(obj)!;
     }
   }
 }
