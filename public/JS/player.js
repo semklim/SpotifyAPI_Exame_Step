@@ -41,30 +41,31 @@ const likeWrap = document.getElementsByClassName('likeWrap')[0];
 const like = document.getElementsByClassName('like')[0];
 const path = document.getElementById('path');
 let likeCondition = false;
-like.addEventListener('click', () => {
-    like.classList.add("shake");
-    setTimeout(function () {
-        like.classList.remove("shake");
-    }, 800);
-    switch (likeCondition) {
-        case false:
-            like.style.width = '19';
-            like.style.height = '17';
-            path.style.stroke = 'none';
-            like.style.fill = 'green';
-            likeCondition = true;
-            like.classList.remove('hover');
-            break;
-        case true:
-            like.style.width = '17';
-            like.style.height = '15';
-            path.style.stroke = 'lightgrey';
-            like.style.fill = 'none';
-            likeCondition = false;
-            like.classList.add('hover');
-            break;
-    }
-});
+// like.addEventListener('click', () => {
+//   like.classList.add("shake");
+//   setTimeout(function () {
+//     like.classList.remove("shake");
+//   }, 800);
+//   switch (likeCondition) {
+//     case false:
+//       like.style.width = '19'
+//       like.style.height = '17'
+//       path.style.stroke = 'none';
+//       like.style.fill = 'green';
+//       likeCondition = true;
+//       like.classList.remove('hover')
+//       break;
+//     case true:
+//       like.style.width = '17'
+//       like.style.height = '15'
+//       path.style.stroke = 'lightgrey'
+//       like.style.fill = 'none';
+//       likeCondition = false;
+//       like.classList.add('hover')
+//       break;
+//   }
+// }
+// )
 //play/pause
 const playBtn = document.getElementsByClassName('play-pauseBtn')[0];
 const playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0];

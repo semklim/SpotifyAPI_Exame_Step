@@ -1,12 +1,14 @@
 
 async function prepareTracks(playlist: any, API: any) {
-	const tracks = playlist.tracks.items;
+	let tracks = playlist.tracks.items;
 	let isLiked: boolean[] = [];
 	let idTracks: string[] = [];
 	let buffer: any = [];
+	
+	tracks = tracks.filter((el: any) => el.track !== null);
 
 	tracks.forEach((el: any) => {
-		idTracks.push(el.track.id);
+			idTracks.push(el.track.id);
 	});
 
 	// making array(boolean[]) of liked tracks

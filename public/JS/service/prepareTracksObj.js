@@ -1,8 +1,9 @@
 async function prepareTracks(playlist, API) {
-    const tracks = playlist.tracks.items;
+    let tracks = playlist.tracks.items;
     let isLiked = [];
     let idTracks = [];
     let buffer = [];
+    tracks = tracks.filter((el) => el.track !== null);
     tracks.forEach((el) => {
         idTracks.push(el.track.id);
     });
