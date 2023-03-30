@@ -36,7 +36,7 @@ const APP = (function (API, UI) {
     };
     const PageTracks = async (id) => {
         const playlist = await API.GetPlaylist(id);
-        const tracks = prepareTracks(playlist, API);
+        const tracks = await prepareTracks(playlist, API);
         // end of logic
         UI.createTracks(playlist);
         //function that finds same url's
