@@ -16,4 +16,3 @@ const trackName = document.querySelector(`.trackPreview__name__link`); //имя 
 const trackLikeBtn = document.querySelector(`.trackLikeBtn`); // кнопка лайка
 const trackLikeSvg = document.querySelector(`.svgTrackLikeBtn`); // лайк свг
 const trackTime = document.querySelector(`.trackDurationTxt`); // время трека
-export {};

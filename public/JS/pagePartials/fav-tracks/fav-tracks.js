@@ -1,12 +1,10 @@
-import API from '../API.js';
+import API from '../../API.js';
 import funcUIList from './fav-tracks-list.js';
-
-async function funcUI ():Promise<any>  {
-      const userProfile = API.user!
-      const userSaveTracks = await API.UserSavedTracks();
-      const addListTracks = funcUIList(userSaveTracks);
-      
-      try {
+async function funcUI() {
+    const userProfile = API.user;
+    const userSaveTracks = await API.UserSavedTracks();
+    const addListTracks = funcUIList(userSaveTracks);
+    try {
         return `<div class="favorite-tracks-box">
         <div class="presentation-favorite-tracks">
           <div class="favorite-tracks__play-list"></div>
@@ -44,11 +42,10 @@ async function funcUI ():Promise<any>  {
           </div>
         </div>
       </div>
-      `
-      }catch(err) {
-        return;
-      }
-      
+      `;
     }
-
-    export default funcUI
+    catch (err) {
+        return;
+    }
+}
+export default funcUI;

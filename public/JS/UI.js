@@ -5,8 +5,8 @@ Represents the Assets of html pages class.
 @method playlistByGenres()
 @method genGenres()
 */
-import Assets from "./htmlAssets/htmlPageAssets.js";
-import funcUI from "./fav-tracks/fav-tracks.js";
+import Assets from "./pagePartials/htmlAssets/htmlPageAssets.js";
+import funcUI from "./pagePartials/fav-tracks/fav-tracks.js";
 class UserInterface {
     /**
 

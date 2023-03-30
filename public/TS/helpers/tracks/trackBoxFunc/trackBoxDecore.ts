@@ -1,8 +1,5 @@
 "use strict";
-import Auth from '../Auth.js';
-import API from '../API.js';
-import UI from '../UI.js';
-import Cookie from '../Cookies.js';
+
 
 //сразу все из блока чтоб перебрать и изменить
 const boxTrackAll = document.querySelectorAll(`.tracksGrid`); //блок трека

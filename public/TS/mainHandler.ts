@@ -2,9 +2,7 @@
 function mainHandler(e: Event) {
 	const target = e.target as HTMLElement;
 	const className = [...target.classList];
-	console.dir(target);
 		if(className.includes('like')){
-				console.log(className);
 			
 			const likeCondition = target.getAttribute('data-likeCondition')!;
 			const path = (target.firstElementChild! as SVGAElement);

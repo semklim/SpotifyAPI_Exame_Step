@@ -4,8 +4,8 @@ import Auth from './Auth.js';
 import API from './API.js';
 import UI from './UI.js';
 import Cookie from './Cookies.js';
-import { Search, QueryFormatter } from './search/search.js';
-import prepareTracks from './service/prepareTracksObj.js';
+import { Search, QueryFormatter } from './pagePartials/search/search.js';
+import prepareTracks from './helpers/tracks/prepareTracksObj.js';
 import mainHandler from "./mainHandler.js";
 const APP = (function (API, UI) {
     const UserProfile = async () => {
