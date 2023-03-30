@@ -1,16 +1,11 @@
-"use strict";
-import Auth from '../Auth.js';
 import API from '../API.js';
-import UI from '../UI.js';
-import Cookie from '../Cookies.js';
 import funcUIList from './fav-tracks-list.js';
 
-
- 
 async function funcUI ():Promise<any>  {
-      const userProfile = await API.UserProfile();
+      const userProfile = API.user!
       const userSaveTracks = await API.UserSavedTracks();
-      const addListTracks = await funcUIList();
+      const addListTracks = funcUIList(userSaveTracks);
+      
       try {
         return `<div class="favorite-tracks-box">
         <div class="presentation-favorite-tracks">

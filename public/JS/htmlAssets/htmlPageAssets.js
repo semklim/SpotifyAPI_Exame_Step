@@ -207,7 +207,7 @@ class Assets {
     static tracksByPlaylist(obj) {
         console.log(obj);
         const tracks = obj.tracks.items;
-        const color = 'hsl(' + 360 * Math.random() + ', 50%, 50%)';
+        const color = 'hsl(' + 360 * Math.random() + ', 80%, 40%)';
         const html = `
 		<div class="favorite-tracks-box">
 		<div class="presentation-favorite-tracks" style="background-color: ${color};">
