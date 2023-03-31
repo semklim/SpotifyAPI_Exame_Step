@@ -1,3 +1,4 @@
+import randomColor from "../../helpers/picColor.js";
 import { minutesSince } from "../../helpers/tracks/trackBoxFunc/trackBoxFunc.js";
 class Assets {
     static genPlaylistCards(list) {
@@ -210,7 +211,7 @@ class Assets {
     static tracksByPlaylist(obj) {
         console.log(obj);
         const tracks = obj.tracks.items;
-        const color = 'hsl(' + 360 * Math.random() + ', 80%, 40%)';
+        const color = randomColor();
         const html = `
 		<div class="favorite-tracks-box">
 		<div class="presentation-favorite-tracks" style="background-color: ${color};">

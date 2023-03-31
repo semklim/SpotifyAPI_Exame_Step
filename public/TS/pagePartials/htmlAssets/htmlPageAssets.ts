@@ -1,3 +1,4 @@
+import randomColor from "../../helpers/picColor.js";
 import { minutesSince } from "../../helpers/tracks/trackBoxFunc/trackBoxFunc.js";
 
 type result = {
@@ -230,7 +231,7 @@ class Assets {
 			items.forEach((el) => {
 			  const urlImg = el.icons[0].url;
 			  genres += `
-				<div class="genres" id="${el.id}" style="background-color:${picColor.next().value}">
+				<div class="genres" id="${el.id}" style="background-color:${ picColor.next().value }">
 					<div class="genres__box">
 						<span class="nameOfGenres">${el.name}</span>
 						<img aria-hidden="false" draggable="false" loading="lazy" src="${urlImg}" class="imgOfGenres" alt="">
@@ -255,7 +256,7 @@ class Assets {
 	static tracksByPlaylist(obj: any){
 		console.log(obj);
 		const tracks = obj.tracks.items;
-		const color = 'hsl(' + 360 * Math.random() + ', 80%, 40%)';
+		const color = randomColor();
 		const html = `
 		<div class="favorite-tracks-box">
 		<div class="presentation-favorite-tracks" style="background-color: ${color};">

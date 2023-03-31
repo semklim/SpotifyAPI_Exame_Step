@@ -3,7 +3,6 @@ import funcUIList from './fav-tracks-list.js';
 
 function funcUI (userSaveTracks: any)  {
       const userProfile = API.user!;
-    //   const userSaveTracks = await API.UserSavedTracks();
       const addListTracks = funcUIList(userSaveTracks);
       
       try {
