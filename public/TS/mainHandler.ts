@@ -1,4 +1,3 @@
-import { log } from "console";
 import API from "./API.js";
 import UI from "./UI.js";
 import APP from "./main.js";
