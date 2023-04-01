@@ -29,7 +29,7 @@ const APP = (function (API, UI) {
                 //@ts-ignore
                 if (array[i].track.preview_url === value) {
                     //@ts-ignore
-                    return array[i];
+                    return i;
                 }
             }
         }

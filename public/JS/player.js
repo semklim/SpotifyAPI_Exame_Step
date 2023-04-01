@@ -91,17 +91,20 @@ let albumCover = document.getElementsByClassName('albumCover')[0];
 let artist = document.getElementsByClassName('artist')[0];
 let songName = document.getElementsByClassName('songName')[0];
 let audio;
-export function onPlay(tracks, track) {
+export function onPlay(tracks, i) {
     //@ts-ignore
-    audio = new Audio(track.track.preview_url);
+    audio = new Audio(tracks[i].track.preview_url);
     //@ts-ignore
-    console.log(track.track);
     audio.play();
     //@ts-ignore
-    artist.textContent = track.track.artists[0].name;
+    artist.textContent = tracks[i].track.artists[0].name;
     //@ts-ignore
-    songName.textContent = track.track.name;
+    songName.textContent = tracks[i].track.name;
     //@ts-ignore
-    albumCover.style.backgroundImage = `url("${track.track.album.images[0].url}")`;
+    albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+    audio.addEventListener('ended', () => {
+        i = i + 1;
+        onPlay(tracks, i);
+    });
     return audio;
 }

@@ -89,19 +89,23 @@ let albumCover = document.getElementsByClassName('albumCover')[0] as HTMLDivElem
 let artist = document.getElementsByClassName('artist')[0] as HTMLDivElement;
 let songName = document.getElementsByClassName('songName')[0] as HTMLDivElement;
 let audio: string | HTMLAudioElement;
-export function onPlay(tracks: any[], track: object) {
+export function onPlay(tracks: any[], i: number) {
 
   //@ts-ignore
-  audio = new Audio(track.track.preview_url!);
+  audio = new Audio(tracks[i].track.preview_url!);
   //@ts-ignore
-  console.log(track.track)
   audio.play();
   //@ts-ignore
-  artist.textContent = track.track.artists[0].name
+  artist.textContent = tracks[i].track.artists[0].name
   //@ts-ignore
-  songName.textContent = track.track.name;
+  songName.textContent = tracks[i].track.name;
   //@ts-ignore
-  albumCover.style.backgroundImage = `url("${track.track.album.images[0].url}")`;
+  albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+
+  audio.addEventListener('ended', () => {
+    i = i + 1;
+    onPlay(tracks, i)
+  })
 
 
   return audio;

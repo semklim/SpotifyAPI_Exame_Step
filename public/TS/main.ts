@@ -23,10 +23,10 @@ const APP = (function (API, UI) {
 
 	const PageTracks = async (id: string) => {
 		const playlist = await API.GetPlaylist(id);
-		
+
 		const tracks = await prepareTracks(playlist, API);
 		console.log(tracks);
-		
+
 		// end of logic
 		UI.createTracks(playlist);
 		//function that finds same url's
@@ -36,7 +36,7 @@ const APP = (function (API, UI) {
 				//@ts-ignore
 				if (array[i].track.preview_url === value) {
 					//@ts-ignore
-					return array[i] as object;
+					return i;
 				}
 			}
 		}
@@ -62,7 +62,7 @@ const APP = (function (API, UI) {
 					playingAudio = onPlay(tracks, findObjectByParam(tracks, url));
 					// playingAudio!.src = url;
 					// playingAudio!.play();
-				}else{
+				} else {
 					console.log('Sorry track is not found')
 				}
 			}
@@ -138,27 +138,27 @@ if ((Cookie.get('accessToken')) && !switcher) {
 
 
 //////////////
-const ifPrevNull = async function(obj: any, token: string) {
-  const modifiedTracks = await Promise.all(obj.map(async (el: any) => {
-    if (el.track.preview_url === null) {
-      console.log(`Замена превью юрл: ${el.track.name}`);
-      const trackName = el.track.name;
-      const albumName = el.track.artists[0].name;
-      const searchString = (`album:${albumName} track:${trackName}`).replace(/ /g,`%20`);
-      const response = await fetch(`https://api.spotify.com/v1/search?q=${searchString}&type=track&limit=1`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      const data = await response.json();
-      const previewUrl = data.tracks.items[0]?.preview_url || null;
-      const modifiedTrack = { ...el, track: { ...el.track, preview_url: previewUrl } };
-      console.log(`Обновленый трек:`, modifiedTrack);
-      return modifiedTrack;
-    }
-    return el;
-  }));
-  return modifiedTracks;	
+const ifPrevNull = async function (obj: any, token: string) {
+	const modifiedTracks = await Promise.all(obj.map(async (el: any) => {
+		if (el.track.preview_url === null) {
+			console.log(`Замена превью юрл: ${el.track.name}`);
+			const trackName = el.track.name;
+			const albumName = el.track.artists[0].name;
+			const searchString = (`album:${albumName} track:${trackName}`).replace(/ /g, `%20`);
+			const response = await fetch(`https://api.spotify.com/v1/search?q=${searchString}&type=track&limit=1`, {
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			});
+			const data = await response.json();
+			const previewUrl = data.tracks.items[0]?.preview_url || null;
+			const modifiedTrack = { ...el, track: { ...el.track, preview_url: previewUrl } };
+			console.log(`Обновленый трек:`, modifiedTrack);
+			return modifiedTrack;
+		}
+		return el;
+	}));
+	return modifiedTracks;
 }
 
 ///favorite-tracks
@@ -170,8 +170,8 @@ favorite_track_button.addEventListener(`click`, async () => {
 	console.log(tracks);
 	//@ts-ignore
 	const modifiedTracks = await ifPrevNull(tracks, API.accessToken);
-  console.log(modifiedTracks);
-		
+	console.log(modifiedTracks);
+
 	// нікіта, цце твій обєкт музики userSaveTracks
 	// нікіта, это сразу масив с котором обьекты tracks
 	// нікіта, это я перебераю массив и если превью нет он обращаеться в поиск, находит из поиска и заменяет превью значение у обькта modifiedTracks
