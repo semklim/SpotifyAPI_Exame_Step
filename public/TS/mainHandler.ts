@@ -1,5 +1,4 @@
-import API from "./API.js";
-import UI from "./UI.js";
+
 import APP from "./main.js";
 
 const requestBox = document.getElementsByClassName('requestBox')[0];
@@ -20,6 +19,8 @@ function keepChronology() {
 async function mainHandler( e: Event ) {
 	const target = e!.target as HTMLElement;
 	const className = [...target.classList];
+
+	// HISTORY BLOCK START
 		if(className.includes('btn-controls-contents__left')){
 			if(historyIndex - 1 >= 0){
 			historyIndex = historyIndex - 1;
@@ -35,7 +36,7 @@ async function mainHandler( e: Event ) {
 				requestBox.innerHTML = html;
 			}
 		}
-
+	// WORK OF LIKE
 		if(className.includes('like')){
 			
 			const likeCondition = target.getAttribute('data-likeCondition')!;
@@ -66,7 +67,7 @@ async function mainHandler( e: Event ) {
 	if(className.includes('nav-bar__serch-link')){
 		// copies a page when client make a step back, to keep a history of client actions
 		keepChronology()
-		
+
 		await APP.genGenres();
 		historyLogic();
 		APP.PageSearch();
@@ -74,19 +75,18 @@ async function mainHandler( e: Event ) {
 	if(className.includes('genres')){
 		// copies a page when client make a step back, to keep a history of client actions
 		keepChronology()
-		
-		const genresName = ((target as HTMLElement).querySelector('.nameOfGenres')!).textContent!;
+
+		const genreName = ((target as HTMLElement).querySelector('.nameOfGenres')!).textContent!;
 		const id = (target as HTMLElement).getAttribute('id')!;
-		const playlist = await API.GetCategoryPlaylists(id);
-		UI.createGenresRes(genresName, playlist.playlists.items);
+
+		await APP.playlistsByGenre(genreName, id);
 		historyLogic();
-		
 	}
 
 	if(className.includes('shelf__content__playlist')){
 		// copies a page when client make a step back, to keep a history of client actions
 		keepChronology()
-		
+
 		await APP.PageTracks(target.id);
 		historyLogic();
 	}
