@@ -20,7 +20,10 @@ const APP = (function (API, UI) {
 		const genres = await API.Genres();
 		UI.createGenres(genres);
 	}
-
+	const playlistsByGenre = async (genreName: string, genreID: string) => {
+		const list = await API.GetCategoryPlaylists(genreID);
+		UI.createGenresRes(genreName, list.playlists.items);
+	}
 	const PageTracks = async (id: string) => {
 		const playlist = await API.GetPlaylist(id);
 
@@ -97,6 +100,9 @@ const APP = (function (API, UI) {
 		},
 		async genGenres() {
 			await genGenres();
+		},
+		async playlistsByGenre(genreName: string, genreID: string){
+			await playlistsByGenre(genreName, genreID);
 		}
 	};
 })(API, UI);

@@ -1,14 +1,26 @@
-import API from "./API.js";
-import UI from "./UI.js";
+
 import APP from "./main.js";
 
 const requestBox = document.getElementsByClassName('requestBox')[0];
 const history: Array<string> = [];
 let historyIndex: number = 0;
 
+function historyLogic () {
+	history.push(requestBox.innerHTML);
+	historyIndex = history.length - 1;
+};
+
+function keepChronology() {
+	if(historyIndex !== (history.length - 1)){
+		history.push(requestBox.innerHTML);
+	}
+};
+
 async function mainHandler( e: Event ) {
 	const target = e!.target as HTMLElement;
 	const className = [...target.classList];
+
+	// HISTORY BLOCK START
 		if(className.includes('btn-controls-contents__left')){
 			if(historyIndex - 1 >= 0){
 			historyIndex = historyIndex - 1;
@@ -24,7 +36,7 @@ async function mainHandler( e: Event ) {
 				requestBox.innerHTML = html;
 			}
 		}
-
+	// WORK OF LIKE
 		if(className.includes('like')){
 			
 			const likeCondition = target.getAttribute('data-likeCondition')!;
@@ -53,35 +65,30 @@ async function mainHandler( e: Event ) {
 		}
 
 	if(className.includes('nav-bar__serch-link')){
-		if(historyIndex !== (history.length - 1)){
-			history.push(requestBox.innerHTML);
-		}
+		// copies a page when client make a step back, to keep a history of client actions
+		keepChronology()
+
 		await APP.genGenres();
-		history.push(requestBox.innerHTML);
-		historyIndex = history.length - 1;
+		historyLogic();
 		APP.PageSearch();
 	}
 	if(className.includes('genres')){
-		if(historyIndex !== (history.length - 1)){
-			history.push(requestBox.innerHTML);
-		}
-		const genresName = ((target as HTMLElement).querySelector('.nameOfGenres')!).textContent!;
+		// copies a page when client make a step back, to keep a history of client actions
+		keepChronology()
+
+		const genreName = ((target as HTMLElement).querySelector('.nameOfGenres')!).textContent!;
 		const id = (target as HTMLElement).getAttribute('id')!;
-		const playlist = await API.GetCategoryPlaylists(id);
-		UI.createGenresRes(genresName, playlist.playlists.items);
-		history.push(requestBox.innerHTML);
-		historyIndex = history.length - 1;
-		console.log(history.length, historyIndex);
-		
+
+		await APP.playlistsByGenre(genreName, id);
+		historyLogic();
 	}
 
 	if(className.includes('shelf__content__playlist')){
-		if(historyIndex !== (history.length - 1)){
-			history.push(requestBox.innerHTML);
-		}
+		// copies a page when client make a step back, to keep a history of client actions
+		keepChronology()
+
 		await APP.PageTracks(target.id);
-		history.push(requestBox.innerHTML);
-		historyIndex = history.length - 1;
+		historyLogic();
 	}
 }
 
