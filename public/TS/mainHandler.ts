@@ -1,7 +1,31 @@
+import { log } from "console";
+import API from "./API.js";
+import UI from "./UI.js";
+import APP from "./main.js";
 
-function mainHandler(e: Event) {
-	const target = e.target as HTMLElement;
+const requestBox = document.getElementsByClassName('requestBox')[0];
+const history: Array<string> = [];
+let historyIndex: number = 0;
+
+async function mainHandler( e: Event ) {
+	const target = e!.target as HTMLElement;
 	const className = [...target.classList];
+		if(className.includes('btn-controls-contents__left')){
+			if(historyIndex - 1 >= 0){
+			historyIndex = historyIndex - 1;
+			const html = history[historyIndex];
+			requestBox.innerHTML = html;
+			}
+		}
+
+		if(className.includes('btn-controls-contents__right')){
+			if(historyIndex + 1 < history.length){
+				historyIndex = historyIndex + 1;
+				const html = history[historyIndex];
+				requestBox.innerHTML = html;
+			}
+		}
+
 		if(className.includes('like')){
 			
 			const likeCondition = target.getAttribute('data-likeCondition')!;
@@ -28,6 +52,38 @@ function mainHandler(e: Event) {
 				  target.classList.remove('hover')
 			}
 		}
+
+	if(className.includes('nav-bar__serch-link')){
+		if(historyIndex !== (history.length - 1)){
+			history.push(requestBox.innerHTML);
+		}
+		await APP.genGenres();
+		history.push(requestBox.innerHTML);
+		historyIndex = history.length - 1;
+		APP.PageSearch();
+	}
+	if(className.includes('genres')){
+		if(historyIndex !== (history.length - 1)){
+			history.push(requestBox.innerHTML);
+		}
+		const genresName = ((target as HTMLElement).querySelector('.nameOfGenres')!).textContent!;
+		const id = (target as HTMLElement).getAttribute('id')!;
+		const playlist = await API.GetCategoryPlaylists(id);
+		UI.createGenresRes(genresName, playlist.playlists.items);
+		history.push(requestBox.innerHTML);
+		historyIndex = history.length - 1;
+		console.log(history.length, historyIndex);
+		
+	}
+
+	if(className.includes('shelf__content__playlist')){
+		if(historyIndex !== (history.length - 1)){
+			history.push(requestBox.innerHTML);
+		}
+		await APP.PageTracks(target.id);
+		history.push(requestBox.innerHTML);
+		historyIndex = history.length - 1;
+	}
 }
 
 export default mainHandler;

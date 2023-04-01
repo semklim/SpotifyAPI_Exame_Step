@@ -19,29 +19,6 @@ const APP = (function (API, UI) {
 	const genGenres = async () => {
 		const genres = await API.Genres();
 		UI.createGenres(genres);
-
-		const collectionGenres = document.querySelector('.collectionGenres');
-
-		collectionGenres?.addEventListener('click', async ({ target }: Event) => {
-			const className: string = (target as HTMLElement)!.className;
-
-			if (className === 'genres') {
-				const genresName = ((target as HTMLElement).querySelector('.nameOfGenres')!).textContent!;
-				const id = (target as HTMLElement).getAttribute('id')!;
-				const playlist = await API.GetCategoryPlaylists(id);
-				console.log(playlist);
-				UI.createGenresRes(genresName, playlist.playlists.items);
-
-				const shelf__content = document.querySelector('.shelf__content')!;
-				shelf__content.addEventListener('click', (e: Event) => {
-					const target = (e.target as HTMLElement);
-					if (target.className === "shelf__content__playlist") {
-						APP.PageTracks(target.id)
-					}
-				});
-			}
-		});
-		APP.PageSearch();
 	}
 
 	const PageTracks = async (id: string) => {
@@ -115,11 +92,11 @@ const APP = (function (API, UI) {
 		PageSearch() {
 			PageSearch();
 		},
-		PageTracks(id: string) {
-			PageTracks(id);
+		async PageTracks(id: string) {
+			await PageTracks(id);
 		},
-		genGenres() {
-			genGenres();
+		async genGenres() {
+			await genGenres();
 		}
 	};
 })(API, UI);
@@ -147,7 +124,6 @@ async function loginBtn() {
 }
 
 const btn = document.querySelector('.login')!;
-const nav_bar__search = document.querySelector('.nav-bar__serch-link')!;
 let switcher = false;
 if ((Cookie.get('accessToken')) && !switcher) {
 	Auth.accessToken = Cookie.get('accessToken');
@@ -160,10 +136,6 @@ if ((Cookie.get('accessToken')) && !switcher) {
 	btn.addEventListener('click', loginBtn);
 }
 
-function searchListener() {
-	APP.genGenres();
-}
-nav_bar__search.addEventListener('click', searchListener);
 
 //////////////
 const ifPrevNull = async function(obj: any, token: string) {
@@ -209,3 +181,5 @@ favorite_track_button.addEventListener(`click`, async () => {
 
 
 document.body.addEventListener('click', mainHandler);
+
+export default APP;

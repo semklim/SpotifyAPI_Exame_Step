@@ -72,8 +72,11 @@ import funcUI from "./pagePartials/fav-tracks/fav-tracks.js";
 		const root__top_bar = document.querySelector('.root__top-bar')!;
 		const requestBox = document.querySelector('.requestBox');
 		if(root__top_bar.nextElementSibling === null){
-			(document.querySelector('.main-content')!).innerHTML += box;
+			const mainContent = document.querySelector('.main-content')!;
+			const requestBox = `<div class ="requestBox" id="GenresPage">${box}</div>`;
+			mainContent.innerHTML += requestBox;
 		}else if(requestBox){
+			requestBox.id = 'GenresPage';
 			requestBox.innerHTML = box;
 		}
 	}

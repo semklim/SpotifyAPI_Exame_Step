@@ -245,12 +245,10 @@ class Assets {
 				  </div>
 			  </div>`;
 			const box =`
-			<div class="requestBox">
 				<h2 class="nameOfList">Browse all</h2>
 				<div class="collectionGenres">
 					${genres}
-				</div>
-			</div>` ;
+				</div>`;
 			return {searchBox, box};
 	}
 	static tracksByPlaylist(obj: any){

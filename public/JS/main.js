@@ -15,25 +15,6 @@ const APP = (function (API, UI) {
     const genGenres = async () => {
         const genres = await API.Genres();
         UI.createGenres(genres);
-        const collectionGenres = document.querySelector('.collectionGenres');
-        collectionGenres?.addEventListener('click', async ({ target }) => {
-            const className = target.className;
-            if (className === 'genres') {
-                const genresName = (target.querySelector('.nameOfGenres')).textContent;
-                const id = target.getAttribute('id');
-                const playlist = await API.GetCategoryPlaylists(id);
-                console.log(playlist);
-                UI.createGenresRes(genresName, playlist.playlists.items);
-                const shelf__content = document.querySelector('.shelf__content');
-                shelf__content.addEventListener('click', (e) => {
-                    const target = e.target;
-                    if (target.className === "shelf__content__playlist") {
-                        APP.PageTracks(target.id);
-                    }
-                });
-            }
-        });
-        APP.PageSearch();
     };
     const PageTracks = async (id) => {
         const playlist = await API.GetPlaylist(id);
@@ -102,11 +83,11 @@ const APP = (function (API, UI) {
         PageSearch() {
             PageSearch();
         },
-        PageTracks(id) {
-            PageTracks(id);
+        async PageTracks(id) {
+            await PageTracks(id);
         },
-        genGenres() {
-            genGenres();
+        async genGenres() {
+            await genGenres();
         }
     };
 })(API, UI);
@@ -131,7 +112,6 @@ async function loginBtn() {
     }
 }
 const btn = document.querySelector('.login');
-const nav_bar__search = document.querySelector('.nav-bar__serch-link');
 let switcher = false;
 if ((Cookie.get('accessToken')) && !switcher) {
     Auth.accessToken = Cookie.get('accessToken');
@@ -144,10 +124,6 @@ if ((Cookie.get('accessToken')) && !switcher) {
 else {
     btn.addEventListener('click', loginBtn);
 }
-function searchListener() {
-    APP.genGenres();
-}
-nav_bar__search.addEventListener('click', searchListener);
 //////////////
 const ifPrevNull = async function (obj, token) {
     const modifiedTracks = await Promise.all(obj.map(async (el) => {
@@ -188,3 +164,4 @@ favorite_track_button.addEventListener(`click`, async () => {
 });
 //////////////////////////////////
 document.body.addEventListener('click', mainHandler);
+export default APP;
