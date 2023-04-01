@@ -6,6 +6,17 @@ const requestBox = document.getElementsByClassName('requestBox')[0];
 const history: Array<string> = [];
 let historyIndex: number = 0;
 
+function historyLogic () {
+	history.push(requestBox.innerHTML);
+	historyIndex = history.length - 1;
+};
+
+function keepChronology() {
+	if(historyIndex !== (history.length - 1)){
+		history.push(requestBox.innerHTML);
+	}
+};
+
 async function mainHandler( e: Event ) {
 	const target = e!.target as HTMLElement;
 	const className = [...target.classList];
@@ -53,35 +64,31 @@ async function mainHandler( e: Event ) {
 		}
 
 	if(className.includes('nav-bar__serch-link')){
-		if(historyIndex !== (history.length - 1)){
-			history.push(requestBox.innerHTML);
-		}
+		// copies a page when client make a step back, to keep a history of client actions
+		keepChronology()
+		
 		await APP.genGenres();
-		history.push(requestBox.innerHTML);
-		historyIndex = history.length - 1;
+		historyLogic();
 		APP.PageSearch();
 	}
 	if(className.includes('genres')){
-		if(historyIndex !== (history.length - 1)){
-			history.push(requestBox.innerHTML);
-		}
+		// copies a page when client make a step back, to keep a history of client actions
+		keepChronology()
+		
 		const genresName = ((target as HTMLElement).querySelector('.nameOfGenres')!).textContent!;
 		const id = (target as HTMLElement).getAttribute('id')!;
 		const playlist = await API.GetCategoryPlaylists(id);
 		UI.createGenresRes(genresName, playlist.playlists.items);
-		history.push(requestBox.innerHTML);
-		historyIndex = history.length - 1;
-		console.log(history.length, historyIndex);
+		historyLogic();
 		
 	}
 
 	if(className.includes('shelf__content__playlist')){
-		if(historyIndex !== (history.length - 1)){
-			history.push(requestBox.innerHTML);
-		}
+		// copies a page when client make a step back, to keep a history of client actions
+		keepChronology()
+		
 		await APP.PageTracks(target.id);
-		history.push(requestBox.innerHTML);
-		historyIndex = history.length - 1;
+		historyLogic();
 	}
 }
 
