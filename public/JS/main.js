@@ -16,6 +16,10 @@ const APP = (function (API, UI) {
         const genres = await API.Genres();
         UI.createGenres(genres);
     };
+    const playlistsByGenre = async (genreName, genreID) => {
+        const list = await API.GetCategoryPlaylists(genreID);
+        UI.createGenresRes(genreName, list.playlists.items);
+    };
     const PageTracks = async (id) => {
         const playlist = await API.GetPlaylist(id);
         const tracks = await prepareTracks(playlist, API);
@@ -88,6 +92,9 @@ const APP = (function (API, UI) {
         },
         async genGenres() {
             await genGenres();
+        },
+        async playlistsByGenre(genreName, genreID) {
+            await playlistsByGenre(genreName, genreID);
         }
     };
 })(API, UI);
