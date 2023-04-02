@@ -8,8 +8,7 @@ import Cookie from './Cookies.js';
 import { Search, QueryFormatter } from './pagePartials/search/search.js';
 import prepareTracks from './helpers/tracks/prepareTracksObj.js'
 import mainHandler from "./mainHandler.js";
-let playingAudio: HTMLAudioElement | null = null
-
+import { OnPlayFunc } from "./OnPlayFunc.js";
 
 const APP = (function (API, UI) {
 	const UserProfile = async () => {
@@ -45,32 +44,8 @@ const APP = (function (API, UI) {
 			}
 		}
 		const mainbox = document.querySelector('.favorite-tracks-contents');
-		// let playingAudio: HTMLAudioElement | null = null;
 		mainbox?.addEventListener('click', (e: Event) => {
-			if (playingAudio != null) {
-				playingAudio!.currentTime = 0
-				playingAudio!.volume = 0;
-				playingAudio!.pause()
-				playingAudio = null
-			}
-			const target = (e.target as HTMLElement);
-			if (target.className === "trackPlayBtn") {
-				const url = target.getAttribute('href');
-				if (url !== 'null') {
-					/*
-					якщо в об'єкті playlist.tracks є посилання на наступну сторінку з треками, то об'єкт tracks в середину буде мати не [] музики,
-					а додаткові поля і поле items з масивот треків.
-					Врахуй це при розробці.
-					Nikita_Function(tracks,findObjectByParam(tracks, url));
-					*/
-					//@ts-ignore
-					playingAudio = onPlay(tracks, findObjectByParam(tracks, url));
-					// playingAudio!.src = url;
-					// playingAudio!.play();
-				} else {
-					console.log('Sorry track is not found')
-				}
-			}
+			OnPlayFunc(tracks)
 		});
 
 	}
