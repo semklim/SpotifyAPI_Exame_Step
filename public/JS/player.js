@@ -91,20 +91,44 @@ let albumCover = document.getElementsByClassName('albumCover')[0];
 let artist = document.getElementsByClassName('artist')[0];
 let songName = document.getElementsByClassName('songName')[0];
 let audio;
+let audioIsPlaying = false;
 export function onPlay(tracks, i) {
-    //@ts-ignore
-    audio = new Audio(tracks[i].track.preview_url);
-    //@ts-ignore
-    audio.play();
-    //@ts-ignore
-    artist.textContent = tracks[i].track.artists[0].name;
-    //@ts-ignore
-    songName.textContent = tracks[i].track.name;
-    //@ts-ignore
-    albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
-    audio.addEventListener('ended', () => {
-        i = i + 1;
-        onPlay(tracks, i);
-    });
+    if (audioIsPlaying === true) {
+        console.log('audio:' + audio);
+        //@ts-ignore
+        audio = new Audio(tracks[i].track.preview_url);
+        //@ts-ignore
+        audio.play();
+        //@ts-ignore
+        artist.textContent = tracks[i].track.artists[0].name;
+        //@ts-ignore
+        songName.textContent = tracks[i].track.name;
+        //@ts-ignore
+        albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+        //@ts-ignore
+        audio.addEventListener('ended', () => {
+            i = i + 1;
+            onPlay(tracks, i);
+        });
+    }
+    else if (audioIsPlaying === false) {
+        audio = null;
+        //@ts-ignore
+        audio = new Audio(tracks[i].track.preview_url);
+        //@ts-ignore
+        audio.play();
+        //@ts-ignore
+        artist.textContent = tracks[i].track.artists[0].name;
+        //@ts-ignore
+        songName.textContent = tracks[i].track.name;
+        //@ts-ignore
+        albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+        //@ts-ignore
+        audio.addEventListener('ended', () => {
+            i = i + 1;
+            onPlay(tracks, i);
+        });
+    }
+    audioIsPlaying = true;
     return audio;
 }

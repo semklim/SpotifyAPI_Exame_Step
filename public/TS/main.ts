@@ -8,6 +8,7 @@ import Cookie from './Cookies.js';
 import { Search, QueryFormatter } from './pagePartials/search/search.js';
 import prepareTracks from './helpers/tracks/prepareTracksObj.js'
 import mainHandler from "./mainHandler.js";
+let playingAudio: HTMLAudioElement | null = null
 
 
 const APP = (function (API, UI) {
@@ -44,12 +45,13 @@ const APP = (function (API, UI) {
 			}
 		}
 		const mainbox = document.querySelector('.favorite-tracks-contents');
-		let playingAudio: HTMLAudioElement | null;
+		// let playingAudio: HTMLAudioElement | null = null;
 		mainbox?.addEventListener('click', (e: Event) => {
 			if (playingAudio != null) {
-				// playingAudio!.currentTime = 0
-				// playingAudio!.volume = 0;
+				playingAudio!.currentTime = 0
+				playingAudio!.volume = 0;
 				playingAudio!.pause()
+				playingAudio = null
 			}
 			const target = (e.target as HTMLElement);
 			if (target.className === "trackPlayBtn") {
@@ -101,7 +103,7 @@ const APP = (function (API, UI) {
 		async genGenres() {
 			await genGenres();
 		},
-		async playlistsByGenre(genreName: string, genreID: string){
+		async playlistsByGenre(genreName: string, genreID: string) {
 			await playlistsByGenre(genreName, genreID);
 		}
 	};
