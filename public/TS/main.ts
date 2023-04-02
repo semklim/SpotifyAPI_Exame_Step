@@ -1,6 +1,5 @@
 "use strict";
 
-import { onPlay } from "./player.js"
 import Auth from './Auth.js';
 import API from './API.js';
 import UI from './UI.js';
@@ -32,17 +31,7 @@ const APP = (function (API, UI) {
 
 		// end of logic
 		UI.createTracks(playlist);
-		//function that finds same url's
-		//@ts-ignore
-		function findObjectByParam(array: any[], value: string) {
-			for (let i = 0; i < array.length; i += 1) {
-				//@ts-ignore
-				if (array[i].track.preview_url === value) {
-					//@ts-ignore
-					return i;
-				}
-			}
-		}
+	
 		const mainbox = document.querySelector('.favorite-tracks-contents');
 		mainbox?.addEventListener('click', (e: Event) => {
 			OnPlayFunc(tracks)

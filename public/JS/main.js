@@ -26,17 +26,6 @@ const APP = (function (API, UI) {
         console.log(tracks);
         // end of logic
         UI.createTracks(playlist);
-        //function that finds same url's
-        //@ts-ignore
-        function findObjectByParam(array, value) {
-            for (let i = 0; i < array.length; i += 1) {
-                //@ts-ignore
-                if (array[i].track.preview_url === value) {
-                    //@ts-ignore
-                    return i;
-                }
-            }
-        }
         const mainbox = document.querySelector('.favorite-tracks-contents');
         mainbox?.addEventListener('click', (e) => {
             OnPlayFunc(tracks);
