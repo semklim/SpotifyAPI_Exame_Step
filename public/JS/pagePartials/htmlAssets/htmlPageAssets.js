@@ -44,6 +44,8 @@ class Assets {
                 return undefined;
             const track = el.track;
             const { album: { images }, name, artists, duration_ms, preview_url, id } = track;
+            if (images.length === 0 || name === '' || duration_ms === 0)
+                return undefined;
             html += `
 			<div class="tracksBoxMain" id="${id}">
 				<div class="tracksGrid">
@@ -185,8 +187,11 @@ class Assets {
         let genres = '';
         items.forEach((el) => {
             const urlImg = el.icons[0].url;
+            //   funk is undefined. can`t read.
+            if (el.id === 'funk')
+                return undefined;
             genres += `
-				<div class="genres" id="${el.id}" style="background-color:${picColor.next().value}">
+				<div class="genres" id="${el.id === 'funk' ? '0JQ5DAqbMKFFsW9N8maB6z' : el.id}" style="background-color:${picColor.next().value}">
 					<div class="genres__box">
 						<span class="nameOfGenres">${el.name}</span>
 						<img aria-hidden="false" draggable="false" loading="lazy" src="${urlImg}" class="imgOfGenres" alt="">
