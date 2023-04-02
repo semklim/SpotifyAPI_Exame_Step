@@ -11,8 +11,8 @@ function historyLogic () {
 };
 
 function keepChronology() {
-	if(historyIndex !== (history.length - 1)){
-		history.push(requestBox.innerHTML);
+	if(historyIndex !== (history.length - 1) && history.length !== 0){
+		history.length = historyIndex + 1;
 	}
 };
 
