@@ -7,6 +7,7 @@ import Cookie from './Cookies.js';
 import { Search, QueryFormatter } from './pagePartials/search/search.js';
 import prepareTracks from './helpers/tracks/prepareTracksObj.js';
 import mainHandler from "./mainHandler.js";
+let playingAudio = null;
 const APP = (function (API, UI) {
     const UserProfile = async () => {
         const user = await API.UserProfile();
@@ -38,12 +39,13 @@ const APP = (function (API, UI) {
             }
         }
         const mainbox = document.querySelector('.favorite-tracks-contents');
-        let playingAudio;
+        // let playingAudio: HTMLAudioElement | null = null;
         mainbox?.addEventListener('click', (e) => {
             if (playingAudio != null) {
-                // playingAudio!.currentTime = 0
-                // playingAudio!.volume = 0;
+                playingAudio.currentTime = 0;
+                playingAudio.volume = 0;
                 playingAudio.pause();
+                playingAudio = null;
             }
             const target = e.target;
             if (target.className === "trackPlayBtn") {
