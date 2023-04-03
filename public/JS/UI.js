@@ -74,16 +74,15 @@ class UserInterface {
          */
         function setNumberOfGridColumns() {
             if (shelf__content__playlist.offsetWidth < 180) {
-                if ((count -= 1) < 3) {
-                    gap = 12;
-                }
+                count = Math.round((contentSize.offsetWidth - gap) / (shelf__content__playlist.offsetWidth < 180 ? 180 : shelf__content__playlist.offsetWidth + gap));
                 count = count < 2 ? 2 : count;
                 contentSize.setAttribute('style', `--column-count: ${count}; --grid-gap: ${gap}px;`);
             }
             const rise = (180 + gap) * (count + 1);
             if (rise < contentSize.offsetWidth && rise < 1800) {
-                if ((count += 1) > 3)
+                if (count > 3)
                     gap = 24;
+                count = Math.round((contentSize.offsetWidth - gap) / (shelf__content__playlist.offsetWidth > 220 ? 220 : shelf__content__playlist.offsetWidth + gap));
                 contentSize.setAttribute('style', `--column-count: ${count};  --grid-gap: ${gap}px;`);
             }
         }
