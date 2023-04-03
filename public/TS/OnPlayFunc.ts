@@ -1,5 +1,5 @@
-let playingAudio: HTMLAudioElement | null = null;
-import { onPlay } from "./player";
+export let playingAudio: HTMLAudioElement | null = null;
+import { onPlay } from "./player.js";
 
 export function findObjectByParam(array: any[], value: string) {
     for (let i = 0; i < array.length; i += 1) {
