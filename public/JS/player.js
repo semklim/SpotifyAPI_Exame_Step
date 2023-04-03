@@ -68,8 +68,8 @@ let likeCondition = false;
 // }
 // )
 //play/pause
-const playBtn = document.getElementsByClassName('play-pauseBtn')[0];
-const playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0];
+let playBtn = document.getElementsByClassName('play-pauseBtn')[0];
+export let playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0];
 let pauseCondition = false;
 playBtn.addEventListener('click', () => {
     switch (pauseCondition) {

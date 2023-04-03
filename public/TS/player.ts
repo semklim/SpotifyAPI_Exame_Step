@@ -67,8 +67,8 @@ let likeCondition = false;
 // )
 
 //play/pause
-const playBtn = document.getElementsByClassName('play-pauseBtn')[0] as HTMLButtonElement;
-const playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0] as SVGElement;
+let playBtn = document.getElementsByClassName('play-pauseBtn')[0] as HTMLButtonElement;
+export let playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0] as SVGElement;
 let pauseCondition: boolean = false;
 playBtn.addEventListener('click', () => {
   switch (pauseCondition) {
