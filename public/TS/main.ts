@@ -23,6 +23,22 @@ const APP = (function (API, UI) {
 	}
 	const playlistsByGenre = async (genreName: string, genreID: string) => {
 		const list = await API.GetCategoryPlaylists(genreID);
+		if(list.status === '404'){
+			const delEL = document.getElementById(`${genreID}`)!;
+			delEL.style.backgroundColor = '#444';
+			delEL.children[0].setAttribute('style', `
+			width:100%;
+			height: 100%;
+			color: white;
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			`);
+			delEL.children[0].innerHTML = '<p>Sorry, this genre is not available</p>';
+			return undefined;
+		} 
+		
 		UI.createGenresRes(genreName, list.playlists.items);
 	}
 	const PageTracks = async (id: string) => {

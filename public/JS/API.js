@@ -55,7 +55,8 @@ class SpotifyAPI {
     Genres() {
         const url = 'https://api.spotify.com/v1/browse/categories'
             + `?country=${this.user ? this.user.country : 'ES'}`
-            + `&locale=${this.user ? this.user.country : 'ES'}`
+            // + `&locale=${this.user ? this.user.country : 'ES'}`
+            + `&locale=RU`
             + `&limit=50`
             + '&offset=0';
         return this.get(url);
@@ -112,17 +113,24 @@ class SpotifyAPI {
             this.accessToken = access_token;
             this.expires_in = new Date(Date.now() + (expires_in * 1000));
         }
-        const response = await fetch(url, {
-            method: methodReq ? methodReq.toUpperCase() : 'GET',
-            headers: {
-                Authorization: `Bearer ${this.accessToken}`,
-            },
-        });
-        if (!response.ok) {
-            const { error, error_description } = await response.json();
-            throw new Error(`${error}: ${error_description}`);
+        try {
+            const response = await fetch(url, {
+                method: methodReq ? methodReq.toUpperCase() : 'GET',
+                headers: {
+                    Authorization: `Bearer ${this.accessToken}`,
+                },
+            });
+            if (!response.ok) {
+                const { error: { status, message } } = await response.json();
+                throw new Error(`--> Status:${status}. ${message} <--`);
+            }
+            return response.json();
         }
-        return response.json();
+        catch (err) {
+            console.error(err);
+            const status = err.message.match(/\d+/g);
+            return { status: status[0] };
+        }
     }
 }
 export default new SpotifyAPI();
