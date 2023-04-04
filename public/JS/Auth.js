@@ -59,6 +59,25 @@ class SpotifyAuth {
         this.scopes = scopes;
     }
     /**
+     * Authorization Client Credentials Flow.
+     * @returns {Promise<string>} - The access token and expiration time.
+     */
+    getToken() {
+        const urlAuth = 'https://accounts.spotify.com/api/token';
+        const configAuth = {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Basic ' + btoa(this.clientId + ':' + this.clientSecret),
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'grant_type=client_credentials'
+        };
+        const token = fetch(urlAuth, configAuth)
+            .then((data) => data.json())
+            .then((accessObject) => accessObject);
+        return token;
+    }
+    /**
      * Authenticates the user with the Spotify Web API.
      * @returns {Promise<string>} - A Promise that resolves with the code for the authenticated user.
      */

@@ -10,6 +10,14 @@ import mainHandler from "./mainHandler.js";
 import { OnPlayFunc } from "./OnPlayFunc.js";
 
 const APP = (function (API, UI) {
+
+	const getToken = async () => {
+		// @ts-ignore
+		const { access_token, expires_in } = await Auth.getToken();
+				API.accessToken = access_token;
+				API.expires_in = new Date(Date.now() + (expires_in * 1000));
+	}
+
 	const UserProfile = async () => {
 		const user = await API.UserProfile();
 		UI.createAccount(user);
@@ -41,9 +49,7 @@ const APP = (function (API, UI) {
 	}
 	const PageTracks = async (id: string) => {
 		const playlist = await API.GetPlaylist(id);
-
-		const tracks = await prepareTracks(playlist, API);
-		console.log(tracks);
+			const tracks = await prepareTracks(playlist, API);
 
 		// end of logic
 		UI.createTracks(playlist);
@@ -71,6 +77,9 @@ const APP = (function (API, UI) {
 		})
 	}
 	return {
+		getToken() {
+			getToken();
+		},
 		UserProfile() {
 			UserProfile();
 		},
@@ -89,9 +98,13 @@ const APP = (function (API, UI) {
 	};
 })(API, UI);
 
+	APP.getToken();
+
 async function loginBtn() {
 	if (btn.getAttribute('data-isLoggedIn') === 'false') {
 		await Auth.login();
+		API.accessToken = Auth.accessToken;
+		API.expires_in = Auth.expires_in;
 		API.user = await API.UserProfile();
 		Cookie.set('accessToken', Auth.accessToken!, 15);
 		Cookie.set('refreshToken', Auth.refreshToken!, 15);

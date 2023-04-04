@@ -107,8 +107,8 @@ class SpotifyAPI implements APIClient {
 	Genres() {
 		const url = 'https://api.spotify.com/v1/browse/categories'
 			+ `?country=${this.user ? this.user.country : 'ES'}`
-			// + `&locale=${this.user ? this.user.country : 'ES'}`
-			+ `&locale=RU`
+			+ `&locale=${this.user ? this.user.country : 'ES'}`
+			// + `&locale=RU`
 			+ `&limit=50`
 			+ '&offset=0';
 			return this.get(url);
@@ -155,25 +155,32 @@ class SpotifyAPI implements APIClient {
 		interface access{
 			access_token: string;
 			token_type: string;
-			scope: string;
+			scope?: string;
 			expires_in: number;
-			refresh_token: string;
+			refresh_token?: string;
 		}
 		if (!this.accessToken) {
 			if (Auth.accessToken){ 
 			this.accessToken = Auth.accessToken;
 			this.expires_in = Auth.expires_in;
 			}else{
-		  throw new Error('You must be logged in to make this request.');
+		  throw new Error('You must be logged in, to be able make this request.');
 			}
 		}
 	
 		if (this.expires_in && this.expires_in < new Date()) {
 		  // The access token has expired, so use the refresh token to get a new access token.
-		  	const res = await Auth.refreshAccessToken();
-			  const { access_token, expires_in } = res as access;
-			  this.accessToken = access_token;
-			  this.expires_in = new Date(Date.now() + (expires_in * 1000));
+			if(!Auth.refreshToken){
+				const res = await Auth.getToken();
+				const { access_token, expires_in } = res as access;
+				this.accessToken = access_token;
+				this.expires_in = new Date(Date.now() + (expires_in * 1000));
+			}else{
+				const res = await Auth.refreshAccessToken();
+				const { access_token, expires_in } = res as access;
+				this.accessToken = access_token;
+				this.expires_in = new Date(Date.now() + (expires_in * 1000));
+			}
 		}
 		try{
 			const response = await fetch(url, {
