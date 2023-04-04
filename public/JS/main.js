@@ -112,8 +112,6 @@ async function loginBtn() {
         btn.setAttribute('data-isLoggedIn', 'false');
         btn.textContent = "Login";
         Cookie.clearAllCookie();
-        localStorage.clear();
-        location.reload();
     }
 }
 const btn = document.querySelector('.login');
