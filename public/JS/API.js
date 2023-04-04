@@ -25,7 +25,6 @@ class SpotifyAPI {
         /**
          * The User data for get request.
          * @type {object | null}
-         * @private
          */
         this.user = null;
         this.accessToken;

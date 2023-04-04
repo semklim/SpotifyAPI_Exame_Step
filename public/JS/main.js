@@ -79,34 +79,41 @@ const APP = (function (API, UI) {
     };
 })(API, UI);
 async function loginBtn() {
-    if (!switcher) {
+    if (btn.getAttribute('data-isLoggedIn') === 'false') {
         await Auth.login();
         API.user = await API.UserProfile();
-        localStorage.setItem('accessToken', `${Auth.accessToken}`);
-        localStorage.setItem('expires_in', `${Auth.expires_in}`);
         Cookie.set('accessToken', Auth.accessToken, 15);
         Cookie.set('refreshToken', Auth.refreshToken, 15);
-        console.log(Auth.refreshToken);
-        Cookie.get('refreshToken');
         Cookie.set('expires_in', Auth.expires_in.toUTCString(), 15);
         Cookie.set('userProfile', JSON.stringify(API.user), 15);
+        btn.setAttribute('data-isLoggedIn', 'true');
         btn.textContent = "Logout";
-        switcher = true;
     }
     else {
-        location.href = "https://accounts.spotify.com/en/logout";
-        switcher = false;
+        const url = 'https://accounts.spotify.com/en/logout';
+        const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40');
+        spotifyLogoutWindow.close();
+        Auth.accessToken = null;
+        Auth.refreshToken = null;
+        API.user = null;
+        API.accessToken = null;
+        API.expires_in = null;
+        btn.setAttribute('data-isLoggedIn', 'false');
+        btn.textContent = "Login";
+        Cookie.clearAllCookie();
+        localStorage.clear();
+        location.reload();
     }
 }
 const btn = document.querySelector('.login');
-let switcher = false;
-if ((Cookie.get('accessToken')) && !switcher) {
+if ((Cookie.get('accessToken'))) {
     Auth.accessToken = Cookie.get('accessToken');
     Auth.refreshToken = Cookie.get('refreshToken');
     Auth.expires_in = new Date(Cookie.get('expires_in'));
     API.user = JSON.parse(Cookie.get('userProfile'));
     btn.textContent = "Logout";
-    btn.addEventListener('click', () => location.href = "https://accounts.spotify.com/en/logout");
+    btn.setAttribute('data-isLoggedIn', 'true');
+    btn.addEventListener('click', loginBtn);
 }
 else {
     btn.addEventListener('click', loginBtn);

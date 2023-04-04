@@ -59,19 +59,18 @@ class SpotifyAPI implements APIClient {
 	 * @type {string | null}
 	 * @private
 	 */
-	private accessToken: string | null = null;
+	accessToken: string | null = null;
 
 	/**
 	 * The expires_in for the authenticated user.
 	 * @type {Date | null}
 	 * @private
 	 */
-	private expires_in: Date | null = null;
+	expires_in: Date | null = null;
 
 	/**
 	 * The User data for get request.
 	 * @type {object | null}
-	 * @private
 	 */
 	public user: User | null = null;
 
