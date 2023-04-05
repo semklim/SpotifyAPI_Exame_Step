@@ -16,6 +16,27 @@ function keepChronology() {
 	}
 };
 
+function likeStyle(target: HTMLElement , likeCondition: boolean) {
+	const path = (target.firstElementChild! as SVGAElement);
+	if(likeCondition){
+		target.style.width = '19'
+		target.style.height = '17'
+		path.style.stroke = 'none';
+		target.style.fill = 'green';
+	  //   likeCondition = true;
+		target.setAttribute('data-like-condition', 'true');
+		target.classList.remove('hover');
+	}else{
+		  target.style.width = '17'
+		  target.style.height = '15'
+		  path.style.stroke = 'lightgrey'
+		  target.style.fill = 'none';
+		//   likeCondition = false;
+		  target.setAttribute('data-like-condition', 'false');
+		  target.classList.add('hover');
+	}
+}
+
 async function mainHandler( e: Event ) {
 	const target = e!.target as HTMLElement;
 	const className = [...target.classList];
@@ -38,30 +59,17 @@ async function mainHandler( e: Event ) {
 		}
 	// WORK OF LIKE
 		if(className.includes('like')){
-			
-			const likeCondition = target.getAttribute('data-likeCondition')!;
-			const path = (target.firstElementChild! as SVGAElement);
-			target.classList.add("shake");
+			const id = target.getAttribute('data-like-id')!;
+			const allLikes = document.querySelectorAll(`[data-like-id="${id}"]`);
+			const likeCondition = (target.getAttribute('data-like-condition') === 'false');
+			allLikes.forEach((el) => {
+				el.classList.add("shake");
 			setTimeout(function () {
-				target.classList.remove("shake");
+				el.classList.remove("shake");
 			}, 800);
-			if(likeCondition === 'true'){
-				target.style.width = '17'
-				target.style.height = '15'
-				path.style.stroke = 'lightgrey'
-				target.style.fill = 'none';
-			  //   likeCondition = false;
-				target.setAttribute('data-likeCondition', 'false');
-				target.classList.add('hover');
-			}else{
-				  target.style.width = '19'
-				  target.style.height = '17'
-				  path.style.stroke = 'none';
-				  target.style.fill = 'green';
-				//   likeCondition = true;
-				  target.setAttribute('data-likeCondition', 'true');
-				  target.classList.remove('hover')
-			}
+			likeStyle((el as HTMLElement), likeCondition);
+			})
+			APP.setLike(id, likeCondition);
 		}
 
 	if(className.includes('nav-bar__serch-link')){

@@ -151,7 +151,7 @@ class SpotifyAPI implements APIClient {
    * @returns {Promise<any>} - A Promise that resolves with the response data.
    */
 	  async get(url: string, methodReq?: string): Promise<any> {
-
+		methodReq = methodReq ? methodReq.toUpperCase() : 'GET';
 		interface access{
 			access_token: string;
 			token_type: string;
@@ -183,8 +183,9 @@ class SpotifyAPI implements APIClient {
 			}
 		}
 		try{
+			
 			const response = await fetch(url, {
-			  method: methodReq ? methodReq.toUpperCase() : 'GET',
+			  method: methodReq,
 			  headers: {
 				Authorization: `Bearer ${this.accessToken}`,
 			  },
@@ -193,7 +194,9 @@ class SpotifyAPI implements APIClient {
 				const { error: { status, message } } = await response.json();
 				throw new Error(`--> Status:${status}. ${message} <--`);
 			  }
-			  return response.json();
+			  if(methodReq === "GET" ){
+				  return response.json();
+			  }
 		}catch(err){
 			console.error(err);
 			const status = (err as Error).message.match(/\d+/g)!;

@@ -1,5 +1,5 @@
 import randomColor from "../../helpers/picColor.js";
-import { minutesSince } from "../../helpers/tracks/trackBoxFunc/trackBoxFunc.js";
+import { minutesSince, msToTime } from "../../helpers/tracks/trackBoxFunc/trackBoxFunc.js";
 
 type result = {
 	name: string;
@@ -80,19 +80,18 @@ class Assets {
 	}
 	private static getTracks(list: object[]){
 		let html = '';
-		console.log(list);
-		
 		list.forEach((el: any, i: number) => {
-			console.log(el);
 			if(!el || !el.track) return undefined;
-			const track = el.track;
-			const {album:{ images }, name, artists, duration_ms, preview_url, id, isLiked } = track;
+			const added_at = el.added_at;
+			const {album:{ images }, name, artists, duration_ms, preview_url, id, isLiked } = el.track;
+;
+			if(images.length === 0 || name === '' || duration_ms === 0) return undefined;
+			
 			const classLike = isLiked ? 'like' : 'like hover';
 			const style = isLiked ? 'style="width: 19px; height: 17px; fill: green;"' : '';
 			const pathStyle = isLiked ? 'style="stroke: none;"' : 'style="stroke: lightgrey;"';
-			if(images.length === 0 || name === '' || duration_ms === 0) return undefined;
 			html += `
-			<div class="tracksBoxMain" id="${id}">
+			<div class="tracksBoxMain">
 				<div class="tracksGrid">
 					<div class="trackNO">
 						<div class="trackNO__box">
@@ -129,25 +128,19 @@ class Assets {
 						</span>
 					</div>
 					<div class="trackDate">
-						<span class="trackDate__txt">			
-							${//@ts-ignore
-								minutesSince(list[i].added_at)}
+						<span class="trackDate__txt">
+							${minutesSince(added_at)}
 						</span>
 					</div>
 					<div class="trackLikeAndDuration">
 						<div role="switch" class="trackLikeBtn" data-testid="add-button" tabindex="-1">
-							<svg role="img" height="16" width="16" aria-hidden="true" data-likeCondition="${isLiked}" id="${id}" viewBox="0 0 16 16" data-encore-id="icon" class="${classLike}" ${style}>
+							<svg role="img" height="16" width="16" aria-hidden="true" data-like-id="${id}" data-like-condition="${isLiked}"viewBox="0 0 16 16" data-encore-id="icon" class="${classLike}" ${style}>
 								<path id="path" stroke="lightgrey" stroke-width="2" stroke-opacity="0.7" d="M15.724 4.22A4.313 4.313 0 0 0 12.192.814a4.269 4.269 0 0 0-3.622 1.13.837.837 0 0 1-1.14 0 4.272 4.272 0 0 0-6.21 5.855l5.916 7.05a1.128 1.128 0 0 0 1.727 0l5.916-7.05a4.228 4.228 0 0 0 .945-3.577z" ${pathStyle}>
 								</path>
 							</svg>
 						</div>
 						<div class="trackDurationTxt" data-encore-id="type">
-							${	(function millisToMinutesAndSeconds(millis) {
-								let minutes = Math.floor(millis / 60000);
-								let seconds = ((millis % 60000) / 1000).toFixed(0);
-								return minutes + ":" + (Number(seconds) < 10 ? '0' : '') + seconds;
-								})(duration_ms)
-							}
+							${	msToTime(duration_ms)}
 						</div>
 					</div>
 				</div>

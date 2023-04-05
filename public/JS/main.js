@@ -16,6 +16,31 @@ const APP = (function (API, UI) {
             API.expires_in = new Date(Date.now() + (expires_in * 1000));
         }
     };
+    const initLogin = async () => {
+        await Auth.login();
+        API.accessToken = Auth.accessToken;
+        API.expires_in = Auth.expires_in;
+        API.user = await API.UserProfile();
+        Cookie.set('accessToken', Auth.accessToken, 15);
+        Cookie.set('refreshToken', Auth.refreshToken, 15);
+        Cookie.set('expires_in', Auth.expires_in.toUTCString(), 15);
+        Cookie.set('userProfile', JSON.stringify(API.user), 15);
+        btn.setAttribute('data-isLoggedIn', 'true');
+        btn.textContent = "Logout";
+    };
+    const initLogout = async () => {
+        const url = 'https://accounts.spotify.com/en/logout';
+        const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40');
+        spotifyLogoutWindow.close();
+        Auth.accessToken = null;
+        Auth.refreshToken = null;
+        API.user = null;
+        API.accessToken = null;
+        API.expires_in = null;
+        btn.setAttribute('data-isLoggedIn', 'false');
+        btn.textContent = "Login";
+        Cookie.clearAllCookie();
+    };
     const UserProfile = async () => {
         const user = await API.UserProfile();
         UI.createAccount(user);
@@ -67,30 +92,14 @@ const APP = (function (API, UI) {
             console.log(result);
         });
     };
-    const initLogin = async () => {
-        await Auth.login();
-        API.accessToken = Auth.accessToken;
-        API.expires_in = Auth.expires_in;
-        API.user = await API.UserProfile();
-        Cookie.set('accessToken', Auth.accessToken, 15);
-        Cookie.set('refreshToken', Auth.refreshToken, 15);
-        Cookie.set('expires_in', Auth.expires_in.toUTCString(), 15);
-        Cookie.set('userProfile', JSON.stringify(API.user), 15);
-        btn.setAttribute('data-isLoggedIn', 'true');
-        btn.textContent = "Logout";
-    };
-    const initLogout = async () => {
-        const url = 'https://accounts.spotify.com/en/logout';
-        const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40');
-        spotifyLogoutWindow.close();
-        Auth.accessToken = null;
-        Auth.refreshToken = null;
-        API.user = null;
-        API.accessToken = null;
-        API.expires_in = null;
-        btn.setAttribute('data-isLoggedIn', 'false');
-        btn.textContent = "Login";
-        Cookie.clearAllCookie();
+    const setLike = async (idTrack, likeCondition) => {
+        const url = `https://api.spotify.com/v1/me/tracks?ids=${idTrack}`;
+        if (likeCondition) {
+            await API.get(url, 'PUT');
+        }
+        else {
+            await API.get(url, 'DELETE');
+        }
     };
     return {
         initLogin() {
@@ -116,6 +125,9 @@ const APP = (function (API, UI) {
         },
         async playlistsByGenre(genreName, genreID) {
             await playlistsByGenre(genreName, genreID);
+        },
+        async setLike(idTrack, likeCondition) {
+            await setLike(idTrack, likeCondition);
         }
     };
 })(API, UI);

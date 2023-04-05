@@ -13,6 +13,27 @@ function keepChronology() {
     }
 }
 ;
+function likeStyle(target, likeCondition) {
+    const path = target.firstElementChild;
+    if (likeCondition) {
+        target.style.width = '19';
+        target.style.height = '17';
+        path.style.stroke = 'none';
+        target.style.fill = 'green';
+        //   likeCondition = true;
+        target.setAttribute('data-like-condition', 'true');
+        target.classList.remove('hover');
+    }
+    else {
+        target.style.width = '17';
+        target.style.height = '15';
+        path.style.stroke = 'lightgrey';
+        target.style.fill = 'none';
+        //   likeCondition = false;
+        target.setAttribute('data-like-condition', 'false');
+        target.classList.add('hover');
+    }
+}
 async function mainHandler(e) {
     const target = e.target;
     const className = [...target.classList];
@@ -33,30 +54,17 @@ async function mainHandler(e) {
     }
     // WORK OF LIKE
     if (className.includes('like')) {
-        const likeCondition = target.getAttribute('data-likeCondition');
-        const path = target.firstElementChild;
-        target.classList.add("shake");
-        setTimeout(function () {
-            target.classList.remove("shake");
-        }, 800);
-        if (likeCondition === 'true') {
-            target.style.width = '17';
-            target.style.height = '15';
-            path.style.stroke = 'lightgrey';
-            target.style.fill = 'none';
-            //   likeCondition = false;
-            target.setAttribute('data-likeCondition', 'false');
-            target.classList.add('hover');
-        }
-        else {
-            target.style.width = '19';
-            target.style.height = '17';
-            path.style.stroke = 'none';
-            target.style.fill = 'green';
-            //   likeCondition = true;
-            target.setAttribute('data-likeCondition', 'true');
-            target.classList.remove('hover');
-        }
+        const id = target.getAttribute('data-like-id');
+        const allLikes = document.querySelectorAll(`[data-like-id="${id}"]`);
+        const likeCondition = (target.getAttribute('data-like-condition') === 'false');
+        allLikes.forEach((el) => {
+            el.classList.add("shake");
+            setTimeout(function () {
+                el.classList.remove("shake");
+            }, 800);
+            likeStyle(el, likeCondition);
+        });
+        APP.setLike(id, likeCondition);
     }
     if (className.includes('nav-bar__serch-link')) {
         // copies a page when client make a step back, to keep a history of client actions

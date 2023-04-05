@@ -96,6 +96,7 @@ class SpotifyAPI {
  * @returns {Promise<any>} - A Promise that resolves with the response data.
  */
     async get(url, methodReq) {
+        methodReq = methodReq ? methodReq.toUpperCase() : 'GET';
         if (!this.accessToken) {
             if (Auth.accessToken) {
                 this.accessToken = Auth.accessToken;
@@ -122,7 +123,7 @@ class SpotifyAPI {
         }
         try {
             const response = await fetch(url, {
-                method: methodReq ? methodReq.toUpperCase() : 'GET',
+                method: methodReq,
                 headers: {
                     Authorization: `Bearer ${this.accessToken}`,
                 },
@@ -131,7 +132,9 @@ class SpotifyAPI {
                 const { error: { status, message } } = await response.json();
                 throw new Error(`--> Status:${status}. ${message} <--`);
             }
-            return response.json();
+            if (methodReq === "GET") {
+                return response.json();
+            }
         }
         catch (err) {
             console.error(err);
