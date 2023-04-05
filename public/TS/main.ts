@@ -9,11 +9,11 @@ import prepareTracks from './helpers/tracks/prepareTracksObj.js'
 import mainHandler from "./mainHandler.js";
 import { OnPlayFunc } from "./OnPlayFunc.js";
 
+const btn = document.querySelector('.login')!;
 const APP = (function (API, UI) {
 
 	const getToken = async () => {
-		// @ts-ignore
-		const { access_token, expires_in } = await Auth.getToken();
+		const { access_token, expires_in }:{access_token: string; expires_in: number} = await Auth.getToken();
 				API.accessToken = access_token;
 				API.expires_in = new Date(Date.now() + (expires_in * 1000));
 	}
@@ -76,7 +76,39 @@ const APP = (function (API, UI) {
 
 		})
 	}
+	const initLogin = async () =>  {
+		await Auth.login();
+		API.accessToken = Auth.accessToken;
+		API.expires_in = Auth.expires_in;
+		API.user = await API.UserProfile();
+		Cookie.set('accessToken', Auth.accessToken!, 15);
+		Cookie.set('refreshToken', Auth.refreshToken!, 15);
+		Cookie.set('expires_in', Auth.expires_in!.toUTCString(), 15);
+		Cookie.set('userProfile', JSON.stringify(API.user!), 15);
+
+		btn.setAttribute('data-isLoggedIn', 'true');
+		btn.textContent = "Logout";
+	}
+	const initLogout = async () =>  {
+		const url = 'https://accounts.spotify.com/en/logout'
+		const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')!;
+		spotifyLogoutWindow.close();
+		Auth.accessToken = null;
+		Auth.refreshToken = null;
+		API.user = null;
+		API.accessToken = null;
+		API.expires_in = null;
+		btn.setAttribute('data-isLoggedIn', 'false');
+		btn.textContent = "Login";
+		Cookie.clearAllCookie();
+	}
 	return {
+		initLogin() {
+			initLogin();
+		},
+		initLogout() {
+			initLogout();
+		},
 		getToken() {
 			getToken();
 		},
@@ -100,38 +132,15 @@ const APP = (function (API, UI) {
 
 	APP.getToken();
 
-async function loginBtn() {
+function logicOfLoginBtn() {
 	if (btn.getAttribute('data-isLoggedIn') === 'false') {
-		await Auth.login();
-		API.accessToken = Auth.accessToken;
-		API.expires_in = Auth.expires_in;
-		API.user = await API.UserProfile();
-		Cookie.set('accessToken', Auth.accessToken!, 15);
-		Cookie.set('refreshToken', Auth.refreshToken!, 15);
-		Cookie.set('expires_in', Auth.expires_in!.toUTCString(), 15);
-		Cookie.set('userProfile', JSON.stringify(API.user!), 15);
-
-		btn.setAttribute('data-isLoggedIn', 'true');
-		btn.textContent = "Logout";
+		APP.initLogin();
 	}
 	else {
-		const url = 'https://accounts.spotify.com/en/logout'
-		const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')!;
-		spotifyLogoutWindow.close();
-		Auth.accessToken = null;
-		Auth.refreshToken = null;
-		API.user = null;
-		API.accessToken = null;
-		API.expires_in = null;
-		btn.setAttribute('data-isLoggedIn', 'false');
-		btn.textContent = "Login";
-		Cookie.clearAllCookie();
+		APP.initLogout();
 	}
 }
 
-
-
-const btn = document.querySelector('.login')!;
 if ((Cookie.get('accessToken'))) {
 	Auth.accessToken = Cookie.get('accessToken');
 	Auth.refreshToken = Cookie.get('refreshToken')!;
@@ -139,9 +148,10 @@ if ((Cookie.get('accessToken'))) {
 	API.user = JSON.parse(Cookie.get('userProfile')!);
 	btn.textContent = "Logout";
 	btn.setAttribute('data-isLoggedIn', 'true');
-	btn.addEventListener('click', loginBtn);
+	btn.addEventListener('click', logicOfLoginBtn);
 } else {
-	btn.addEventListener('click', loginBtn);
+	Cookie.clearAllCookie();
+	btn.addEventListener('click', logicOfLoginBtn);
 }
 
 

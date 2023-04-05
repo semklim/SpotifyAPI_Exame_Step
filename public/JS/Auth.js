@@ -60,7 +60,7 @@ class SpotifyAuth {
     }
     /**
      * Authorization Client Credentials Flow.
-     * @returns {Promise<string>} - The access token and expiration time.
+     * @returns {Promise<object>} - The access token and expiration time.
      */
     getToken() {
         const urlAuth = 'https://accounts.spotify.com/api/token';

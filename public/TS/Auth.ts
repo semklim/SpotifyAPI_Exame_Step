@@ -26,6 +26,12 @@ const SCOPES = [
 	'user-read-currently-playing',
 ];
 
+type Credentials = {
+	access_token: string; 
+	expires_in: number;
+	token_type: string;
+}
+
 /**
  * The SpotifyAuth class provides methods for authenticating a user and making API requests to the Spotify Web API.
  */
@@ -92,9 +98,9 @@ class SpotifyAuth {
 	}
 	/**
 	 * Authorization Client Credentials Flow.
-	 * @returns {Promise<string>} - The access token and expiration time.
+	 * @returns {Promise<object>} - The access token and expiration time.
 	 */
-	 getToken (): Promise<object> {
+	 getToken (): Promise<Credentials> {
 		const urlAuth = 'https://accounts.spotify.com/api/token';
 		const configAuth = {
 			method: 'POST',
