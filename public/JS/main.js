@@ -10,9 +10,11 @@ import { OnPlayFunc } from "./OnPlayFunc.js";
 const btn = document.querySelector('.login');
 const APP = (function (API, UI) {
     const getToken = async () => {
-        const { access_token, expires_in } = await Auth.getToken();
-        API.accessToken = access_token;
-        API.expires_in = new Date(Date.now() + (expires_in * 1000));
+        if (Cookie.get('accessToken') === null) {
+            const { access_token, expires_in } = await Auth.getToken();
+            API.accessToken = access_token;
+            API.expires_in = new Date(Date.now() + (expires_in * 1000));
+        }
     };
     const UserProfile = async () => {
         const user = await API.UserProfile();
@@ -127,9 +129,11 @@ function logicOfLoginBtn() {
     }
 }
 if ((Cookie.get('accessToken'))) {
-    Auth.accessToken = Cookie.get('accessToken');
     Auth.refreshToken = Cookie.get('refreshToken');
+    Auth.accessToken = Cookie.get('accessToken');
     Auth.expires_in = new Date(Cookie.get('expires_in'));
+    API.accessToken = Auth.accessToken;
+    API.expires_in = Auth.expires_in;
     API.user = JSON.parse(Cookie.get('userProfile'));
     btn.textContent = "Logout";
     btn.setAttribute('data-isLoggedIn', 'true');
