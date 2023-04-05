@@ -80,11 +80,16 @@ class Assets {
 	}
 	private static getTracks(list: object[]){
 		let html = '';
-
+		console.log(list);
+		
 		list.forEach((el: any, i: number) => {
+			console.log(el);
 			if(!el || !el.track) return undefined;
 			const track = el.track;
-			const {album:{ images }, name, artists, duration_ms, preview_url, id } = track;
+			const {album:{ images }, name, artists, duration_ms, preview_url, id, isLiked } = track;
+			const classLike = isLiked ? 'like' : 'like hover';
+			const style = isLiked ? 'style="width: 19px; height: 17px; fill: green;"' : '';
+			const pathStyle = isLiked ? 'style="stroke: none;"' : 'style="stroke: lightgrey;"';
 			if(images.length === 0 || name === '' || duration_ms === 0) return undefined;
 			html += `
 			<div class="tracksBoxMain" id="${id}">
@@ -130,9 +135,9 @@ class Assets {
 						</span>
 					</div>
 					<div class="trackLikeAndDuration">
-						<div type="button" role="switch" aria-checked="true" aria-label="Add to Your Library" class="trackLikeBtn" data-testid="add-button" tabindex="-1">
-							<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="like hover">
-								<path id="path" stroke="lightgrey" stroke-width="2" stroke-opacity="0.7" d="M15.724 4.22A4.313 4.313 0 0 0 12.192.814a4.269 4.269 0 0 0-3.622 1.13.837.837 0 0 1-1.14 0 4.272 4.272 0 0 0-6.21 5.855l5.916 7.05a1.128 1.128 0 0 0 1.727 0l5.916-7.05a4.228 4.228 0 0 0 .945-3.577z">
+						<div role="switch" class="trackLikeBtn" data-testid="add-button" tabindex="-1">
+							<svg role="img" height="16" width="16" aria-hidden="true" data-likeCondition="${isLiked}" id="${id}" viewBox="0 0 16 16" data-encore-id="icon" class="${classLike}" ${style}>
+								<path id="path" stroke="lightgrey" stroke-width="2" stroke-opacity="0.7" d="M15.724 4.22A4.313 4.313 0 0 0 12.192.814a4.269 4.269 0 0 0-3.622 1.13.837.837 0 0 1-1.14 0 4.272 4.272 0 0 0-6.21 5.855l5.916 7.05a1.128 1.128 0 0 0 1.727 0l5.916-7.05a4.228 4.228 0 0 0 .945-3.577z" ${pathStyle}>
 								</path>
 							</svg>
 						</div>
