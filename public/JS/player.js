@@ -37,40 +37,10 @@ volumeSlider.addEventListener('input', () => {
         muteBtn.innerHTML = '<svg role="presentation" height="16" width="16" aria-hidden="true" aria-label="Низкая громкость" class="volume-icon" id= "volume-icon" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path fill="#dddcdc" d="M9.741.85a.75.75 0 0 1 .375.65v13a.75.75 0 0 1-1.125.65l-6.925-4a3.642 3.642 0 0 1-1.33-4.967 3.639 3.639 0 0 1 1.33-1.332l6.925-4a.75.75 0 0 1 .75 0zm-6.924 5.3a2.139 2.139 0 0 0 0 3.7l5.8 3.35V2.8l-5.8 3.35zm8.683 4.29V5.56a2.75 2.75 0 0 1 0 4.88z"></path></svg>';
     }
 });
-//like
-const likeWrap = document.getElementsByClassName('likeWrap')[0];
-const like = document.getElementsByClassName('like')[0];
-const path = document.getElementById('path');
-let likeCondition = false;
-// like.addEventListener('click', () => {
-//   like.classList.add("shake");
-//   setTimeout(function () {
-//     like.classList.remove("shake");
-//   }, 800);
-//   switch (likeCondition) {
-//     case false:
-//       like.style.width = '19'
-//       like.style.height = '17'
-//       path.style.stroke = 'none';
-//       like.style.fill = 'green';
-//       likeCondition = true;
-//       like.classList.remove('hover')
-//       break;
-//     case true:
-//       like.style.width = '17'
-//       like.style.height = '15'
-//       path.style.stroke = 'lightgrey'
-//       like.style.fill = 'none';
-//       likeCondition = false;
-//       like.classList.add('hover')
-//       break;
-//   }
-// }
-// )
 //play/pause
 let playBtn = document.getElementsByClassName('play-pauseBtn')[0];
 export let playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0];
-let pauseCondition = false;
+export let pauseCondition = false;
 playBtn.addEventListener('click', () => {
     switch (pauseCondition) {
         case false:
@@ -85,6 +55,9 @@ playBtn.addEventListener('click', () => {
             break;
     }
 });
+export function pauseConditionChange() {
+    pauseCondition = false;
+}
 //chosen song
 let audioCurrTime = document.getElementsByClassName('songOnPlayCurrTime')[0];
 let audioFullDuration = document.getElementsByClassName('songOnEndCurrTime')[0];

@@ -35,41 +35,10 @@ volumeSlider.addEventListener('input', () => {
   }
 })
 
-//like
-const likeWrap = document.getElementsByClassName('likeWrap')[0] as HTMLDivElement;
-const like = document.getElementsByClassName('like')[0] as SVGElement;
-const path = document.getElementById('path') as unknown as SVGPathElement;
-let likeCondition = false;
-// like.addEventListener('click', () => {
-//   like.classList.add("shake");
-//   setTimeout(function () {
-//     like.classList.remove("shake");
-//   }, 800);
-//   switch (likeCondition) {
-//     case false:
-//       like.style.width = '19'
-//       like.style.height = '17'
-//       path.style.stroke = 'none';
-//       like.style.fill = 'green';
-//       likeCondition = true;
-//       like.classList.remove('hover')
-//       break;
-//     case true:
-//       like.style.width = '17'
-//       like.style.height = '15'
-//       path.style.stroke = 'lightgrey'
-//       like.style.fill = 'none';
-//       likeCondition = false;
-//       like.classList.add('hover')
-//       break;
-//   }
-// }
-// )
-
 //play/pause
 let playBtn = document.getElementsByClassName('play-pauseBtn')[0] as HTMLButtonElement;
 export let playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0] as SVGElement;
-let pauseCondition: boolean = false;
+export let pauseCondition: boolean = false;
 playBtn.addEventListener('click', () => {
   switch (pauseCondition) {
     case false: playBtnSVG.innerHTML ='<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
@@ -82,6 +51,10 @@ playBtn.addEventListener('click', () => {
       break;
   }
 })
+
+export function pauseConditionChange() {
+  pauseCondition = false;
+}
 
 //chosen song
 let audioCurrTime = document.getElementsByClassName('songOnPlayCurrTime')[0] as HTMLSpanElement;
