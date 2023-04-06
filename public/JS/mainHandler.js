@@ -59,9 +59,7 @@ async function mainHandler(e) {
         const likeCondition = (target.getAttribute('data-like-condition') === 'false');
         allLikes.forEach((el) => {
             el.classList.add("shake");
-            setTimeout(function () {
-                el.classList.remove("shake");
-            }, 800);
+            setTimeout(function () { el.classList.remove("shake"); }, 800);
             likeStyle(el, likeCondition);
         });
         APP.setLike(id, likeCondition);

@@ -62,13 +62,15 @@ async function mainHandler( e: Event ) {
 			const id = target.getAttribute('data-like-id')!;
 			const allLikes = document.querySelectorAll(`[data-like-id="${id}"]`);
 			const likeCondition = (target.getAttribute('data-like-condition') === 'false');
+
 			allLikes.forEach((el) => {
 				el.classList.add("shake");
-			setTimeout(function () {
-				el.classList.remove("shake");
-			}, 800);
-			likeStyle((el as HTMLElement), likeCondition);
-			})
+
+				setTimeout( function () {el.classList.remove("shake")}, 800 );
+
+				likeStyle((el as HTMLElement), likeCondition);
+			});
+
 			APP.setLike(id, likeCondition);
 		}
 
