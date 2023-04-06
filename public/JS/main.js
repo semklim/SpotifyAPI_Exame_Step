@@ -7,6 +7,7 @@ import { Search, QueryFormatter } from './pagePartials/search/search.js';
 import prepareTracks from './helpers/tracks/prepareTracksObj.js';
 import mainHandler from "./mainHandler.js";
 import { OnPlayFunc } from "./OnPlayFunc.js";
+import { addIsLikedKey } from './helpers/tracks/trackBoxFunc/trackBoxFunc.js';
 const btn = document.querySelector('.login');
 const APP = (function (API, UI) {
     const getToken = async () => {
@@ -183,15 +184,13 @@ const favorite_track_button = document.querySelector(`.nav-bar-library-link-box`
 favorite_track_button.addEventListener(`click`, async () => {
     const userSaveTracks = await API.UserSavedTracks();
     UI.createFavTracks(userSaveTracks);
-    const tracks = userSaveTracks.items;
+    const tracks = addIsLikedKey(userSaveTracks.items);
     console.log(tracks);
+    // нікіта, это сразу масив с котором обьекты - tracks
+    //на будущее,замена превью-юрл через поиск
     //@ts-ignore
-    const modifiedTracks = await ifPrevNull(tracks, API.accessToken);
-    console.log(modifiedTracks);
-    // нікіта, цце твій обєкт музики userSaveTracks
-    // нікіта, это сразу масив с котором обьекты tracks
-    // нікіта, это я перебераю массив и если превью нет он обращаеться в поиск, находит из поиска и заменяет превью значение у обькта modifiedTracks
-    //иногда все равно возвращает null
+    // const modifiedTracks = await ifPrevNull(tracks, API.accessToken);
+    // console.log(modifiedTracks);
 });
 //////////////////////////////////
 document.body.addEventListener('click', mainHandler);
