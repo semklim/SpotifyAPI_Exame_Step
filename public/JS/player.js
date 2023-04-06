@@ -59,6 +59,8 @@ export function pauseConditionChange() {
     pauseCondition = false;
 }
 //chosen song
+//@ts-ignore
+export let currentAudio;
 let audioCurrTime = document.getElementsByClassName('songOnPlayCurrTime')[0];
 let audioFullDuration = document.getElementsByClassName('songOnEndCurrTime')[0];
 let albumCover = document.getElementsByClassName('albumCover')[0];
@@ -69,40 +71,34 @@ let audioIsPlaying = false;
 export function onPlay(tracks, i) {
     if (audioIsPlaying === true) {
         console.log('audio:' + audio);
-        //@ts-ignore
+        audio = null;
         audio = new Audio(tracks[i].track.preview_url);
-        //@ts-ignore
         audio.play();
-        //@ts-ignore
         artist.textContent = tracks[i].track.artists[0].name;
-        //@ts-ignore
         songName.textContent = tracks[i].track.name;
-        //@ts-ignore
         albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
-        //@ts-ignore
-        audio.addEventListener('ended', () => {
-            i = i + 1;
-            onPlay(tracks, i);
-        });
+        // audio.addEventListener('ended', () => {
+        //   i = i + 1;
+        //   onPlay(tracks, i)
+        // })
     }
     else if (audioIsPlaying === false) {
         audio = null;
-        //@ts-ignore
         audio = new Audio(tracks[i].track.preview_url);
-        //@ts-ignore
         audio.play();
-        //@ts-ignore
         artist.textContent = tracks[i].track.artists[0].name;
-        //@ts-ignore
         songName.textContent = tracks[i].track.name;
-        //@ts-ignore
         albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
-        //@ts-ignore
-        audio.addEventListener('ended', () => {
-            i = i + 1;
-            onPlay(tracks, i);
-        });
+        // audio.addEventListener('ended', () => {
+        //   i = i + 1;
+        //   onPlay(tracks, i)
+        // })
     }
+    //@ts-ignore
+    audio.addEventListener('ended', () => {
+        i = i + 1;
+        currentAudio = onPlay(tracks, i);
+    });
     audioIsPlaying = true;
     return audio;
 }

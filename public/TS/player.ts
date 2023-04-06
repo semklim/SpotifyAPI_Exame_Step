@@ -41,7 +41,7 @@ export let playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0] as S
 export let pauseCondition: boolean = false;
 playBtn.addEventListener('click', () => {
   switch (pauseCondition) {
-    case false: playBtnSVG.innerHTML ='<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
+    case false: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
       pauseCondition = true;
       playingAudio?.pause()
       break;
@@ -57,6 +57,8 @@ export function pauseConditionChange() {
 }
 
 //chosen song
+//@ts-ignore
+export let currentAudio;
 let audioCurrTime = document.getElementsByClassName('songOnPlayCurrTime')[0] as HTMLSpanElement;
 let audioFullDuration = document.getElementsByClassName('songOnEndCurrTime')[0] as HTMLSpanElement;
 let albumCover = document.getElementsByClassName('albumCover')[0] as HTMLDivElement;
@@ -65,42 +67,35 @@ let songName = document.getElementsByClassName('songName')[0] as HTMLDivElement;
 let audio: string | HTMLAudioElement | null;
 let audioIsPlaying = false;
 export function onPlay(tracks: any[], i: number) {
-
   if (audioIsPlaying === true) {
     console.log('audio:' + audio)
-    //@ts-ignore
+    audio = null;
     audio = new Audio(tracks[i].track.preview_url!);
-    //@ts-ignore
     audio.play();
-    //@ts-ignore
     artist.textContent = tracks[i].track.artists[0].name
-    //@ts-ignore
     songName.textContent = tracks[i].track.name;
-    //@ts-ignore
     albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
-    //@ts-ignore
-    audio.addEventListener('ended', () => {
-      i = i + 1;
-      onPlay(tracks, i)
-    })
+    // audio.addEventListener('ended', () => {
+    //   i = i + 1;
+    //   onPlay(tracks, i)
+    // })
   } else if (audioIsPlaying === false) {
     audio = null;
-    //@ts-ignore
     audio = new Audio(tracks[i].track.preview_url!);
-    //@ts-ignore
     audio.play();
-    //@ts-ignore
     artist.textContent = tracks[i].track.artists[0].name
-    //@ts-ignore
     songName.textContent = tracks[i].track.name;
-    //@ts-ignore
     albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
-    //@ts-ignore
-    audio.addEventListener('ended', () => {
-      i = i + 1;
-      onPlay(tracks, i)
-    })
+    // audio.addEventListener('ended', () => {
+    //   i = i + 1;
+    //   onPlay(tracks, i)
+    // })
   }
+  //@ts-ignore
+  audio!.addEventListener('ended', () => {
+    i = i + 1;
+    currentAudio = onPlay(tracks, i)
+  })
 
   audioIsPlaying = true;
   return audio;

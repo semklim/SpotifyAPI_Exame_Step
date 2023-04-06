@@ -2,6 +2,7 @@ export let playingAudio = null;
 import { onPlay } from "./player.js";
 import { playBtnSVG } from "./player.js";
 import { pauseConditionChange } from "./player.js";
+import { currentAudio } from "./player.js";
 export function findObjectByParam(array, value) {
     for (let i = 0; i < array.length; i += 1) {
         //@ts-ignore
@@ -20,6 +21,9 @@ export function OnPlayFunc(tracks) {
         playingAudio.volume = 0;
         playingAudio.pause();
         playingAudio = null;
+    }
+    if (currentAudio) {
+        currentAudio.pause();
     }
     const target = event.target;
     if (target.className === "trackPlayBtn") {
