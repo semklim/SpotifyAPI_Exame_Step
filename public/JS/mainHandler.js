@@ -45,6 +45,9 @@ async function mainHandler(e) {
             requestBox.innerHTML = html;
         }
     }
+    if (className.includes('trackPlayBtn')) {
+        // OnPlayFunc();
+    }
     if (className.includes('btn-controls-contents__right')) {
         if (historyIndex + 1 < history.length) {
             historyIndex = historyIndex + 1;
