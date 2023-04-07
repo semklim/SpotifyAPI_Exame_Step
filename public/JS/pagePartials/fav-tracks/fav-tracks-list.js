@@ -58,7 +58,7 @@ function funcUIList(userSaveTracks) {
   	  </div>
       <div class="trackLikeAndDuration">
         <div class="trackLikeBtn" tabindex="-1">
-			<svg role="img" height="16" width="16" viewBox="0 0 16 16" data-like-condition="true" data-like-id="${userTracks[i].track.id}" class="like" style="width: 19px; height: 17px; fill: green;">
+			<svg role="img" height="17" width="19" viewBox="0 0 16 16" data-like-condition="true" data-like-id="${userTracks[i].track.id}" class="like" style=" fill: green;">
 				<path id="path" stroke="lightgrey" stroke-width="2" stroke-opacity="0.7" 
 				d="M15.724 4.22A4.313 4.313 0 0 0 12.192.814a4.269 4.269 0 0 0-3.622 1.13.837.837 0 0 1-1.14 0 4.272 4.272 0 0 0-6.21 5.855l5.916 7.05a1.128 1.128 0 0 0 1.727 0l5.916-7.05a4.228 4.228 0 0 0 .945-3.577z" style="stroke: none;">
 				</path>

@@ -27,7 +27,7 @@ function likeStyle(target, likeCondition) {
     }
     else {
         target.style.width = '17';
-        target.style.height = '15';
+        target.style.height = '16';
         path.style.stroke = 'lightgrey';
         target.style.fill = 'none';
         //   likeCondition = false;
