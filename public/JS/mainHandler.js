@@ -1,3 +1,4 @@
+import { OnPlayFunc } from "./OnPlayFunc.js";
 import APP from "./main.js";
 const requestBox = document.getElementsByClassName('requestBox')[0];
 const history = [];
@@ -87,6 +88,9 @@ async function mainHandler(e) {
         keepChronology();
         await APP.PageTracks(target.id);
         historyLogic();
+    }
+    if (className.includes('trackPlayBtn')) {
+        OnPlayFunc();
     }
 }
 export default mainHandler;

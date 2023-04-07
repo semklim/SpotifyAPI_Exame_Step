@@ -74,10 +74,10 @@ const APP = (function (API, UI) {
         const tracks = await prepareTracks(playlist, API);
         // end of logic
         UI.createTracks(playlist);
-        const mainbox = document.querySelector('.favorite-tracks-contents');
-        mainbox?.addEventListener('click', (e) => {
-            OnPlayFunc(tracks);
-        });
+        // const mainbox = document.querySelector('.favorite-tracks-contents');
+        // mainbox?.addEventListener('click', (e: Event) => {
+        OnPlayFunc(tracks);
+        // });
     };
     const PageSearch = async () => {
         const searchBox = document.querySelector('.searchbox');

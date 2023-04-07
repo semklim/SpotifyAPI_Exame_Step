@@ -84,10 +84,10 @@ const APP = (function (API, UI) {
 		// end of logic
 		UI.createTracks(playlist);
 	
-		const mainbox = document.querySelector('.favorite-tracks-contents');
-		mainbox?.addEventListener('click', (e: Event) => {
-			OnPlayFunc(tracks)
-		});
+		// const mainbox = document.querySelector('.favorite-tracks-contents');
+		// mainbox?.addEventListener('click', (e: Event) => {
+			OnPlayFunc(tracks);
+		// });
 
 	}
 

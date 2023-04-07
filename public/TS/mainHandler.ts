@@ -105,6 +105,10 @@ async function mainHandler(e: Event) {
 		await APP.PageTracks(target.id);
 		historyLogic();
 	}
+
+	if(className.includes('trackPlayBtn')){
+		OnPlayFunc();
+	}
 }
 
 export default mainHandler;
