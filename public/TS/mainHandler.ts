@@ -1,6 +1,5 @@
 import { OnPlayFunc } from "./OnPlayFunc.js";
 import APP from "./main.js";
-import { onPlay } from "./player";
 
 const requestBox = document.getElementsByClassName('requestBox')[0];
 const history: Array<string> = [];
