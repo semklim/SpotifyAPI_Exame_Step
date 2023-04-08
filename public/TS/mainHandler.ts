@@ -101,7 +101,7 @@ async function mainHandler(e: Event) {
 		// copies a page when client make a step back, to keep a history of client actions
 		keepChronology()
 
-		await APP.PageTracks(target.id);
+		await APP.tracksByPlaylist(target.id);
 		historyLogic();
 	}
 

@@ -1,5 +1,5 @@
 {
-  "name": "spotify_web_api",
+  "name": "spotify_demo",
   "version": "1.0.0",
   "description": "",
   "main": "./public/JS/main.js",
@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "Klymashenko Roman",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^18.15.3"
   }

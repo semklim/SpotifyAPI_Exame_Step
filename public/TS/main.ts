@@ -77,7 +77,7 @@ const APP = (function (API, UI) {
 
 		UI.createGenresRes(genreName, list.playlists.items);
 	}
-	const PageTracks = async (id: string) => {
+	const tracksByPlaylist = async (id: string) => {
 		const playlist = await API.GetPlaylist(id);
 		const tracks = await prepareTracks(playlist, API);
 
@@ -130,8 +130,8 @@ const APP = (function (API, UI) {
 		PageSearch() {
 			PageSearch();
 		},
-		async PageTracks(id: string) {
-			await PageTracks(id);
+		async tracksByPlaylist(id: string) {
+			await tracksByPlaylist(id);
 		},
 		async genGenres() {
 			await genGenres();
