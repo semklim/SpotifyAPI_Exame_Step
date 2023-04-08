@@ -72,6 +72,7 @@ export function onPlay(tracks, i) {
     if (audioIsPlaying === true) {
         console.log('audio:' + audio);
         audio = null;
+        console.log(tracks[i]);
         audio = new Audio(tracks[i].track.preview_url);
         audio.play();
         artist.textContent = tracks[i].track.artists[0].name;

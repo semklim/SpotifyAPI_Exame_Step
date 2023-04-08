@@ -14,14 +14,14 @@ const btn = document.querySelector('.login')!;
 const APP = (function (API, UI) {
 
 	const getToken = async () => {
-		if(Cookie.get('accessToken') === null){
-			const { access_token, expires_in }:{access_token: string; expires_in: number} = await Auth.getToken();
-					API.accessToken = access_token;
-					API.expires_in = new Date(Date.now() + (expires_in * 1000));
+		if (Cookie.get('accessToken') === null) {
+			const { access_token, expires_in }: { access_token: string; expires_in: number } = await Auth.getToken();
+			API.accessToken = access_token;
+			API.expires_in = new Date(Date.now() + (expires_in * 1000));
 		}
 	}
 
-	const initLogin = async () =>  {
+	const initLogin = async () => {
 		await Auth.login();
 		API.accessToken = Auth.accessToken;
 		API.expires_in = Auth.expires_in;
@@ -34,7 +34,7 @@ const APP = (function (API, UI) {
 		btn.setAttribute('data-isLoggedIn', 'true');
 		btn.textContent = "Logout";
 	}
-	const initLogout = async () =>  {
+	const initLogout = async () => {
 		const url = 'https://accounts.spotify.com/en/logout'
 		const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')!;
 		spotifyLogoutWindow.close();
@@ -59,7 +59,7 @@ const APP = (function (API, UI) {
 	}
 	const playlistsByGenre = async (genreName: string, genreID: string) => {
 		const list = await API.GetCategoryPlaylists(genreID);
-		if(list.status === '404'){
+		if (list.status === '404') {
 			const delEL = document.getElementById(`${genreID}`)!;
 			delEL.style.backgroundColor = '#444';
 			delEL.children[0].setAttribute('style', `
@@ -73,20 +73,20 @@ const APP = (function (API, UI) {
 			`);
 			delEL.children[0].innerHTML = '<p>Sorry, this genre is not available</p>';
 			return undefined;
-		} 
-		
+		}
+
 		UI.createGenresRes(genreName, list.playlists.items);
 	}
 	const PageTracks = async (id: string) => {
 		const playlist = await API.GetPlaylist(id);
-			const tracks = await prepareTracks(playlist, API);
+		const tracks = await prepareTracks(playlist, API);
 
 		// end of logic
 		UI.createTracks(playlist);
-	
+
 		// const mainbox = document.querySelector('.favorite-tracks-contents');
 		// mainbox?.addEventListener('click', (e: Event) => {
-			OnPlayFunc(tracks);
+		OnPlayFunc(tracks);
 		// });
 
 	}
@@ -108,9 +108,9 @@ const APP = (function (API, UI) {
 	}
 	const setLike = async (idTrack: string, likeCondition: boolean) => {
 		const url = `https://api.spotify.com/v1/me/tracks?ids=${idTrack}`;
-		if(likeCondition){
+		if (likeCondition) {
 			await API.get(url, 'PUT');
-		}else{
+		} else {
 			await API.get(url, 'DELETE');
 		}
 	}
@@ -139,13 +139,13 @@ const APP = (function (API, UI) {
 		async playlistsByGenre(genreName: string, genreID: string) {
 			await playlistsByGenre(genreName, genreID);
 		},
-		async setLike(idTrack: string, likeCondition: boolean){
+		async setLike(idTrack: string, likeCondition: boolean) {
 			await setLike(idTrack, likeCondition);
 		}
 	};
 })(API, UI);
 
-	APP.getToken();
+APP.getToken();
 
 function logicOfLoginBtn() {
 	if (btn.getAttribute('data-isLoggedIn') === 'false') {
@@ -198,11 +198,14 @@ const ifPrevNull = async function (obj: any, token: string) {
 
 ///favorite-tracks
 const favorite_track_button = document.querySelector(`.nav-bar-library-link-box`)!
+let userSaveTracks;
+//@ts-ignore
+export let favTracks;
 favorite_track_button.addEventListener(`click`, async () => {
-	const userSaveTracks = await API.UserSavedTracks();
+	userSaveTracks = await API.UserSavedTracks();
 	UI.createFavTracks(userSaveTracks);
-	const tracks = addIsLikedKey(userSaveTracks.items);
-	console.log(tracks);
+	favTracks = addIsLikedKey(userSaveTracks.items);
+	console.log(favTracks);
 	// нікіта, это сразу масив с котором обьекты - tracks
 
 
@@ -212,6 +215,9 @@ favorite_track_button.addEventListener(`click`, async () => {
 	// console.log(modifiedTracks);
 });
 //////////////////////////////////
+export function favTracksDeleter() {
+	favTracks = null;
+}
 
 
 document.body.addEventListener('click', mainHandler);

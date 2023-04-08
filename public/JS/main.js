@@ -181,11 +181,14 @@ const ifPrevNull = async function (obj, token) {
 };
 ///favorite-tracks
 const favorite_track_button = document.querySelector(`.nav-bar-library-link-box`);
+let userSaveTracks;
+//@ts-ignore
+export let favTracks;
 favorite_track_button.addEventListener(`click`, async () => {
-    const userSaveTracks = await API.UserSavedTracks();
+    userSaveTracks = await API.UserSavedTracks();
     UI.createFavTracks(userSaveTracks);
-    const tracks = addIsLikedKey(userSaveTracks.items);
-    console.log(tracks);
+    favTracks = addIsLikedKey(userSaveTracks.items);
+    console.log(favTracks);
     // нікіта, это сразу масив с котором обьекты - tracks
     //на будущее,замена превью-юрл через поиск
     //@ts-ignore
@@ -193,5 +196,8 @@ favorite_track_button.addEventListener(`click`, async () => {
     // console.log(modifiedTracks);
 });
 //////////////////////////////////
+export function favTracksDeleter() {
+    favTracks = null;
+}
 document.body.addEventListener('click', mainHandler);
 export default APP;
