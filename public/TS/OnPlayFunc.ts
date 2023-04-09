@@ -58,7 +58,7 @@ export function OnPlayFunc(tracks?) {
             if (url !== 'null') {
 				const index = findObjectByParam(tracks, url, favTracks);
 
-					if (index && index !== 0){
+					if (typeof index === "number"){
 						//@ts-ignore
 						playingAudio = onPlay(tracks, index);
 					} else{
