@@ -70,7 +70,6 @@ let audio;
 let audioIsPlaying = false;
 export function onPlay(tracks, i) {
     if (audioIsPlaying === true) {
-        console.log('audio:' + audio);
         audio = null;
         audio = new Audio(tracks[i].track.preview_url);
         audio.play();

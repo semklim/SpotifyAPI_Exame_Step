@@ -68,7 +68,6 @@ let audio: string | HTMLAudioElement | null;
 let audioIsPlaying = false;
 export function onPlay(tracks: any[], i: number) {
   if (audioIsPlaying === true) {
-    console.log('audio:' + audio)
     audio = null;
     audio = new Audio(tracks[i].track.preview_url!);
     audio.play();
