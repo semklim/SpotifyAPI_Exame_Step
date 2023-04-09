@@ -80,15 +80,9 @@ const APP = (function (API, UI) {
 	const tracksByPlaylist = async (id: string) => {
 		const playlist = await API.GetPlaylist(id);
 		const tracks = await prepareTracks(playlist, API);
-
-		// end of logic
+		
 		UI.createTracks(playlist);
-
-		// const mainbox = document.querySelector('.favorite-tracks-contents');
-		// mainbox?.addEventListener('click', (e: Event) => {
 		OnPlayFunc(tracks);
-		// });
-
 	}
 
 	const PageSearch = async () => {
