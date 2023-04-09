@@ -105,7 +105,7 @@ async function mainHandler(e: Event) {
 		historyLogic();
 	}
 
-	if (className.includes('trackPlayBtn')) {
+	if (className.includes('trackPlayBtn') || className.includes('play-favorite-track__button')) {
 		OnPlayFunc();
 	}
 }

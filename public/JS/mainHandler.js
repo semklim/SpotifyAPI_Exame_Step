@@ -89,7 +89,7 @@ async function mainHandler(e) {
         await APP.tracksByPlaylist(target.id);
         historyLogic();
     }
-    if (className.includes('trackPlayBtn')) {
+    if (className.includes('trackPlayBtn') || className.includes('play-favorite-track__button')) {
         OnPlayFunc();
     }
 }

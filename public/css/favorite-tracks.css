@@ -81,6 +81,10 @@
   align-items: center;
 }
 
+.play-favorite-track__button svg{
+pointer-events: none;
+}
+
 .favorite-tracks-contents {
   width: 100%;
   padding: 0 50px;

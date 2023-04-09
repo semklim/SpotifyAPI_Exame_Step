@@ -251,6 +251,7 @@
 }
 
 .playBtn {
+	margin: 0;
     position: relative;
     z-index: 1;
 	box-sizing: border-box;
@@ -274,6 +275,12 @@
     transform: translate3d(0px, 0px, 0px);
     padding: 0px;
     min-inline-size: 0px;
+	width: auto;
+	height: auto;
+}
+
+.playBtn > * {
+	pointer-events: none;
 }
 
 .shelf__content__playlist:focus-within .imgBox__PlayButton,

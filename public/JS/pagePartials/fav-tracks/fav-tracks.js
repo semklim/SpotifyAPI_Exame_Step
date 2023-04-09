@@ -1,10 +1,10 @@
 import API from '../../API.js';
 import funcUIList from './fav-tracks-list.js';
 function funcUI(userSaveTracks) {
-  const userProfile = API.user;
-  const addListTracks = funcUIList(userSaveTracks);
-  try {
-    return `<div class="favorite-tracks-box">
+    const userProfile = API.user;
+    const addListTracks = funcUIList(userSaveTracks);
+    try {
+        return `<div class="favorite-tracks-box">
         <div class="presentation-favorite-tracks">
           <div class="favorite-tracks__play-list"></div>
           <div class="favorite-tracks__info">
@@ -42,9 +42,9 @@ function funcUI(userSaveTracks) {
         </div>
       </div>
       `;
-  }
-  catch (err) {
-    return;
-  }
+    }
+    catch (err) {
+        return;
+    }
 }
 export default funcUI;
