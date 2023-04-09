@@ -42,8 +42,6 @@ let playBtn = document.getElementsByClassName('play-pauseBtn')[0];
 export let playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0];
 export let pauseCondition = false;
 playBtn.addEventListener('click', () => {
-    console.log(playingAudio);
-    console.log(currentAudio);
     if (currentAudio) {
         switch (pauseCondition) {
             case false:
