@@ -34,7 +34,7 @@ function genPlaylistCards(list) {
     });
     return html;
 }
-function playlistByGenres(genres, obj) {
+function playlistByGenres(genres, nameColumn, obj) {
     const html = `
 	<div class="contentSpacing titleBox">
 	<div class="titleBox__size">
@@ -53,7 +53,7 @@ function playlistByGenres(genres, obj) {
 					<div class="shelf__name">
 						<h2 draggable="false" class="shelf__name__title"  data-href="">
 							<span class="shelf__txt" data-href="">
-							All Things
+							${nameColumn}
 							</span>
 						</h2>
 					</div>

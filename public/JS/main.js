@@ -8,6 +8,7 @@ import prepareTracks from './helpers/tracks/prepareTracksObj.js';
 import mainHandler from "./mainHandler.js";
 import { OnPlayFunc } from "./OnPlayFunc.js";
 import { addIsLikedKey } from './helpers/tracks/trackBoxFunc/trackBoxFunc.js';
+import playlistByGenres from './pagePartials/groupOfPlaylist/groupOfPlaylist.js';
 const btn = document.querySelector('.login');
 const APP = (function (API, UI) {
     const getToken = async () => {
@@ -84,13 +85,30 @@ const APP = (function (API, UI) {
         const queryFormatter = new QueryFormatter();
         const SearchAPP = new Search(searchBox, queryFormatter, API);
         SearchAPP.input.addEventListener('input', async () => {
-            const result = await SearchAPP.handleInput().then(() => {
-                const res = SearchAPP.getResult();
-                if (!res)
-                    return undefined;
-                return res;
-            });
-            console.log(result);
+            const requestBox = document.querySelector('.requestBox');
+            const resultAlbumsObj = await SearchAPP.handleInput('album');
+            const resultArtistsObj = await SearchAPP.handleInput('artist');
+            const resultPlaylistsObj = await SearchAPP.handleInput('playlist');
+            const resultTracksObj = await SearchAPP.handleInput('track');
+            const albums = resultAlbumsObj.albums.items;
+            const artists = resultArtistsObj.artists.items;
+            const playlists = resultPlaylistsObj.playlists.items;
+            const tracks = resultTracksObj.tracks.items;
+            if (searchBox.value === '') {
+                requestBox.innerHTML = '';
+            }
+            else {
+                requestBox.innerHTML = playlistByGenres(searchBox.value, 'Tracks', playlists);
+            }
+            console.log(searchBox.value);
+            // console.log(albums)
+            // console.log(artists)
+            console.log(playlists);
+            // console.log(tracks)
+            // console.log(resultAlbumsObj);
+            // console.log(resultArtistsObj);
+            // console.log(resultPlaylistsObj);
+            // console.log(resultTracksObj);
         });
     };
     const setLike = async (idTrack, likeCondition) => {
