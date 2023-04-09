@@ -108,7 +108,7 @@ class Search {
 	/**
 	 * Event listener callback function for the input event on the search box element
 	 */
-	async handleInput() {
+	async handleInput(colomn:any) {
 		interface searchResult {
 			href: string;
 			items: Array<object>;
@@ -124,12 +124,12 @@ class Search {
 		this.result = null;
 		return undefined;  
 	};
-		await new Promise((res, reject) => {
+		return await new Promise((res, reject) => {
 			this.waitTime = setTimeout(async () => {
-				const url = `https://api.spotify.com/v1/search?q=${this.query}&type=track&market=ES&limit=50&offset=0`;
-				this.result = await this.apiClient.get(url) as searchResult;
-				res(true);
-			  }, 500);
+				const url = `https://api.spotify.com/v1/search?q=${this.query}&type=${colomn}&market=ES&limit=50&offset=0`;
+				 this.result = await this.apiClient.get(url) as searchResult;
+				res(this.result);
+			  }, 200);
 		});
 	}
 	getResult(){

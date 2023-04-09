@@ -13,7 +13,6 @@ export function findObjectByParam(array, value, anotherArray) {
         //@ts-ignore
         if (array[i].track.preview_url === value) {
             //@ts-ignore
-            console.log(array);
             console.log(i);
             return i;
         }
@@ -48,8 +47,6 @@ export function OnPlayFunc(tracks) {
         const target = event.target;
         if (target.className === "trackPlayBtn") {
             const url = target.getAttribute('href');
-            console.log(url);
-            console.log(tracks);
             if (favTracks) {
                 tracks = favTracks;
             }

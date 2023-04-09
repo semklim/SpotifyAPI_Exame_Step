@@ -15,14 +15,13 @@ export function findObjectByParam(array: any[], value: string, anotherArray: any
         //@ts-ignore
         if (array[i].track.preview_url === value) {
             //@ts-ignore
-            console.log(array)
             console.log(i)
             return i;
         } else if (anotherArray) {
-			// @ts-ignore
-			if(anotherArray[i].track.preview_url === value){
-				return i;
-			}
+            // @ts-ignore
+            if (anotherArray[i].track.preview_url === value) {
+                return i;
+            }
         }
     }
 }
@@ -50,13 +49,11 @@ export function OnPlayFunc(tracks?) {
         const target = (event!.target as HTMLElement);
         if (target.className === "trackPlayBtn") {
             const url = target.getAttribute('href')!;
-            console.log(url);
-            console.log(tracks);
             if (favTracks) {
                 tracks = favTracks
             }
             if (url !== 'null') {
-				const index = findObjectByParam(tracks, url, favTracks);
+                const index = findObjectByParam(tracks, url, favTracks);
 
 					if (typeof index === "number"){
 						//@ts-ignore
