@@ -40,15 +40,28 @@ let playBtn = document.getElementsByClassName('play-pauseBtn')[0] as HTMLButtonE
 export let playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0] as SVGElement;
 export let pauseCondition: boolean = false;
 playBtn.addEventListener('click', () => {
-  switch (pauseCondition) {
-    case false: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
-      pauseCondition = true;
-      playingAudio?.pause()
-      break;
-    case true: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
-      playingAudio?.play()
-      pauseCondition = false;
-      break;
+  if (currentAudio) {
+    switch (pauseCondition) {
+      case false: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
+        pauseCondition = true;
+        currentAudio?.pause()
+        break;
+      case true: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
+        currentAudio?.play()
+        pauseCondition = false;
+        break;
+    }
+  } else {
+    switch (pauseCondition) {
+      case false: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
+        pauseCondition = true;
+        playingAudio?.pause()
+        break;
+      case true: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
+        playingAudio?.play()
+        pauseCondition = false;
+        break;
+    }
   }
 })
 
@@ -67,10 +80,9 @@ let songName = document.getElementsByClassName('songName')[0] as HTMLDivElement;
 let audio: string | HTMLAudioElement | null;
 let audioIsPlaying = false;
 export function onPlay(tracks: any[], i: number) {
+  currentAudio = null;
   if (audioIsPlaying === true) {
-    console.log('audio:' + audio)
     audio = null;
-    console.log(tracks[i])
     audio = new Audio(tracks[i].track.preview_url!);
     audio.play();
     artist.textContent = tracks[i].track.artists[0].name
