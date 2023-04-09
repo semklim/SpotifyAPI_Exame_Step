@@ -15,13 +15,7 @@ export function findObjectByParam(array, value, anotherArray) {
             console.log(i);
             return i;
         }
-    }
-    for (let i = 0; i < array.length; i += 1) {
-        //@ts-ignore
-        if (anotherArray[i].track.preview_url === value) {
-            //@ts-ignore
-            console.log(array);
-            console.log(i);
+        else if (anotherArray[i].track.preview_url === value) {
             return i;
         }
     }

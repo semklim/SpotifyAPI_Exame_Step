@@ -75,7 +75,7 @@ class Search {
         ;
         await new Promise((res, reject) => {
             this.waitTime = setTimeout(async () => {
-                const url = `https://api.spotify.com/v1/search?q=${btoa(this.query)}&type=track&market=ES&limit=50&offset=0`;
+                const url = `https://api.spotify.com/v1/search?q=${this.query}&type=track&market=ES&limit=50&offset=0`;
                 this.result = await this.apiClient.get(url);
                 res(true);
             }, 500);
