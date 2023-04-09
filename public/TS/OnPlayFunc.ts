@@ -18,10 +18,10 @@ export function findObjectByParam(array: any[], value: string, anotherArray: any
             console.log(i)
             return i;
         } else if (anotherArray) {
-			// @ts-ignore
-			if(anotherArray[i].track.preview_url === value){
-				return i;
-			}
+            // @ts-ignore
+            if (anotherArray[i].track.preview_url === value) {
+                return i;
+            }
         }
     }
 }
@@ -53,24 +53,24 @@ export function OnPlayFunc(tracks?) {
                 tracks = favTracks
             }
             if (url !== 'null') {
-				const index = findObjectByParam(tracks, url, favTracks);
+                const index = findObjectByParam(tracks, url, favTracks);
 
-					if (index && index !== 0){
-						//@ts-ignore
-						playingAudio = onPlay(tracks, index);
-					} else{
-						const refreshPlaylist = async () => {
-							const playlistId = document.querySelector('.play-favorite-track__button')!.getAttribute('data-playlist-id');
-							const playlist = await API.GetPlaylist(playlistId!);
-							const tracksObj = await prepareTracks(playlist, API);
-						
-							tracks = tracksObj!;
-							// @ts-ignore
-							playingAudio = onPlay(tracks, findObjectByParam(tracks, url, favTracks)!);
-						};
-						
-						refreshPlaylist();
-					}
+                if (index && index !== 0) {
+                    //@ts-ignore
+                    playingAudio = onPlay(tracks, index);
+                } else {
+                    const refreshPlaylist = async () => {
+                        const playlistId = document.querySelector('.play-favorite-track__button')!.getAttribute('data-playlist-id');
+                        const playlist = await API.GetPlaylist(playlistId!);
+                        const tracksObj = await prepareTracks(playlist, API);
+
+                        tracks = tracksObj!;
+                        // @ts-ignore
+                        playingAudio = onPlay(tracks, findObjectByParam(tracks, url, favTracks)!);
+                    };
+
+                    refreshPlaylist();
+                }
             } else {
                 console.log('Sorry track is not found')
             }
