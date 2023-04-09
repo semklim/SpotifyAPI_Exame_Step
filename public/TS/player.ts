@@ -40,8 +40,6 @@ let playBtn = document.getElementsByClassName('play-pauseBtn')[0] as HTMLButtonE
 export let playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0] as SVGElement;
 export let pauseCondition: boolean = false;
 playBtn.addEventListener('click', () => {
-  console.log(playingAudio)
-  console.log(currentAudio)
   if (currentAudio) {
     switch (pauseCondition) {
       case false: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
