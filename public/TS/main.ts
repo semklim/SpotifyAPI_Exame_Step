@@ -10,6 +10,8 @@ import mainHandler from "./mainHandler.js";
 import { OnPlayFunc } from "./OnPlayFunc.js";
 import { addIsLikedKey } from './helpers/tracks/trackBoxFunc/trackBoxFunc.js';
 import playlistByGenres from './pagePartials/groupOfPlaylist/groupOfPlaylist.js'
+import resize from './Listeners/resize.js';
+import htmlRecomm from './pagePartials/groupOfPlaylist/groupOfPlaylist.js';
 
 
 const btn = document.querySelector('.login')!;
@@ -110,7 +112,7 @@ const APP = (function (API, UI) {
 			if(searchBox.value === ''){
 				requestBox.innerHTML = ''
 			} else {
-				requestBox.innerHTML = playlistByGenres(searchBox.value,'Tracks', playlists);
+				requestBox.innerHTML = htmlRecomm('Tracks', playlists, searchBox.value);
 			}
 			console.log(searchBox.value)
 
@@ -139,6 +141,12 @@ const APP = (function (API, UI) {
 		console.log(topTracks);
 		topTracks = topTracks.items.sort((el1: any, el2: any) => el1.popularity > el2.popularity ? -1 : 1);
 		console.log('sorted ', topTracks);
+
+
+		// const html = htmlRecomm(genresName, playlist.albums.items);
+		const requestBox = document.querySelector('.requestBox')!;
+		// requestBox.innerHTML = html;
+
 	}
 
 	const setLike = async (idTrack: string, likeCondition: boolean) => {
@@ -269,5 +277,5 @@ export function favTracksDeleter() {
 
 
 document.body.addEventListener('click', mainHandler);
-
+window.addEventListener('resize', resize)
 export default APP;

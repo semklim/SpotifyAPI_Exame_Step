@@ -6,7 +6,7 @@ function genPlaylistCards(list) {
         const { name, href, description, images } = el;
         const img = images[0].url ? images[0].url : '';
         html += `
-		<div class="shelf__content__playlist">
+		<div class="displayNone__moreThen shelf__content__playlist">
 		<div class="playlist__imgBox">
 			<div class="imgBox__img">
 				<img aria-hidden="false" draggable="false" loading="lazy" src="${img}" alt="">
@@ -34,20 +34,27 @@ function genPlaylistCards(list) {
     });
     return html;
 }
-function playlistByGenres(genres, nameColumn, obj) {
-    const html = `
-	<div class="contentSpacing titleBox">
-	<div class="titleBox__size">
-		<div class="titleBox__content">
-			<span class="title" draggable="false">
-				<h1 class="title__genresName">${genres}</h1>
-			</span>
+function htmlRecomm(nameColumn, obj, genres) {
+    const requestBox = document.createElement('div');
+    requestBox.classList.add('requestBox');
+    let html = '';
+    if (genres) {
+        html += `
+		<div class="contentSpacing titleBox">
+		<div class="titleBox__size">
+			<div class="titleBox__content">
+				<span class="title" draggable="false">
+					<h1 class="title__genresName">${genres}</h1>
+				</span>
+			</div>
 		</div>
-	</div>
-	</div>
+		</div>
+		`;
+    }
+    ;
+    html += `
 	<div class="contentSpacing resultReq">
 		<div class="resultReq__infinite-scroll-list">
-
 			<section class="shelf" aria-label="">
 				<div class="shelf__control">
 					<div class="shelf__name">
@@ -66,8 +73,7 @@ function playlistByGenres(genres, nameColumn, obj) {
 				</div>
 			</section>
 		</div>
-	</div>
-	`;
+	</div>`;
     return html;
 }
-export default playlistByGenres;
+export default htmlRecomm;

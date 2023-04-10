@@ -1,13 +1,13 @@
+import Assets from "./pagePartials/htmlAssets/htmlPageAssets.js";
+import funcUI from "./pagePartials/fav-tracks/fav-tracks.js";
+import { setNumberOfGridColumns } from "./helpers/setNumberOfColumns.js";
 /**
 
 Represents the Assets of html pages class.
 @class
 @method playlistByGenres() 
 @method genGenres()
-*/
-import Assets from "./pagePartials/htmlAssets/htmlPageAssets.js";
-import funcUI from "./pagePartials/fav-tracks/fav-tracks.js";
-  
+*/  
   class UserInterface {
 	/*
 	The logo element.
@@ -92,42 +92,6 @@ import funcUI from "./pagePartials/fav-tracks/fav-tracks.js";
 		const html = Assets.playlistByGenres(genresName, playlists);
 		const requestBox = document.querySelector('.requestBox')!;
 		requestBox.innerHTML = html;
-		const contentSize = <HTMLElement>document.querySelector('.shelf__content')!;
-		const shelf__content__playlist = <HTMLElement>document.querySelector('.shelf__content__playlist')!;
-		let gap = 24;
-		let count = Math.round((contentSize.offsetWidth - gap) / (shelf__content__playlist.offsetWidth < 180 ? 180 : shelf__content__playlist.offsetWidth + gap));
-		gap = count < 3 ? 12 : 24;
-		contentSize.setAttribute('style', `--column-count: ${count}; --grid-gap: ${gap}px;`);
-
-		/**
-         * Sets the number of grid columns based on the width of the shelf content playlist
-         */
-		function setNumberOfGridColumns() { 
-			
-			if(shelf__content__playlist.offsetWidth < 180){
-
-				count = Math.round((contentSize.offsetWidth - gap) / (shelf__content__playlist.offsetWidth < 180 ? 180 : shelf__content__playlist.offsetWidth + gap));
-				count = count < 2 ? 2 : count;
-				contentSize.setAttribute('style', `--column-count: ${count}; --grid-gap: ${gap}px;`)
-			}
-			const rise = (180 + gap) * (count + 1);
-			if(rise < contentSize.offsetWidth && rise < 1800){
-				if(count > 3) gap = 24;
-				count = Math.round((contentSize.offsetWidth - gap) / (shelf__content__playlist.offsetWidth > 220 ? 220 : shelf__content__playlist.offsetWidth + gap));
-				contentSize.setAttribute('style', `--column-count: ${count};  --grid-gap: ${gap}px;`)
-			}
-		}
-
-		// prevents of stacking the same eventlistener
-		if(!UserInterface.EventHandlers){
-			UserInterface.EventHandlers = new Map();
-			UserInterface.EventHandlers.set('setNumberOfGridColumns', setNumberOfGridColumns);
-			window.addEventListener('resize', setNumberOfGridColumns);
-		} else{
-			window.removeEventListener('resize', UserInterface.EventHandlers.get('setNumberOfGridColumns'));
-			UserInterface.EventHandlers.set('setNumberOfGridColumns', setNumberOfGridColumns);
-			window.addEventListener('resize', setNumberOfGridColumns);
-		}
 	}
 
 	public createTracks(playlist: any){
