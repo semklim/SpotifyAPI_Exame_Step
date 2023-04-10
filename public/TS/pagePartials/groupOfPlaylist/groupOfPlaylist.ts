@@ -19,7 +19,10 @@ const listOfPlaylists = (list: object[], listLength: number) => {
 		if(el === null) continue;
 
 		const {name, href, description, images, id} = el as result;
+		
+		if(!images.length){continue}
 		const img = images[0].url ? images[0].url : '';
+		 
 
 		html += `<div class="displayNone__moreThen shelf__content__playlist" id = "${id}">
 					<div class="playlist__imgBox">

@@ -87,8 +87,10 @@ const APP = (function (API, UI) {
             const resultArtistsObj = await SearchAPP.handleInput('artist');
             const resultPlaylistsObj = await SearchAPP.handleInput('playlist');
             const resultTracksObj = await SearchAPP.handleInput('track');
-            const albums = resultAlbumsObj.albums.items;
-            const artists = resultArtistsObj.artists.items;
+            const albums = resultAlbumsObj;
+            albums.message = 'Albums';
+            const artists = resultArtistsObj;
+            artists.message = 'Artists';
             const playlists = resultPlaylistsObj;
             playlists.message = 'Tracks';
             const tracks = resultTracksObj.tracks.items;
@@ -96,12 +98,12 @@ const APP = (function (API, UI) {
                 requestBox.innerHTML = '';
             }
             else {
-                requestBox.innerHTML = htmlRecomm([playlists], searchBox.value);
+                requestBox.innerHTML = htmlRecomm([albums, playlists, artists], searchBox.value);
             }
             console.log(searchBox.value);
-            // console.log(albums)
-            // console.log(artists)
-            console.log(playlists);
+            console.log(albums);
+            console.log(artists);
+            // console.log(playlists)
             // console.log(tracks)
             // console.log(resultAlbumsObj);
             // console.log(resultArtistsObj);
@@ -122,9 +124,9 @@ const APP = (function (API, UI) {
         topTracks = topTracks.items.sort((el1, el2) => el1.popularity > el2.popularity ? -1 : 1);
         console.log('sorted ', topTracks);
         // const html = htmlRecomm(, playlist.albums.items);
-        const html = htmlRecomm([featured, newReleases]);
-        const requestBox = document.querySelector('.requestBox');
-        requestBox.innerHTML = html;
+        // const html = htmlRecomm([featured, newReleases])
+        // const requestBox = document.querySelector('.requestBox')!;
+        // requestBox.innerHTML = html;
     };
     const setLike = async (idTrack, likeCondition) => {
         const url = `https://api.spotify.com/v1/me/tracks?ids=${idTrack}`;
