@@ -130,7 +130,13 @@ nextBtn.addEventListener('click', () => {
   }
   if (playingAudio) {
     //@ts-ignore
-    audio.currentTime = audio.duration - 0.100;
+    if (testI + 1 < testTracks.length) {
+      //@ts-ignore
+      console.log(testTracks.length)
+      console.log(testI)
+      //@ts-ignore
+      audio!.currentTime = audio!.duration - 0.100;
+    }
   }
 })
 
@@ -142,7 +148,11 @@ prevBtn.addEventListener('click', () => {
   }
   if (playingAudio) {
     //@ts-ignore
-    testI = testI - 1;
+    if (testI > 0) {
+      console.log(testI)
+      testI = testI - 1;
+      console.log(testI)
+    }
     //@ts-ignore
     audio.pause();
     audio = null;
