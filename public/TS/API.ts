@@ -162,7 +162,7 @@ class SpotifyAPI implements APIClient {
 	}
 
 	getUserTopTracks() {
-		const url = `https://api.spotify.com/v1/browse/new-releases
+		const url = `https://api.spotify.com/v1/me/top/tracks
 					?offset=0
 					&limit=50`;
 		return this.get(url);

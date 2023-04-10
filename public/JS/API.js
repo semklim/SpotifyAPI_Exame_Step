@@ -90,6 +90,26 @@ class SpotifyAPI {
             + `?ids=${decodeURIComponent(tracks)}`;
         return this.get(url);
     }
+    getFeaturedPlaylists() {
+        const url = `https://api.spotify.com/v1/browse/featured-playlists
+					?country=${this.user ? this.user.country : 'ES'}
+					&offset=0
+					&limit=50`;
+        return this.get(url);
+    }
+    getNewReleases() {
+        const url = `https://api.spotify.com/v1/browse/new-releases
+					?country=${this.user ? this.user.country : 'ES'}
+					&offset=0
+					&limit=50`;
+        return this.get(url);
+    }
+    getUserTopTracks() {
+        const url = `https://api.spotify.com/v1/me/top/tracks
+					?offset=0
+					&limit=50`;
+        return this.get(url);
+    }
     /**
  * Makes an authenticated GET request to the Spotify Web API.
  * @param {string} url - The URL to make the request to Spotify Web API.

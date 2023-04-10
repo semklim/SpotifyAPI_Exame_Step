@@ -36,6 +36,7 @@ const APP = (function (API, UI) {
 		btn.setAttribute('data-isLoggedIn', 'true');
 		btn.textContent = "Logout";
 	}
+
 	const initLogout = async () => {
 		const url = 'https://accounts.spotify.com/en/logout'
 		const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')!;
@@ -59,6 +60,7 @@ const APP = (function (API, UI) {
 		const genres = await API.Genres();
 		UI.createGenres(genres);
 	}
+
 	const playlistsByGenre = async (genreName: string, genreID: string) => {
 		const list = await API.GetCategoryPlaylists(genreID);
 		if (list.status === '404') {
@@ -79,6 +81,7 @@ const APP = (function (API, UI) {
 
 		UI.createGenresRes(genreName, list.playlists.items);
 	}
+
 	const tracksByPlaylist = async (id: string) => {
 		const playlist = await API.GetPlaylist(id);
 		const tracks = await prepareTracks(playlist, API);
@@ -124,8 +127,19 @@ const APP = (function (API, UI) {
 		})
 	}
 
-
-
+	const PageRecomm = async () => {
+		const newReleases = await API.getNewReleases();
+		const featured = await API.getFeaturedPlaylists();
+		const recentlyPlayed = await API.UserRecentlyPlayedTracks();
+		let topTracks = await API.getUserTopTracks();
+		console.log('newReleases ',newReleases );
+		console.log('featured ',featured );
+		console.log('recentlyPlayed ',recentlyPlayed );
+		
+		console.log(topTracks);
+		topTracks = topTracks.items.sort((el1: any, el2: any) => el1.popularity > el2.popularity ? -1 : 1);
+		console.log('sorted ', topTracks);
+	}
 
 	const setLike = async (idTrack: string, likeCondition: boolean) => {
 		const url = `https://api.spotify.com/v1/me/tracks?ids=${idTrack}`;
@@ -139,27 +153,39 @@ const APP = (function (API, UI) {
 		initLogin() {
 			initLogin();
 		},
+
 		initLogout() {
 			initLogout();
 		},
+
 		getToken() {
 			getToken();
 		},
+
 		UserProfile() {
 			UserProfile();
 		},
+
+		PageRecomm() {
+			PageRecomm();
+		},
+
 		PageSearch() {
 			PageSearch();
 		},
+
 		async tracksByPlaylist(id: string) {
 			await tracksByPlaylist(id);
 		},
+
 		async genGenres() {
 			await genGenres();
 		},
+
 		async playlistsByGenre(genreName: string, genreID: string) {
 			await playlistsByGenre(genreName, genreID);
 		},
+
 		async setLike(idTrack: string, likeCondition: boolean) {
 			await setLike(idTrack, likeCondition);
 		}
@@ -192,6 +218,7 @@ if ((Cookie.get('accessToken'))) {
 	btn.addEventListener('click', logicOfLoginBtn);
 }
 
+APP.PageRecomm();
 
 //////////////
 const ifPrevNull = async function (obj: any, token: string) {

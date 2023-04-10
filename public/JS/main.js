@@ -107,6 +107,18 @@ const APP = (function (API, UI) {
             // console.log(resultTracksObj);
         });
     };
+    const PageRecomm = async () => {
+        const newReleases = await API.getNewReleases();
+        const featured = await API.getFeaturedPlaylists();
+        const recentlyPlayed = await API.UserRecentlyPlayedTracks();
+        let topTracks = await API.getUserTopTracks();
+        console.log('newReleases ', newReleases);
+        console.log('featured ', featured);
+        console.log('recentlyPlayed ', recentlyPlayed);
+        console.log(topTracks);
+        topTracks = topTracks.items.sort((el1, el2) => el1.popularity > el2.popularity ? -1 : 1);
+        console.log('sorted ', topTracks);
+    };
     const setLike = async (idTrack, likeCondition) => {
         const url = `https://api.spotify.com/v1/me/tracks?ids=${idTrack}`;
         if (likeCondition) {
@@ -128,6 +140,9 @@ const APP = (function (API, UI) {
         },
         UserProfile() {
             UserProfile();
+        },
+        PageRecomm() {
+            PageRecomm();
         },
         PageSearch() {
             PageSearch();
@@ -170,6 +185,7 @@ else {
     Cookie.clearAllCookie();
     btn.addEventListener('click', logicOfLoginBtn);
 }
+APP.PageRecomm();
 //////////////
 const ifPrevNull = async function (obj, token) {
     const modifiedTracks = await Promise.all(obj.map(async (el) => {
