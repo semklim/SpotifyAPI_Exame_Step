@@ -112,16 +112,7 @@ export function onPlay(tracks, i) {
     audio.addEventListener('ended', () => {
         i = i + 1;
         currentAudio = onPlay(tracks, i);
-    });
-    nextBtn.addEventListener('click', () => {
-        if (pauseCondition) {
-            pauseConditionChange();
-            playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
-        }
-        if (playingAudio) {
-            //@ts-ignore
-            audio.currentTime = 1000000000;
-        }
+        return;
     });
     prevBtn.addEventListener('click', () => {
         //@ts-ignore
@@ -142,3 +133,13 @@ export function onPlay(tracks, i) {
 //NEXT/PREV SONG
 let nextBtn = document.getElementsByClassName('nextTrackBtn')[0];
 let prevBtn = document.getElementsByClassName('prevTrackBtn')[0];
+nextBtn.addEventListener('click', () => {
+    if (pauseCondition) {
+        pauseConditionChange();
+        playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
+    }
+    if (playingAudio) {
+        //@ts-ignore
+        audio.currentTime = audio.duration - 0.100;
+    }
+});
