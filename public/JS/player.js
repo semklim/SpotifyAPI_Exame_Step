@@ -89,7 +89,10 @@ export function onPlay(tracks, i) {
     if (audioIsPlaying === true) {
         audio = null;
         audio = new Audio(tracks[i].track.preview_url);
-        audio.play();
+        audio.addEventListener('canplaythrough', function () {
+            //@ts-ignore
+            audio.play();
+        });
         artist.textContent = tracks[i].track.artists[0].name;
         songName.textContent = tracks[i].track.name;
         albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
@@ -97,7 +100,10 @@ export function onPlay(tracks, i) {
     else if (audioIsPlaying === false) {
         audio = null;
         audio = new Audio(tracks[i].track.preview_url);
-        audio.play();
+        audio.addEventListener('canplaythrough', function () {
+            //@ts-ignore
+            audio.play();
+        });
         artist.textContent = tracks[i].track.artists[0].name;
         songName.textContent = tracks[i].track.name;
         albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
