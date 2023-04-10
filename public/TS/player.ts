@@ -69,7 +69,7 @@ export function pauseConditionChange() {
   pauseCondition = false;
 }
 
-//chosen song
+//CHOSEN SONG
 //@ts-ignore
 export let currentAudio;
 let audioCurrTime = document.getElementsByClassName('songOnPlayCurrTime')[0] as HTMLSpanElement;
@@ -88,10 +88,6 @@ export function onPlay(tracks: any[], i: number) {
     artist.textContent = tracks[i].track.artists[0].name
     songName.textContent = tracks[i].track.name;
     albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
-    // audio.addEventListener('ended', () => {
-    //   i = i + 1;
-    //   onPlay(tracks, i)
-    // })
   } else if (audioIsPlaying === false) {
     audio = null;
     audio = new Audio(tracks[i].track.preview_url!);
@@ -99,17 +95,41 @@ export function onPlay(tracks: any[], i: number) {
     artist.textContent = tracks[i].track.artists[0].name
     songName.textContent = tracks[i].track.name;
     albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
-    // audio.addEventListener('ended', () => {
-    //   i = i + 1;
-    //   onPlay(tracks, i)
-    // })
   }
   //@ts-ignore
   audio!.addEventListener('ended', () => {
     i = i + 1;
-    currentAudio = onPlay(tracks, i)
+    currentAudio = onPlay(tracks, i);
   })
 
+  nextBtn.addEventListener('click', () => {
+    if (pauseCondition) {
+      pauseConditionChange();
+      playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
+    }
+    if (playingAudio) {
+      //@ts-ignore
+      audio.currentTime = 1000000000;
+    }
+  })
+
+  prevBtn.addEventListener('click', () => {
+    //@ts-ignore
+    if (pauseCondition) {
+      pauseConditionChange();
+      playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
+    }
+    //@ts-ignore
+    i = i - 1;
+    //@ts-ignore
+    audio.pause();
+    audio = null;
+    currentAudio! = onPlay(tracks, i);
+  })
   audioIsPlaying = true;
   return audio;
 }
+
+//NEXT/PREV SONG
+let nextBtn = document.getElementsByClassName('nextTrackBtn')[0] as HTMLButtonElement;
+let prevBtn = document.getElementsByClassName('prevTrackBtn')[0] as HTMLButtonElement;

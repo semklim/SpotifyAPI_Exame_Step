@@ -55,22 +55,22 @@ export function OnPlayFunc(tracks?) {
             if (url !== 'null') {
                 const index = findObjectByParam(tracks, url, favTracks);
 
-					if (typeof index === "number"){
-						//@ts-ignore
-						playingAudio = onPlay(tracks, index);
-					} else{
-						const refreshPlaylist = async () => {
-							const playlistId = document.querySelector('.play-favorite-track__button')!.getAttribute('data-playlist-id');
-							const playlist = await API.GetPlaylist(playlistId!);
-							const tracksObj = await prepareTracks(playlist, API);
-						
-							tracks = tracksObj!;
-							// @ts-ignore
-							playingAudio = onPlay(tracks, findObjectByParam(tracks, url, favTracks)!);
-						};
-						
-						refreshPlaylist();
-					}
+                if (typeof index === "number") {
+                    //@ts-ignore
+                    playingAudio = onPlay(tracks, index);
+                } else {
+                    const refreshPlaylist = async () => {
+                        const playlistId = document.querySelector('.play-favorite-track__button')!.getAttribute('data-playlist-id');
+                        const playlist = await API.GetPlaylist(playlistId!);
+                        const tracksObj = await prepareTracks(playlist, API);
+
+                        tracks = tracksObj!;
+                        // @ts-ignore
+                        playingAudio = onPlay(tracks, findObjectByParam(tracks, url, favTracks)!);
+                    };
+
+                    refreshPlaylist();
+                }
             } else {
                 console.log('Sorry track is not found')
             }
