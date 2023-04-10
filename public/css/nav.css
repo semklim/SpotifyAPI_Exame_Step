@@ -165,6 +165,9 @@ a {
   text-decoration: none;
   color: white;
 }
+.nav-bar-library-link-box > * {
+	pointer-events: none;
+}
 
 .nav-bar-library__box-img-two {
   background: linear-gradient(135deg,#450af5,#c4efd9);

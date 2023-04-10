@@ -1,5 +1,5 @@
 import { OnPlayFunc } from "./OnPlayFunc.js";
-import APP from "./main.js";
+import {APP, favorite_track } from "./main.js";
 
 const requestBox = document.getElementsByClassName('requestBox')[0];
 const history: Array<string> = [];
@@ -48,6 +48,10 @@ async function mainHandler(e: Event) {
 			const html = history[historyIndex];
 			requestBox.innerHTML = html;
 		}
+		if(history.length === 1){
+			const html = history[0];
+			requestBox.innerHTML = html;
+		}
 	}
 
 	if (className.includes('trackPlayBtn')) {
@@ -87,19 +91,20 @@ async function mainHandler(e: Event) {
 		APP.PageSearch();
 	}
 	if (className.includes('genres')) {
+		const searchBar = document.querySelector('.wrapper')!;
 		// copies a page when client make a step back, to keep a history of client actions
 		keepChronology()
-
 		const genreName = ((target as HTMLElement).querySelector('.nameOfGenres')!).textContent!;
 		const id = (target as HTMLElement).getAttribute('id')!;
 
 		await APP.playlistsByGenre(genreName, id);
+		searchBar.remove();
 		historyLogic();
 	}
 
 	if (className.includes('shelf__content__playlist')) {
 		// copies a page when client make a step back, to keep a history of client actions
-		keepChronology()
+		keepChronology();
 
 		await APP.tracksByPlaylist(target.id);
 		historyLogic();
@@ -107,6 +112,18 @@ async function mainHandler(e: Event) {
 
 	if (className.includes('trackPlayBtn') || className.includes('play-favorite-track__button')) {
 		OnPlayFunc();
+	}
+
+	if(className.includes('nav-bar-library-link-box')){
+		const searchBar = document.querySelector('.wrapper')!;
+		keepChronology();
+
+		await favorite_track();
+		if(searchBar) {
+			searchBar.remove();
+		}
+		historyLogic();
+
 	}
 }
 

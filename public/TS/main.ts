@@ -157,6 +157,7 @@ const APP = (function (API, UI) {
 			await API.get(url, 'DELETE');
 		}
 	}
+
 	return {
 		initLogin() {
 			initLogin();
@@ -253,11 +254,10 @@ const ifPrevNull = async function (obj: any, token: string) {
 }
 
 ///favorite-tracks
-const favorite_track_button = document.querySelector(`.nav-bar-library-link-box`)!
 let userSaveTracks;
 //@ts-ignore
 export let favTracks;
-favorite_track_button.addEventListener(`click`, async () => {
+const favorite_track = async () => {
 	userSaveTracks = await API.UserSavedTracks();
 	UI.createFavTracks(userSaveTracks);
 	favTracks = addIsLikedKey(userSaveTracks.items);
@@ -269,7 +269,7 @@ favorite_track_button.addEventListener(`click`, async () => {
 	//@ts-ignore
 	// const modifiedTracks = await ifPrevNull(tracks, API.accessToken);
 	// console.log(modifiedTracks);
-});
+};
 //////////////////////////////////
 export function favTracksDeleter() {
 	favTracks = null;
@@ -278,4 +278,4 @@ export function favTracksDeleter() {
 
 document.body.addEventListener('click', mainHandler);
 window.addEventListener('resize', resize)
-export default APP;
+export { APP, favorite_track};

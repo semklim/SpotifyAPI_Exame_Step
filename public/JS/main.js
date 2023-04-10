@@ -214,11 +214,10 @@ const ifPrevNull = async function (obj, token) {
     return modifiedTracks;
 };
 ///favorite-tracks
-const favorite_track_button = document.querySelector(`.nav-bar-library-link-box`);
 let userSaveTracks;
 //@ts-ignore
 export let favTracks;
-favorite_track_button.addEventListener(`click`, async () => {
+const favorite_track = async () => {
     userSaveTracks = await API.UserSavedTracks();
     UI.createFavTracks(userSaveTracks);
     favTracks = addIsLikedKey(userSaveTracks.items);
@@ -228,11 +227,11 @@ favorite_track_button.addEventListener(`click`, async () => {
     //@ts-ignore
     // const modifiedTracks = await ifPrevNull(tracks, API.accessToken);
     // console.log(modifiedTracks);
-});
+};
 //////////////////////////////////
 export function favTracksDeleter() {
     favTracks = null;
 }
 document.body.addEventListener('click', mainHandler);
 window.addEventListener('resize', resize);
-export default APP;
+export { APP, favorite_track };
