@@ -4,6 +4,7 @@ const muteBtn = document.getElementsByClassName('volume-icon')[0] as SVGElement;
 let muteConditon: boolean = false;
 let volume = volumeSlider.value as unknown as number;
 let timeBefore: string;
+import { test } from "node:test";
 import { playingAudio } from "./OnPlayFunc.js";
 muteBtn.addEventListener('click', () => {
   switch (muteConditon) {
@@ -79,8 +80,12 @@ let artist = document.getElementsByClassName('artist')[0] as HTMLDivElement;
 let songName = document.getElementsByClassName('songName')[0] as HTMLDivElement;
 let audio: string | HTMLAudioElement | null;
 let audioIsPlaying = false;
+let testTracks: any[];
+let testI: number;
 export function onPlay(tracks: any[], i: number) {
   currentAudio = null;
+  testTracks = tracks;
+  testI = i;
   if (audioIsPlaying === true) {
     audio = null;
     audio = new Audio(tracks[i].track.preview_url!);
@@ -109,19 +114,7 @@ export function onPlay(tracks: any[], i: number) {
     return;
   })
 
-  prevBtn.addEventListener('click', () => {
-    //@ts-ignore
-    if (pauseCondition) {
-      pauseConditionChange();
-      playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
-    }
-    //@ts-ignore
-    i = i - 1;
-    //@ts-ignore
-    audio.pause();
-    audio = null;
-    currentAudio! = onPlay(tracks, i);
-  })
+
   audioIsPlaying = true;
   return audio;
 }
@@ -137,6 +130,34 @@ nextBtn.addEventListener('click', () => {
   }
   if (playingAudio) {
     //@ts-ignore
-    audio.currentTime = audio.duration - 0.100;
+    if (testI + 1 < testTracks.length) {
+      //@ts-ignore
+      console.log(testTracks.length)
+      console.log(testI)
+      //@ts-ignore
+      audio!.currentTime = audio!.duration - 0.100;
+    }
+  }
+})
+
+prevBtn.addEventListener('click', () => {
+  //@ts-ignore
+  if (pauseCondition) {
+    pauseConditionChange();
+    playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
+  }
+  if (playingAudio) {
+    //@ts-ignore
+    if (testI > 0) {
+      console.log(testI)
+      testI = testI - 1;
+      console.log(testI)
+    }
+    //@ts-ignore
+    audio.pause();
+    audio = null;
+    currentAudio! = null;
+    currentAudio! = onPlay(testTracks, testI);
+    return;
   }
 })
