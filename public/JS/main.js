@@ -89,13 +89,14 @@ const APP = (function (API, UI) {
             const resultTracksObj = await SearchAPP.handleInput('track');
             const albums = resultAlbumsObj.albums.items;
             const artists = resultArtistsObj.artists.items;
-            const playlists = resultPlaylistsObj.playlists.items;
+            const playlists = resultPlaylistsObj;
+            playlists.message = 'Tracks';
             const tracks = resultTracksObj.tracks.items;
             if (searchBox.value === '') {
                 requestBox.innerHTML = '';
             }
             else {
-                requestBox.innerHTML = htmlRecomm('Tracks', playlists, searchBox.value);
+                requestBox.innerHTML = htmlRecomm([playlists], searchBox.value);
             }
             console.log(searchBox.value);
             // console.log(albums)
@@ -113,15 +114,17 @@ const APP = (function (API, UI) {
         const featured = await API.getFeaturedPlaylists();
         const recentlyPlayed = await API.UserRecentlyPlayedTracks();
         let topTracks = await API.getUserTopTracks();
+        newReleases.message = 'New Releases';
         console.log('newReleases ', newReleases);
         console.log('featured ', featured);
         console.log('recentlyPlayed ', recentlyPlayed);
         console.log(topTracks);
         topTracks = topTracks.items.sort((el1, el2) => el1.popularity > el2.popularity ? -1 : 1);
         console.log('sorted ', topTracks);
-        // const html = htmlRecomm(genresName, playlist.albums.items);
+        // const html = htmlRecomm(, playlist.albums.items);
+        const html = htmlRecomm([featured, newReleases]);
         const requestBox = document.querySelector('.requestBox');
-        // requestBox.innerHTML = html;
+        requestBox.innerHTML = html;
     };
     const setLike = async (idTrack, likeCondition) => {
         const url = `https://api.spotify.com/v1/me/tracks?ids=${idTrack}`;

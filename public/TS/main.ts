@@ -9,7 +9,6 @@ import prepareTracks from './helpers/tracks/prepareTracksObj.js'
 import mainHandler from "./mainHandler.js";
 import { OnPlayFunc } from "./OnPlayFunc.js";
 import { addIsLikedKey } from './helpers/tracks/trackBoxFunc/trackBoxFunc.js';
-import playlistByGenres from './pagePartials/groupOfPlaylist/groupOfPlaylist.js'
 import resize from './Listeners/resize.js';
 import htmlRecomm from './pagePartials/groupOfPlaylist/groupOfPlaylist.js';
 
@@ -106,13 +105,15 @@ const APP = (function (API, UI) {
 
 			const albums = resultAlbumsObj.albums.items;
 			const artists = resultArtistsObj.artists.items;
-			const playlists = resultPlaylistsObj.playlists.items;
+			const playlists = resultPlaylistsObj;
+				playlists.message = 'Tracks';
 			const tracks = resultTracksObj.tracks.items;
 
 			if(searchBox.value === ''){
 				requestBox.innerHTML = ''
 			} else {
-				requestBox.innerHTML = htmlRecomm('Tracks', playlists, searchBox.value);
+
+				requestBox.innerHTML = htmlRecomm([playlists], searchBox.value);
 			}
 			console.log(searchBox.value)
 
@@ -134,6 +135,9 @@ const APP = (function (API, UI) {
 		const featured = await API.getFeaturedPlaylists();
 		const recentlyPlayed = await API.UserRecentlyPlayedTracks();
 		let topTracks = await API.getUserTopTracks();
+
+		newReleases.message = 'New Releases';
+		
 		console.log('newReleases ',newReleases );
 		console.log('featured ',featured );
 		console.log('recentlyPlayed ',recentlyPlayed );
@@ -143,9 +147,10 @@ const APP = (function (API, UI) {
 		console.log('sorted ', topTracks);
 
 
-		// const html = htmlRecomm(genresName, playlist.albums.items);
+		// const html = htmlRecomm(, playlist.albums.items);
+			const html = htmlRecomm([featured, newReleases])
 		const requestBox = document.querySelector('.requestBox')!;
-		// requestBox.innerHTML = html;
+		requestBox.innerHTML = html;
 
 	}
 
