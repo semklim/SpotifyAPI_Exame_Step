@@ -152,9 +152,6 @@
 }
 
 .shelf__content {
-	--column-width:157px; 
-	--column-count:8; 
-	--grid-gap:24px; 
 	--min-container-width:338px;
 	grid-gap: var(--grid-gap);
     display: grid;
@@ -281,6 +278,10 @@
 
 .playBtn > * {
 	pointer-events: none;
+}
+
+.displayNone__moreThen:nth-child(n + var(--column-count)){
+	display: none;
 }
 
 .shelf__content__playlist:focus-within .imgBox__PlayButton,
