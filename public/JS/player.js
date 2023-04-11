@@ -112,13 +112,10 @@ export function onPlay(tracks, i) {
         audio = new Audio(tracks[i].track.preview_url);
         audio.addEventListener('canplaythrough', function () {
             //@ts-ignore
-            console.log(volumeSlider.value / 100);
-            //@ts-ignore
             audio.volume = volumeSlider.value / 100;
             //@ts-ignore
             audio.play();
         });
-        console.log(audio.volume);
         artist.textContent = tracks[i].track.artists[0].name;
         songName.textContent = tracks[i].track.name;
         albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
