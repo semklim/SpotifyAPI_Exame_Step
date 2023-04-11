@@ -13,7 +13,7 @@ import htmlRecomm from './pagePartials/groupOfPlaylist/groupOfPlaylist.js';
 import { setNumberOfGridColumns } from "./helpers/setNumberOfColumns.js";
 
 const APP = (function (API, UI) {
-
+	let history: string[] = [];
 	const getToken = async () => {
 		if (Cookie.get('accessToken') === null) {
 			const { access_token, expires_in }: { access_token: string; expires_in: number } = await Auth.getToken();
@@ -131,6 +131,7 @@ const APP = (function (API, UI) {
 	}
 
 	const PageRecomm = async () => {
+
 		const newReleases = await API.getNewReleases();
 		const featured = await API.getFeaturedPlaylists();
 		const recentlyPlayed = await API.UserRecentlyPlayedTracks();
@@ -140,7 +141,7 @@ const APP = (function (API, UI) {
 		
 		console.log('newReleases ',newReleases );
 		console.log('featured ',featured );
-		console.log('recentlyPlayed ',recentlyPlayed );
+		console.log('recentlyPlayed ',recentlyPlayed);
 		
 		console.log(topTracks);
 		topTracks = topTracks.items.sort((el1: any, el2: any) => el1.popularity > el2.popularity ? -1 : 1);
@@ -175,10 +176,15 @@ const APP = (function (API, UI) {
 
 		
 		
-			const html = htmlRecomm([featured, result, newReleases])
+			const html = htmlRecomm([featured, result, newReleases]);
 		const requestBox = document.querySelector('.requestBox')!;
-		requestBox.innerHTML = html;
+		if(history.length === 0){
+			history[0] = html;
+		}else{
+			history.push(html);
+		}
 
+		requestBox.innerHTML = html;
 	}
 
 	const setLike = async (idTrack: string, likeCondition: boolean) => {
@@ -191,6 +197,8 @@ const APP = (function (API, UI) {
 	}
 
 	return {
+		history: history,
+
 		initLogin() {
 			initLogin();
 		},
@@ -207,8 +215,8 @@ const APP = (function (API, UI) {
 			UserProfile();
 		},
 
-		PageRecomm() {
-			PageRecomm();
+		async PageRecomm() {
+			await PageRecomm();
 		},
 
 		PageSearch() {
@@ -261,10 +269,13 @@ if ((Cookie.get('accessToken'))) {
 }
 
 btn.addEventListener('click', logicOfLoginBtn);
-APP.PageRecomm();
 setNumberOfGridColumns();
-document.body.addEventListener('click', mainHandler);
-window.addEventListener('resize',setNumberOfGridColumns);
+
+	APP.PageRecomm().then(() => {
+		document.body.addEventListener('click', mainHandler);
+	});
+
+	window.addEventListener('resize',setNumberOfGridColumns);
 
 //////////////
 const ifPrevNull = async function (obj: any, token: string) {

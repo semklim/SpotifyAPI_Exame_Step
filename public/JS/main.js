@@ -11,6 +11,7 @@ import { addIsLikedKey } from './helpers/tracks/trackBoxFunc/trackBoxFunc.js';
 import htmlRecomm from './pagePartials/groupOfPlaylist/groupOfPlaylist.js';
 import { setNumberOfGridColumns } from "./helpers/setNumberOfColumns.js";
 const APP = (function (API, UI) {
+    let history = [];
     const getToken = async () => {
         if (Cookie.get('accessToken') === null) {
             const { access_token, expires_in } = await Auth.getToken();
@@ -149,6 +150,12 @@ const APP = (function (API, UI) {
         console.log('count ', count);
         const html = htmlRecomm([featured, result, newReleases]);
         const requestBox = document.querySelector('.requestBox');
+        if (history.length === 0) {
+            history[0] = html;
+        }
+        else {
+            history.push(html);
+        }
         requestBox.innerHTML = html;
     };
     const setLike = async (idTrack, likeCondition) => {
@@ -161,6 +168,7 @@ const APP = (function (API, UI) {
         }
     };
     return {
+        history: history,
         initLogin() {
             initLogin();
         },
@@ -173,8 +181,8 @@ const APP = (function (API, UI) {
         UserProfile() {
             UserProfile();
         },
-        PageRecomm() {
-            PageRecomm();
+        async PageRecomm() {
+            await PageRecomm();
         },
         PageSearch() {
             PageSearch();
@@ -218,9 +226,10 @@ else {
     APP.getToken();
 }
 btn.addEventListener('click', logicOfLoginBtn);
-APP.PageRecomm();
 setNumberOfGridColumns();
-document.body.addEventListener('click', mainHandler);
+APP.PageRecomm().then(() => {
+    document.body.addEventListener('click', mainHandler);
+});
 window.addEventListener('resize', setNumberOfGridColumns);
 //////////////
 const ifPrevNull = async function (obj, token) {

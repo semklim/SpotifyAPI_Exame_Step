@@ -1,16 +1,22 @@
 import { OnPlayFunc } from "./OnPlayFunc.js";
 import { APP, favorite_track } from "./main.js";
 const requestBox = document.getElementsByClassName('requestBox')[0];
-const history = [];
-let historyIndex = 0;
-function historyLogic() {
-    history.push(requestBox.innerHTML);
-    historyIndex = history.length - 1;
+const pauseInMinutes = 5;
+let pausedTillDate = new Date(Date.now() + (pauseInMinutes * 60 * 1000));
+let historyIndex = 1;
+function historyLogic(index) {
+    if (index) {
+        APP.history[index] = requestBox.innerHTML;
+    }
+    else {
+        APP.history.push(requestBox.innerHTML);
+        historyIndex = APP.history.length - 1;
+    }
 }
 ;
 function keepChronology() {
-    if (historyIndex !== (history.length - 1) && history.length !== 0) {
-        history.length = historyIndex + 1;
+    if (historyIndex !== (APP.history.length - 1) && APP.history.length !== 0) {
+        APP.history.length = historyIndex;
     }
 }
 ;
@@ -42,22 +48,34 @@ async function mainHandler(e) {
     if (className.includes('btn-controls-contents__left')) {
         if (historyIndex - 1 >= 0) {
             historyIndex = historyIndex - 1;
-            const html = history[historyIndex];
+        }
+        if (APP.history.length === 1) {
+            const html = APP.history[0];
             requestBox.innerHTML = html;
         }
-        if (history.length === 1) {
-            const html = history[0];
+        else {
+            const html = APP.history[historyIndex];
             requestBox.innerHTML = html;
         }
-    }
-    if (className.includes('trackPlayBtn')) {
-        // OnPlayFunc();
     }
     if (className.includes('btn-controls-contents__right')) {
-        if (historyIndex + 1 < history.length) {
+        if (historyIndex < APP.history.length - 1) {
             historyIndex = historyIndex + 1;
-            const html = history[historyIndex];
+            const html = APP.history[historyIndex];
             requestBox.innerHTML = html;
+        }
+    }
+    if (className.includes('nav-bar__main-page-link')) {
+        if (pausedTillDate && pausedTillDate > new Date()) {
+            keepChronology();
+            requestBox.innerHTML = APP.history[0];
+            historyLogic();
+        }
+        else {
+            keepChronology();
+            await APP.PageRecomm();
+            pausedTillDate = new Date(Date.now() + (pauseInMinutes * 60 * 1000));
+            historyLogic();
         }
     }
     // WORK OF LIKE
@@ -106,6 +124,20 @@ async function mainHandler(e) {
             searchBar.remove();
         }
         historyLogic();
+    }
+    if (className.includes('showAll')) {
+        const parent = target.closest('.shelf__control');
+        const card = parent.nextElementSibling;
+        if (card.getAttribute('data-is-visible') === 'true') {
+            card.classList.toggle('displayNone__moreThen');
+            card.setAttribute('data-is-visible', 'false');
+            target.textContent = "Show all";
+        }
+        else {
+            card.classList.toggle('displayNone__moreThen');
+            card.setAttribute('data-is-visible', 'true');
+            target.textContent = "Hide";
+        }
     }
 }
 export default mainHandler;
