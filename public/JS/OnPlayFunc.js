@@ -7,6 +7,7 @@ import { favTracks } from "./main.js";
 import { favTracksDeleter } from "./main.js";
 import API from "./API.js";
 import prepareTracks from "./helpers/tracks/prepareTracksObj.js";
+import { volumeSlider } from "./player.js";
 export function findObjectByParam(array, value, anotherArray) {
     // favTracks =
     for (let i = 0; i < array.length; i += 1) {
@@ -55,6 +56,8 @@ export function OnPlayFunc(tracks) {
                 if (typeof index === "number") {
                     //@ts-ignore
                     playingAudio = onPlay(tracks, index);
+                    //@ts-ignore
+                    playingAudio.volume = volumeSlider.value / 100;
                 }
                 else {
                     const refreshPlaylist = async () => {
@@ -64,6 +67,8 @@ export function OnPlayFunc(tracks) {
                         tracks = tracksObj;
                         // @ts-ignore
                         playingAudio = onPlay(tracks, findObjectByParam(tracks, url, favTracks));
+                        //@ts-ignore
+                        playingAudio.volume = volumeSlider.value / 100;
                     };
                     refreshPlaylist();
                 }
