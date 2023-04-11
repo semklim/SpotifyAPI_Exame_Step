@@ -1,14 +1,14 @@
 import { OnPlayFunc } from "./OnPlayFunc.js";
-import {APP, favorite_track } from "./main.js";
+import { APP, favorite_track } from "./main.js";
 const requestBox = document.getElementsByClassName('requestBox')[0];
 const pauseInMinutes = 5;
 let pausedTillDate = new Date(Date.now() + (pauseInMinutes * 60 * 1000));
 let historyIndex: number = 1;
 
 function historyLogic(index?: number) {
-	if(index){
+	if (index) {
 		APP.history[index] = requestBox.innerHTML;
-	}else{
+	} else {
 		APP.history.push(requestBox.innerHTML);
 		historyIndex = APP.history.length - 1;
 	}
@@ -51,10 +51,10 @@ async function mainHandler(e: Event) {
 		if (historyIndex - 1 >= 0) {
 			historyIndex = historyIndex - 1;
 		}
-		if(APP.history.length === 1){
+		if (APP.history.length === 1) {
 			const html = APP.history[0];
 			requestBox.innerHTML = html;
-		} else{
+		} else {
 			const html = APP.history[historyIndex];
 			requestBox.innerHTML = html;
 		}
@@ -68,12 +68,12 @@ async function mainHandler(e: Event) {
 		}
 	}
 
-	if(className.includes('nav-bar__main-page-link')){
-		if(pausedTillDate && pausedTillDate > new Date()){
+	if (className.includes('nav-bar__main-page-link')) {
+		if (pausedTillDate && pausedTillDate > new Date()) {
 			keepChronology();
 			requestBox.innerHTML = APP.history[0];
 			historyLogic();
-		}else{
+		} else {
 			keepChronology();
 			await APP.PageRecomm();
 			pausedTillDate = new Date(Date.now() + (pauseInMinutes * 60 * 1000));
@@ -130,30 +130,31 @@ async function mainHandler(e: Event) {
 		OnPlayFunc();
 	}
 
-	if(className.includes('nav-bar-library-link-box')){
+	if (className.includes('nav-bar-library-link-box')) {
 		const searchBar = document.querySelector('.wrapper')!;
 		keepChronology();
 
 		await favorite_track();
-		if(searchBar) {
+		if (searchBar) {
 			searchBar.remove();
 		}
 		historyLogic();
 
 	}
-	if(className.includes('showAll')){
+	if (className.includes('showAll')) {
 		const parent = target.closest('.shelf__control')!;
 		const card = parent.nextElementSibling!;
-		if(card.getAttribute('data-is-visible') === 'true'){
+		if (card.getAttribute('data-is-visible') === 'true') {
 			card.classList.toggle('displayNone__moreThen');
 			card.setAttribute('data-is-visible', 'false');
 			target.textContent = "Show all";
-		}else{
+		} else {
 			card.classList.toggle('displayNone__moreThen');
 			card.setAttribute('data-is-visible', 'true');
 			target.textContent = "Hide";
 		}
 	}
+
 }
 
 export default mainHandler;

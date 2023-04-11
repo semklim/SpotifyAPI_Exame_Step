@@ -7,6 +7,7 @@ import { favTracks } from "./main.js";
 import { favTracksDeleter } from "./main.js";
 import API from "./API.js"
 import prepareTracks from "./helpers/tracks/prepareTracksObj.js"
+import { volumeSlider } from "./player.js";
 
 export function findObjectByParam(array: any[], value: string, anotherArray: any[]) {
     // favTracks =
@@ -15,7 +16,6 @@ export function findObjectByParam(array: any[], value: string, anotherArray: any
         //@ts-ignore
         if (array[i].track.preview_url === value) {
             //@ts-ignore
-            console.log(i)
             return i;
         } else if (anotherArray) {
             // @ts-ignore
@@ -47,6 +47,20 @@ export function OnPlayFunc(tracks?) {
             currentAudio.pause();
         }
         const target = (event!.target as HTMLElement);
+        if (target.className.includes("play-favorite-track__button")) {
+            const refreshPlaylist = async () => {
+                // @ts-ignore
+                const playlistId = target.getAttribute('data-playlist-id');
+                const playlist = await API.GetPlaylist(playlistId!);
+                const tracksObj = await prepareTracks(playlist, API);
+                tracks = tracksObj!;
+                // @ts-ignore
+                playingAudio = onPlay(tracksObj, 0);
+                //@ts-ignore
+                playingAudio.volume = volumeSlider.value / 100
+            };
+            refreshPlaylist();
+        }
         if (target.className === "trackPlayBtn") {
             const url = target.getAttribute('href')!;
             if (favTracks) {
@@ -54,21 +68,24 @@ export function OnPlayFunc(tracks?) {
             }
             if (url !== 'null') {
                 const index = findObjectByParam(tracks, url, favTracks);
-
                 if (typeof index === "number") {
                     //@ts-ignore
                     playingAudio = onPlay(tracks, index);
+                    //@ts-ignore
+                    playingAudio.volume = volumeSlider.value / 100
                 } else {
                     const refreshPlaylist = async () => {
-                        const playlistId = document.querySelector('.play-favorite-track__button')!.getAttribute('data-playlist-id');
+                        // @ts-ignore
+                        const playlistId = target.getAttribute('data-playlist-id');
                         const playlist = await API.GetPlaylist(playlistId!);
                         const tracksObj = await prepareTracks(playlist, API);
 
                         tracks = tracksObj!;
                         // @ts-ignore
                         playingAudio = onPlay(tracks, findObjectByParam(tracks, url, favTracks)!);
+                        //@ts-ignore
+                        playingAudio.volume = volumeSlider.value / 100
                     };
-
                     refreshPlaylist();
                 }
             } else {
