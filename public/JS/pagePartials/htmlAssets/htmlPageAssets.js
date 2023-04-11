@@ -211,7 +211,6 @@ class Assets {
         return { searchBox, box };
     }
     static tracksByPlaylist(obj) {
-        console.log(obj);
         const tracks = obj.tracks.items;
         const color = randomColor();
         const html = `

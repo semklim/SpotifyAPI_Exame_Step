@@ -14,11 +14,9 @@ const APP = (function (API, UI) {
     let history = [];
     let isLoggedIn = false;
     const getToken = async () => {
-        if (Cookie.get('accessToken') === null) {
-            const { access_token, expires_in } = await Auth.getToken();
-            API.accessToken = access_token;
-            API.expires_in = new Date(Date.now() + (expires_in * 1000));
-        }
+        const { access_token, expires_in } = await Auth.getToken();
+        API.accessToken = access_token;
+        API.expires_in = new Date(Date.now() + (expires_in * 1000));
     };
     const initLogin = async () => {
         await Auth.login();
@@ -31,7 +29,8 @@ const APP = (function (API, UI) {
         Cookie.set('userProfile', JSON.stringify(API.user), 15);
         btn.setAttribute('data-isLoggedIn', 'true');
         btn.textContent = "Logout";
-        isLoggedIn = true;
+        APP.isLoggedIn = true;
+        await APP.PageRecomm();
     };
     const initLogout = async () => {
         const url = 'https://accounts.spotify.com/en/logout';
@@ -45,7 +44,9 @@ const APP = (function (API, UI) {
         btn.setAttribute('data-isLoggedIn', 'false');
         btn.textContent = "Login";
         Cookie.clearAllCookie();
-        isLoggedIn = false;
+        APP.isLoggedIn = false;
+        await APP.getToken();
+        await APP.PageRecomm();
     };
     const UserProfile = async () => {
         const user = await API.UserProfile();
@@ -115,24 +116,10 @@ const APP = (function (API, UI) {
         });
     };
     const PageRecomm = async () => {
-        let recentlyPlayed = null;
-        let topTracks = null;
-        let newReleases = null;
-        if (isLoggedIn) {
-            recentlyPlayed = await API.UserRecentlyPlayedTracks();
-            recentlyPlayed.message = "Recently Played";
-            // topTracks = await API.getUserTopTracks();
-        }
-        newReleases = await API.getNewReleases();
+        const newReleases = await API.getNewReleases();
         newReleases.message = 'New Releases';
         const featured = await API.getFeaturedPlaylists();
-        console.log('newReleases ', newReleases);
-        console.log('featured ', featured);
-        console.log('recentlyPlayed ', recentlyPlayed);
-        // console.log(topTracks);
-        // topTracks = topTracks.items.sort((el1: any, el2: any) => el1.popularity > el2.popularity ? -1 : 1);
-        // console.log('sorted ', topTracks);
-        const query = 'daily';
+        const query = APP.isLoggedIn ? 'daily' : 'Spotify';
         const type = 'playlist';
         const url = `https://api.spotify.com/v1/search?q=${query}&type=${type}&market=ES&limit=50&offset=0`;
         const result = await API.get(url);
@@ -153,21 +140,18 @@ const APP = (function (API, UI) {
             }
             return false;
         });
-        result.playlists.items = [...count, ...result.playlists.items];
-        result.message = `Made For ${API.user ? API.user.display_name : ''}`;
-        console.log('result ', result);
-        console.log('count ', count);
-        let arrRes = [featured, result, newReleases];
-        if (isLoggedIn) {
-            arrRes = [recentlyPlayed, ...arrRes];
+        if (count.length !== 0) {
+            result.playlists.items = [...count, ...result.playlists.items];
         }
+        result.message = `${API.user ? 'Made For ' + API.user.display_name : 'Spotify playlists'}`;
+        let arrRes = [featured, result, newReleases];
         const html = htmlRecomm(arrRes);
         const requestBox = document.querySelector('.requestBox');
-        if (history.length === 0) {
-            history[0] = html;
+        if (APP.history.length === 0) {
+            APP.history[0] = html;
         }
         else {
-            history.push(html);
+            APP.history.push(html);
         }
         requestBox.innerHTML = html;
     };
@@ -216,6 +200,7 @@ const APP = (function (API, UI) {
     };
 })(API, UI);
 function logicOfLoginBtn() {
+    APP.history.length = 0;
     if (btn.getAttribute('data-isLoggedIn') === 'false') {
         APP.initLogin();
     }
@@ -240,9 +225,9 @@ if ((Cookie.get('accessToken'))) {
 }
 else {
     Cookie.clearAllCookie();
-    btn.addEventListener('click', logicOfLoginBtn);
     APP.getToken().then(() => {
-        APP.PageRecomm().then(() => {
+        APP.PageRecomm()
+            .then(() => {
             document.body.addEventListener('click', mainHandler);
         });
     });
