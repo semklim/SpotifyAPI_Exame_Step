@@ -139,6 +139,7 @@ const APP = (function (API, UI) {
 
 		const newReleases = await API.getNewReleases();
 		newReleases.message = 'New Releases';
+		console.log(newReleases);
 		const featured = await API.getFeaturedPlaylists();
 
 		const query = APP.isLoggedIn ? 'daily' : 'Spotify';

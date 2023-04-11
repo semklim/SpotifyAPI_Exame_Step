@@ -110,6 +110,10 @@ class SpotifyAPI {
 					&limit=50`;
         return this.get(url);
     }
+    getAlbum(albumId) {
+        const url = `https://api.spotify.com/v1/albums/${albumId}`;
+        return this.get(url);
+    }
     /**
  * Makes an authenticated GET request to the Spotify Web API.
  * @param {string} url - The URL to make the request to Spotify Web API.

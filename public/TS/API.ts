@@ -168,6 +168,10 @@ class SpotifyAPI implements APIClient {
 		return this.get(url);
 	}
 
+	getAlbum (albumId: string){
+		const url = `https://api.spotify.com/v1/albums/${albumId}`;
+		return this.get(url);
+	}
 
 	  /**
    * Makes an authenticated GET request to the Spotify Web API.
