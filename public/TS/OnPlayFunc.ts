@@ -47,7 +47,7 @@ export function OnPlayFunc(tracks?) {
             currentAudio.pause();
         }
         const target = (event!.target as HTMLElement);
-        if (target.className === "play-favorite-track__button") {
+        if (target.className.includes("play-favorite-track__button")) {
             const refreshPlaylist = async () => {
                 // @ts-ignore
                 const playlistId = target.getAttribute('data-playlist-id');
