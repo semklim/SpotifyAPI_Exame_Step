@@ -125,5 +125,19 @@ async function mainHandler(e) {
         }
         historyLogic();
     }
+    if (className.includes('showAll')) {
+        const parent = target.closest('.shelf__control');
+        const card = parent.nextElementSibling;
+        if (card.getAttribute('data-is-visible') === 'true') {
+            card.classList.toggle('displayNone__moreThen');
+            card.setAttribute('data-is-visible', 'false');
+            target.textContent = "Show all";
+        }
+        else {
+            card.classList.toggle('displayNone__moreThen');
+            card.setAttribute('data-is-visible', 'true');
+            target.textContent = "Hide";
+        }
+    }
 }
 export default mainHandler;
