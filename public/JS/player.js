@@ -1,4 +1,4 @@
-//volume
+//VOLUME
 export const volumeSlider = document.getElementById('volumeSlider');
 volumeSlider.value = '60';
 const muteBtn = document.getElementsByClassName('volume-icon')[0];
@@ -54,7 +54,7 @@ volumeSlider.addEventListener('input', () => {
         muteBtn.innerHTML = '<svg role="presentation" height="16" width="16" aria-hidden="true" aria-label="Низкая громкость" class="volume-icon" id= "volume-icon" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path fill="#dddcdc" d="M9.741.85a.75.75 0 0 1 .375.65v13a.75.75 0 0 1-1.125.65l-6.925-4a3.642 3.642 0 0 1-1.33-4.967 3.639 3.639 0 0 1 1.33-1.332l6.925-4a.75.75 0 0 1 .75 0zm-6.924 5.3a2.139 2.139 0 0 0 0 3.7l5.8 3.35V2.8l-5.8 3.35zm8.683 4.29V5.56a2.75 2.75 0 0 1 0 4.88z"></path></svg>';
     }
 });
-//play/pause
+//PLAY/PAUSE
 let playBtn = document.getElementsByClassName('play-pauseBtn')[0];
 export let playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0];
 export let pauseCondition = false;
@@ -136,7 +136,12 @@ export function onPlay(tracks, i) {
     }
     //@ts-ignore
     audio.addEventListener('ended', () => {
-        i = i + 1;
+        if (repeatCondition === false) {
+            i = i + 1;
+        }
+        else if (repeatCondition === true) {
+            i = i + 0;
+        }
         currentAudio = onPlay(tracks, i);
         return;
     });
@@ -178,3 +183,19 @@ prevBtn.addEventListener('click', () => {
         return;
     }
 });
+//REPEAT MODE
+let repeatCondition = false;
+let repeatBtn = document.getElementsByClassName('repeatTrackSvg')[0];
+function repeat() {
+    switch (repeatCondition) {
+        case false:
+            repeatBtn.setAttribute("fill", "green");
+            repeatCondition = true;
+            break;
+        case true:
+            repeatBtn.setAttribute("fill", "#909090");
+            repeatCondition = false;
+            break;
+    }
+}
+repeatBtn.addEventListener('click', repeat);

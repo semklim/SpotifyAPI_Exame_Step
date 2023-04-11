@@ -1,4 +1,4 @@
-//volume
+//VOLUME
 export const volumeSlider = document.getElementById('volumeSlider') as HTMLInputElement;
 volumeSlider.value = '60';
 const muteBtn = document.getElementsByClassName('volume-icon')[0] as SVGElement;
@@ -53,7 +53,7 @@ volumeSlider.addEventListener('input', () => {
   }
 })
 
-//play/pause
+//PLAY/PAUSE
 let playBtn = document.getElementsByClassName('play-pauseBtn')[0] as HTMLButtonElement;
 export let playBtnSVG = document.getElementsByClassName('play-pauseSVG')[0] as SVGElement;
 export let pauseCondition: boolean = false;
@@ -131,7 +131,11 @@ export function onPlay(tracks: any[], i: number) {
   }
   //@ts-ignore
   audio!.addEventListener('ended', () => {
-    i = i + 1;
+    if (repeatCondition === false) {
+      i = i + 1;
+    } else if (repeatCondition === true) {
+      i = i + 0;
+    }
     currentAudio = onPlay(tracks, i);
     return;
   })
@@ -178,3 +182,21 @@ prevBtn.addEventListener('click', () => {
     return;
   }
 })
+
+//REPEAT MODE
+let repeatCondition: boolean = false;
+let repeatBtn = document.getElementsByClassName('repeatTrackSvg')[0] as SVGElement;
+function repeat() {
+  switch (repeatCondition) {
+    case false:
+      repeatBtn.setAttribute("fill", "green");
+      repeatCondition = true;
+      break;
+    case true:
+      repeatBtn.setAttribute("fill", "#909090");
+      repeatCondition = false;
+      break;
+  }
+}
+
+repeatBtn.addEventListener('click', repeat);
