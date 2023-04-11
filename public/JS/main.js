@@ -8,9 +8,8 @@ import prepareTracks from './helpers/tracks/prepareTracksObj.js';
 import mainHandler from "./mainHandler.js";
 import { OnPlayFunc } from "./OnPlayFunc.js";
 import { addIsLikedKey } from './helpers/tracks/trackBoxFunc/trackBoxFunc.js';
-import resize from './Listeners/resize.js';
 import htmlRecomm from './pagePartials/groupOfPlaylist/groupOfPlaylist.js';
-const btn = document.querySelector('.login');
+import { setNumberOfGridColumns } from "./helpers/setNumberOfColumns.js";
 const APP = (function (API, UI) {
     const getToken = async () => {
         if (Cookie.get('accessToken') === null) {
@@ -123,10 +122,34 @@ const APP = (function (API, UI) {
         console.log(topTracks);
         topTracks = topTracks.items.sort((el1, el2) => el1.popularity > el2.popularity ? -1 : 1);
         console.log('sorted ', topTracks);
-        // const html = htmlRecomm(, playlist.albums.items);
-        // const html = htmlRecomm([featured, newReleases])
-        // const requestBox = document.querySelector('.requestBox')!;
-        // requestBox.innerHTML = html;
+        const query = 'daily';
+        const type = 'playlist';
+        const url = `https://api.spotify.com/v1/search?q=${query}&type=${type}&market=ES&limit=50&offset=0`;
+        const result = await API.get(url);
+        let count = [];
+        result.playlists.items = result.playlists.items.filter((el) => {
+            if (el.owner.display_name === 'Spotify') {
+                if (el.name.includes('Daily')) {
+                    const number = el.name.match(/\d/g) ? el.name.match(/\d/g)[0] : undefined;
+                    if (number && !count[number - 1]) {
+                        count[number - 1] = el;
+                        return false;
+                    }
+                }
+                if (el.name.includes('Daily Mix')) {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        });
+        result.playlists.items = [...count, ...result.playlists.items];
+        result.message = `Made For ${API.user.display_name}`;
+        console.log('result ', result);
+        console.log('count ', count);
+        const html = htmlRecomm([featured, result, newReleases]);
+        const requestBox = document.querySelector('.requestBox');
+        requestBox.innerHTML = html;
     };
     const setLike = async (idTrack, likeCondition) => {
         const url = `https://api.spotify.com/v1/me/tracks?ids=${idTrack}`;
@@ -170,7 +193,6 @@ const APP = (function (API, UI) {
         }
     };
 })(API, UI);
-APP.getToken();
 function logicOfLoginBtn() {
     if (btn.getAttribute('data-isLoggedIn') === 'false') {
         APP.initLogin();
@@ -179,6 +201,7 @@ function logicOfLoginBtn() {
         APP.initLogout();
     }
 }
+const btn = document.querySelector('.login');
 if ((Cookie.get('accessToken'))) {
     Auth.refreshToken = Cookie.get('refreshToken');
     Auth.accessToken = Cookie.get('accessToken');
@@ -188,13 +211,17 @@ if ((Cookie.get('accessToken'))) {
     API.user = JSON.parse(Cookie.get('userProfile'));
     btn.textContent = "Logout";
     btn.setAttribute('data-isLoggedIn', 'true');
-    btn.addEventListener('click', logicOfLoginBtn);
 }
 else {
     Cookie.clearAllCookie();
     btn.addEventListener('click', logicOfLoginBtn);
+    APP.getToken();
 }
+btn.addEventListener('click', logicOfLoginBtn);
 APP.PageRecomm();
+setNumberOfGridColumns();
+document.body.addEventListener('click', mainHandler);
+window.addEventListener('resize', setNumberOfGridColumns);
 //////////////
 const ifPrevNull = async function (obj, token) {
     const modifiedTracks = await Promise.all(obj.map(async (el) => {
@@ -237,6 +264,4 @@ const favorite_track = async () => {
 export function favTracksDeleter() {
     favTracks = null;
 }
-document.body.addEventListener('click', mainHandler);
-window.addEventListener('resize', resize);
 export { APP, favorite_track };

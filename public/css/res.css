@@ -280,7 +280,7 @@
 	pointer-events: none;
 }
 
-.displayNone__moreThen:nth-child(n + var(--column-count)){
+.displayNone__moreThen .shelf__content__playlist:nth-child(n + var(--column-count)){
 	display: none;
 }
 

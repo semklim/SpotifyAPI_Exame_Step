@@ -9,7 +9,7 @@ const listOfPlaylists = (list, listLength) => {
             continue;
         }
         const img = images[0].url ? images[0].url : '';
-        html += `<div class="displayNone__moreThen shelf__content__playlist" id = "${id}">
+        html += `<div class="shelf__content__playlist" id = "${id}">
 					<div class="playlist__imgBox">
 						<div class="imgBox__img">
 							<img aria-hidden="false" draggable="false" loading="lazy" src="${img}" alt="">
@@ -59,7 +59,7 @@ function genPlaylistCards(arrayOfPlaylists) {
 							<span class="showAll" data-href="${href}">Show all</span>
 						</div>
 					</div>
-					<div class="shelf__content">
+					<div class="displayNone__moreThen shelf__content">
 					${listOfPlaylists(objOfEL.items, listLength)}
 					</div>
 				</section>`;
