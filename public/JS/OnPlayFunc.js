@@ -14,7 +14,6 @@ export function findObjectByParam(array, value, anotherArray) {
         //@ts-ignore
         if (array[i].track.preview_url === value) {
             //@ts-ignore
-            console.log(i);
             return i;
         }
         else if (anotherArray) {
@@ -46,6 +45,20 @@ export function OnPlayFunc(tracks) {
             currentAudio.pause();
         }
         const target = event.target;
+        if (target.className === "play-favorite-track__button") {
+            const refreshPlaylist = async () => {
+                // @ts-ignore
+                const playlistId = target.getAttribute('data-playlist-id');
+                const playlist = await API.GetPlaylist(playlistId);
+                const tracksObj = await prepareTracks(playlist, API);
+                tracks = tracksObj;
+                // @ts-ignore
+                playingAudio = onPlay(tracksObj, 0);
+                //@ts-ignore
+                playingAudio.volume = volumeSlider.value / 100;
+            };
+            refreshPlaylist();
+        }
         if (target.className === "trackPlayBtn") {
             const url = target.getAttribute('href');
             if (favTracks) {
@@ -61,7 +74,8 @@ export function OnPlayFunc(tracks) {
                 }
                 else {
                     const refreshPlaylist = async () => {
-                        const playlistId = document.querySelector('.play-favorite-track__button').getAttribute('data-playlist-id');
+                        // @ts-ignore
+                        const playlistId = target.getAttribute('data-playlist-id');
                         const playlist = await API.GetPlaylist(playlistId);
                         const tracksObj = await prepareTracks(playlist, API);
                         tracks = tracksObj;
