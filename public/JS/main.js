@@ -30,7 +30,9 @@ const APP = (function (API, UI) {
         btn.setAttribute('data-isLoggedIn', 'true');
         btn.textContent = "Logout";
         APP.isLoggedIn = true;
-        await APP.PageRecomm();
+        APP.PageRecomm().then(() => {
+            window.addEventListener('click', mainHandler);
+        });
     };
     const initLogout = async () => {
         const url = 'https://accounts.spotify.com/en/logout';
@@ -46,7 +48,9 @@ const APP = (function (API, UI) {
         Cookie.clearAllCookie();
         APP.isLoggedIn = false;
         await APP.getToken();
-        await APP.PageRecomm();
+        APP.PageRecomm().then(() => {
+            window.addEventListener('click', mainHandler);
+        });
     };
     const UserProfile = async () => {
         const user = await API.UserProfile();
@@ -129,7 +133,8 @@ const APP = (function (API, UI) {
             if (el.owner.display_name === 'Spotify') {
                 if (el.name.includes('Daily')) {
                     const number = el.name.match(/\d/g) ? el.name.match(/\d/g)[0] : undefined;
-                    if (number && !count[number - 1]) {
+                    const random = Math.round(Math.random() * 101);
+                    if (number && !count[number - 1] || random > 50) {
                         count[number - 1] = el;
                         return false;
                     }
@@ -201,6 +206,7 @@ const APP = (function (API, UI) {
     };
 })(API, UI);
 function logicOfLoginBtn() {
+    removeEventListener('click', mainHandler);
     APP.history.length = 0;
     if (btn.getAttribute('data-isLoggedIn') === 'false') {
         APP.initLogin();
@@ -221,7 +227,7 @@ if ((Cookie.get('accessToken'))) {
     btn.setAttribute('data-isLoggedIn', 'true');
     APP.isLoggedIn = true;
     APP.PageRecomm().then(() => {
-        document.body.addEventListener('click', mainHandler);
+        window.addEventListener('click', mainHandler);
     });
 }
 else {
@@ -229,7 +235,7 @@ else {
     APP.getToken().then(() => {
         APP.PageRecomm()
             .then(() => {
-            document.body.addEventListener('click', mainHandler);
+            window.addEventListener('click', mainHandler);
         });
     });
 }
