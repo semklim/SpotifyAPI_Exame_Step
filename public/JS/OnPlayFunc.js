@@ -9,16 +9,28 @@ import API from "./API.js";
 import { prepareTracks } from "./helpers/tracks/prepareTracksObj.js";
 import { volumeSlider } from "./player.js";
 export function findObjectByParam(array, value, anotherArray) {
-    // favTracks =
-    for (let i = 0; i < array.length; i += 1) {
-        //@ts-ignore
-        if (array[i].track.preview_url === value) {
+    console.log(array);
+    //@ts-ignore
+    if (array.track) {
+        for (let i = 0; i < array.length; i += 1) {
             //@ts-ignore
-            return i;
+            if (array[i].track.preview_url === value) {
+                //@ts-ignore
+                return i;
+            }
+            else if (anotherArray) {
+                // @ts-ignore
+                if (anotherArray[i].track.preview_url === value) {
+                    return i;
+                }
+            }
         }
-        else if (anotherArray) {
-            // @ts-ignore
-            if (anotherArray[i].track.preview_url === value) {
+    }
+    else {
+        for (let i = 0; i < array.length; i += 1) {
+            //@ts-ignore
+            if (array[i].preview_url === value) {
+                //@ts-ignore
                 return i;
             }
         }

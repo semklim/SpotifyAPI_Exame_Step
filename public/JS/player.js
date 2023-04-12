@@ -108,28 +108,59 @@ export function onPlay(tracks, i) {
     testTracks = tracks;
     testI = i;
     if (audioIsPlaying === true) {
-        audio = null;
-        audio = new Audio(tracks[i].track.preview_url);
-        audio.addEventListener('canplaythrough', function () {
-            //@ts-ignore
-            audio.volume = volumeSlider.value / 100;
-            //@ts-ignore
-            audio.play();
-        });
-        artist.textContent = tracks[i].track.artists[0].name;
-        songName.textContent = tracks[i].track.name;
-        albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+        if (tracks[i].track) {
+            audio = null;
+            audio = new Audio(tracks[i].track.preview_url);
+            audio.addEventListener('canplaythrough', function () {
+                //@ts-ignore
+                audio.volume = volumeSlider.value / 100;
+                //@ts-ignore
+                audio.play();
+            });
+            artist.textContent = tracks[i].track.artists[0].name;
+            songName.textContent = tracks[i].track.name;
+            albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+        }
+        else {
+            audio = null;
+            audio = new Audio(tracks[i].preview_url);
+            audio.addEventListener('canplaythrough', function () {
+                //@ts-ignore
+                audio.volume = volumeSlider.value / 100;
+                //@ts-ignore
+                audio.play();
+            });
+            artist.textContent = tracks[i].artists[0].name;
+            songName.textContent = tracks[i].name;
+            let element = document.querySelector('.favorite-tracks__play-list');
+            let album = element.style.backgroundImage;
+            albumCover.style.backgroundImage = `${album}`;
+        }
     }
     else if (audioIsPlaying === false) {
         audio = null;
-        audio = new Audio(tracks[i].track.preview_url);
-        audio.addEventListener('canplaythrough', function () {
-            //@ts-ignore
-            audio.play();
-        });
-        artist.textContent = tracks[i].track.artists[0].name;
-        songName.textContent = tracks[i].track.name;
-        albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+        if (tracks[i].track) {
+            audio = new Audio(tracks[i].track.preview_url);
+            audio.addEventListener('canplaythrough', function () {
+                //@ts-ignore
+                audio.play();
+            });
+            artist.textContent = tracks[i].track.artists[0].name;
+            songName.textContent = tracks[i].track.name;
+            albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+        }
+        else {
+            audio = new Audio(tracks[i].preview_url);
+            audio.addEventListener('canplaythrough', function () {
+                //@ts-ignore
+                audio.play();
+            });
+            artist.textContent = tracks[i].artists[0].name;
+            songName.textContent = tracks[i].name;
+            let element = document.querySelector('.favorite-tracks__play-list');
+            let album = element.style.backgroundImage;
+            albumCover.style.backgroundImage = `${album}`;
+        }
     }
     //@ts-ignore
     audio.addEventListener('ended', () => {
