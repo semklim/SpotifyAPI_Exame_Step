@@ -13,7 +13,7 @@ import { volumeSlider } from "./player.js";
 export function findObjectByParam(array: any[], value: string, anotherArray: any[]) {
     console.log(array);
     //@ts-ignore
-    if (array.track) {
+    if (array[0].track) {
         for (let i = 0; i < array.length; i += 1) {
             //@ts-ignore
             if (array[i].track.preview_url === value) {
@@ -93,7 +93,6 @@ export function OnPlayFunc(tracks?) {
                         const playlistId = target.getAttribute('data-playlist-id');
                         const playlist = await API.GetPlaylist(playlistId!);
                         const tracksObj = await prepareTracks(playlist);
-
                         tracks = tracksObj!;
                         // @ts-ignore
                         playingAudio = onPlay(tracks, findObjectByParam(tracks, url, favTracks)!);

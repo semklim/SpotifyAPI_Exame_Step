@@ -11,7 +11,7 @@ import { volumeSlider } from "./player.js";
 export function findObjectByParam(array, value, anotherArray) {
     console.log(array);
     //@ts-ignore
-    if (array.track) {
+    if (array[0].track) {
         for (let i = 0; i < array.length; i += 1) {
             //@ts-ignore
             if (array[i].track.preview_url === value) {
