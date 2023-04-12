@@ -164,11 +164,16 @@ export function onPlay(tracks, i) {
     }
     //@ts-ignore
     audio.addEventListener('ended', () => {
-        if (repeatCondition === false) {
-            i = i + 1;
+        if (randomCondition === true) {
+            i = getRandomInt(tracks.length);
         }
-        else if (repeatCondition === true) {
-            i = i + 0;
+        else {
+            if (repeatCondition === false) {
+                i = i + 1;
+            }
+            else if (repeatCondition === true) {
+                i = i + 0;
+            }
         }
         currentAudio = onPlay(tracks, i);
         return;
@@ -227,3 +232,22 @@ function repeat() {
     }
 }
 repeatBtn.addEventListener('click', repeat);
+//RANDOM MODE
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+let randomCondition = false;
+let randomBtn = document.getElementsByClassName('randTrackBtnSvg')[0];
+function random() {
+    switch (randomCondition) {
+        case false:
+            randomBtn.setAttribute("fill", "green");
+            randomCondition = true;
+            break;
+        case true:
+            randomBtn.setAttribute("fill", "#909090");
+            randomCondition = false;
+            break;
+    }
+}
+randomBtn.addEventListener('click', random);

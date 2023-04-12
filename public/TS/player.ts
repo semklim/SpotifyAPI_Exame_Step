@@ -157,10 +157,14 @@ export function onPlay(tracks: any[], i: number) {
   }
   //@ts-ignore
   audio!.addEventListener('ended', () => {
-    if (repeatCondition === false) {
-      i = i + 1;
-    } else if (repeatCondition === true) {
-      i = i + 0;
+    if (randomCondition === true) {
+      i = getRandomInt(tracks.length)
+    } else {
+      if (repeatCondition === false) {
+        i = i + 1;
+      } else if (repeatCondition === true) {
+        i = i + 0;
+      }
     }
     currentAudio = onPlay(tracks, i);
     return;
@@ -226,3 +230,26 @@ function repeat() {
 }
 
 repeatBtn.addEventListener('click', repeat);
+
+//RANDOM MODE
+
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
+
+let randomCondition: boolean = false;
+let randomBtn = document.getElementsByClassName('randTrackBtnSvg')[0] as SVGElement;
+function random() {
+  switch (randomCondition) {
+    case false:
+      randomBtn.setAttribute("fill", "green");
+      randomCondition = true;
+      break;
+    case true:
+      randomBtn.setAttribute("fill", "#909090");
+      randomCondition = false;
+      break;
+  }
+}
+
+randomBtn.addEventListener('click', random);
