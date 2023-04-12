@@ -1,20 +1,31 @@
 const listOfPlaylists = (list, listLength) => {
     let html = '';
+    // @ts-ignore
+    let type = list[0].type;
     for (let j = 0; j < listLength; j++) {
         const el = list[j];
+        let name = el.name;
+        let href = el.href;
+        let description = el.description;
+        let images = el.images;
+        let id = el.id;
         if (el === null)
             continue;
-        const { name, href, description, images, id } = el;
+        if (type === 'album') {
+            const date = el.release_date?.slice(0, 4);
+            const name = el.artists[0].name;
+            description = date + ' • ' + name;
+        }
         if (!images.length) {
             continue;
         }
         const img = images[0].url ? images[0].url : '';
-        html += `<div class="shelf__content__playlist" id = "${id}">
+        html += `<div class="shelf__content__playlist" id = "${id}" data-type="${type}">
 					<div class="playlist__imgBox">
 						<div class="imgBox__img">
 							<img aria-hidden="false" draggable="false" loading="lazy" src="${img}" alt="">
 							<div class="imgBox__PlayButton">
-								<button class="play-favorite-track__button playBtn" data-playlist-id="${id}" aria-label="Play ${name}">
+								<button class="play-favorite-track__button playBtn" data-playlist-id="${id}" data-type="${type}" aria-label="Play ${name}">
 									<span class="playBtn__body">
 										<span class="iconWrapper" aria-hidden="true">
 											<svg role="img" height="24" width="24" aria-hidden="true" viewBox="0 0 24 24" class="SvgPlay"><path d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"></path></svg>
