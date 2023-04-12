@@ -24,7 +24,9 @@ export function findObjectByParam(array, value, anotherArray) {
         }
     }
 }
-let tracksObj = null;
+let tracksObj;
+let playlistId;
+let playlist;
 //@ts-ignore
 export function OnPlayFunc(tracks) {
     if (tracks) {
@@ -36,8 +38,6 @@ export function OnPlayFunc(tracks) {
         playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
         pauseConditionChange();
         if (playingAudio != null) {
-            playingAudio.currentTime = 0;
-            playingAudio.volume = 0;
             playingAudio.pause();
             playingAudio = null;
         }
@@ -48,16 +48,19 @@ export function OnPlayFunc(tracks) {
         if (target.className.includes("play-favorite-track__button")) {
             const refreshPlaylist = async () => {
                 // @ts-ignore
-                const playlistId = target.getAttribute('data-playlist-id');
-                const playlist = await API.GetPlaylist(playlistId);
-                const tracksObj = await prepareTracks(playlist);
+                playlistId = target.getAttribute('data-playlist-id');
+                playlist = await API.GetPlaylist(playlistId);
+                tracksObj = await prepareTracks(playlist);
                 tracks = tracksObj;
-                // @ts-ignore
-                playingAudio = onPlay(tracksObj, 0);
+                if (playingAudio === null) {
+                    //@ts-ignore
+                    playingAudio = onPlay(tracksObj, 0);
+                }
                 //@ts-ignore
                 playingAudio.volume = volumeSlider.value / 100;
             };
             refreshPlaylist();
+            return;
         }
         if (target.className === "trackPlayBtn") {
             const url = target.getAttribute('href');
