@@ -4,12 +4,25 @@
   "description": "",
   "main": "./public/JS/main.js",
   "scripts": {
-	"server": "nodemon server.js -e html,js,css"
+    "server": "nodemon server.js -e html,js,css"
   },
   "keywords": [],
-  "author": "Klymashenko Roman",
+  "author": "Klymashenko Roman <romanklimashenko@gmail.com> (https://github.com/semklim)",
+  "contributors": [
+	{
+		"name" : "Nikita",
+		"email" : "example@a.com",
+		"url" : "https://github.com/DeepWeep"
+	  },
+	  {
+		"name" : "Vlad",
+		"email" : "example@a.com",
+		"url" : "https://github.com/DorianNet93"
+	  }
+  ],
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^18.15.3"
+    "@types/node": "^18.15.3",
+    "nodemon": "^2.0.22"
   }
 }
