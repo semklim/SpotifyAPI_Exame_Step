@@ -6,7 +6,7 @@ import { currentAudio } from "./player.js";
 import { favTracks } from "./main.js";
 import { favTracksDeleter } from "./main.js";
 import API from "./API.js";
-import prepareTracks from "./helpers/tracks/prepareTracksObj.js";
+import { prepareTracks } from "./helpers/tracks/prepareTracksObj.js";
 import { volumeSlider } from "./player.js";
 export function findObjectByParam(array, value, anotherArray) {
     // favTracks =
@@ -50,7 +50,7 @@ export function OnPlayFunc(tracks) {
                 // @ts-ignore
                 const playlistId = target.getAttribute('data-playlist-id');
                 const playlist = await API.GetPlaylist(playlistId);
-                const tracksObj = await prepareTracks(playlist, API);
+                const tracksObj = await prepareTracks(playlist);
                 tracks = tracksObj;
                 // @ts-ignore
                 playingAudio = onPlay(tracksObj, 0);
@@ -77,7 +77,7 @@ export function OnPlayFunc(tracks) {
                         // @ts-ignore
                         const playlistId = target.getAttribute('data-playlist-id');
                         const playlist = await API.GetPlaylist(playlistId);
-                        const tracksObj = await prepareTracks(playlist, API);
+                        const tracksObj = await prepareTracks(playlist);
                         tracks = tracksObj;
                         // @ts-ignore
                         playingAudio = onPlay(tracks, findObjectByParam(tracks, url, favTracks));

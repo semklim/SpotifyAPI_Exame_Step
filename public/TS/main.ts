@@ -5,7 +5,7 @@ import API from './API.js';
 import UI from './UI.js';
 import Cookie from './Cookies.js';
 import { Search, QueryFormatter } from './pagePartials/search/search.js';
-import prepareTracks from './helpers/tracks/prepareTracksObj.js'
+import { prepareTracks, prepareTracksForAlbum } from './helpers/tracks/prepareTracksObj.js'
 import mainHandler from "./mainHandler.js";
 import { OnPlayFunc } from "./OnPlayFunc.js";
 import { addIsLikedKey } from './helpers/tracks/trackBoxFunc/trackBoxFunc.js';
@@ -92,12 +92,19 @@ const APP = (function (API, UI) {
 
 	const tracksByPlaylist = async (id: string) => {
 		const playlist = await API.GetPlaylist(id);
-		const tracks = await prepareTracks(playlist, API);
+		const tracks = await prepareTracks(playlist);
 
 		UI.createTracks(playlist);
 		OnPlayFunc(tracks);
 	}
 
+	const tracksByAlbum = async (id:string) => {
+		const album = await API.getAlbum(id);
+		const tracks = await prepareTracksForAlbum(album);
+		UI.createTracks(album);
+		debugger;
+		OnPlayFunc(tracks);
+	}
 	const PageSearch = async () => {
 		const searchBox = document.querySelector('.searchbox') as HTMLInputElement;
 		const queryFormatter = new QueryFormatter();
@@ -227,6 +234,10 @@ const APP = (function (API, UI) {
 
 		async tracksByPlaylist(id: string) {
 			await tracksByPlaylist(id);
+		},
+
+		tracksByAlbum(id:string){
+			tracksByAlbum(id);
 		},
 
 		async genGenres() {

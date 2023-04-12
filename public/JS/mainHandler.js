@@ -110,7 +110,12 @@ async function mainHandler(e) {
     if (className.includes('shelf__content__playlist')) {
         // copies a page when client make a step back, to keep a history of client actions
         keepChronology();
-        await APP.tracksByPlaylist(target.id);
+        if (target.getAttribute('data-type') === 'album') {
+            await APP.tracksByAlbum(target.id);
+        }
+        else {
+            await APP.tracksByPlaylist(target.id);
+        }
         historyLogic();
     }
     if (className.includes('trackPlayBtn') || className.includes('play-favorite-track__button')) {
