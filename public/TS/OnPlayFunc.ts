@@ -62,15 +62,30 @@ export function OnPlayFunc(tracks?) {
             const refreshPlaylist = async () => {
                 // @ts-ignore
                 playlistId = target.getAttribute('data-playlist-id');
-                playlist = await API.GetPlaylist(playlistId!);
-                tracksObj = await prepareTracks(playlist);
-                tracks = tracksObj!;
-                if (playingAudio === null) {
+                console.log(playlistId)
+                if (target.getAttribute('data-type') === 'album') {
                     //@ts-ignore
-                    playingAudio = onPlay(tracksObj, 0);
+                    playlist = await API.getAlbum(playlistId!);
+                    // @ts-ignore
+                    tracksObj = playlist!.tracks.items
+                    tracks = tracksObj!;
+                    if (playingAudio === null) {
+                        //@ts-ignore
+                        playingAudio = onPlay(tracksObj, 0);
+                    }
+                    //@ts-ignore
+                    playingAudio.volume = volumeSlider.value / 100
+                } else if (target.getAttribute('data-type') === 'playlist') {
+                    playlist = await API.GetPlaylist(playlistId!);
+                    tracksObj = await prepareTracks(playlist);
+                    tracks = tracksObj!;
+                    if (playingAudio === null) {
+                        //@ts-ignore
+                        playingAudio = onPlay(tracksObj, 0);
+                    }
+                    //@ts-ignore
+                    playingAudio.volume = volumeSlider.value / 100
                 }
-                //@ts-ignore
-                playingAudio.volume = volumeSlider.value / 100
             };
             refreshPlaylist();
             return;
