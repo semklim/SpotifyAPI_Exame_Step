@@ -290,8 +290,12 @@ const favorite_track = async () => {
     // const modifiedTracks = await ifPrevNull(tracks, API.accessToken);
     // console.log(modifiedTracks);
 };
+const refreshFavorite_track = async () => {
+    userSaveTracks = await API.UserSavedTracks();
+    return addIsLikedKey(userSaveTracks.items);
+};
 //////////////////////////////////
 export function favTracksDeleter() {
     favTracks = null;
 }
-export { APP, favorite_track };
+export { APP, favorite_track, refreshFavorite_track };
