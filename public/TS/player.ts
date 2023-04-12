@@ -223,7 +223,7 @@ function repeat() {
       repeatCondition = true;
       break;
     case true:
-      repeatBtn.setAttribute("fill", "#909090");
+      repeatBtn.setAttribute("fill", "#c9c9c9");
       repeatCondition = false;
       break;
   }
@@ -246,7 +246,7 @@ function random() {
       randomCondition = true;
       break;
     case true:
-      randomBtn.setAttribute("fill", "#909090");
+      randomBtn.setAttribute("fill", "#c9c9c9");
       randomCondition = false;
       break;
   }
