@@ -7,8 +7,8 @@ function init() {
 	if(location.search.includes('code=') && !location.hash){
 		const code = location.search.replace('?code=', '');
 		window.opener.postMessage(JSON.stringify({
-			type:'code',
-			code: code
+			type:'SpotifyCode',
+			SpotifyCode: code
 		}), '*');
 	}
 }
