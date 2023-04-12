@@ -134,9 +134,9 @@ class SpotifyAuth {
 		  }
 		  const access = JSON.parse(event.data);
 
-		if (access.type === 'code') {
+		if (access.type === 'SpotifyCode') {
 			// Exchange the authorization code for an access token and refresh token.
-			const { access_token, refresh_token, expires_in } = await this.exchangeAuthorizationCode(access.code);
+			const { access_token, refresh_token, expires_in } = await this.exchangeAuthorizationCode(access.SpotifyCode);
   
 			// Store the access token, refresh token, and expiration time.
 			this.accessToken = access_token;
