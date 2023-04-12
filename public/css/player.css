@@ -169,7 +169,7 @@ input[type=range]:hover::-webkit-slider-thumb {
 }
 
 .nextTrackBtn {
-  fill: #a2a2a2;
+  fill: #c9c9c9;
   height: 100%;
   width: 6%;
   margin-left: 1vw;
@@ -178,7 +178,7 @@ input[type=range]:hover::-webkit-slider-thumb {
   justify-content: center;
   min-width: 30px;
   min-height: 30px;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .nextTrackBtn:hover {
