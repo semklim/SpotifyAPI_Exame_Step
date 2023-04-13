@@ -104,34 +104,67 @@ export function onPlay(tracks: any[], i: number) {
   testTracks = tracks;
   testI = i;
   if (audioIsPlaying === true) {
-    audio = null;
-    audio = new Audio(tracks[i].track.preview_url!);
-    audio.addEventListener('canplaythrough', function () {
-      //@ts-ignore
-      audio!.volume = volumeSlider.value / 100
-      //@ts-ignore
-      audio!.play();
-    });
-    artist.textContent = tracks[i].track.artists[0].name
-    songName.textContent = tracks[i].track.name;
-    albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+    if (tracks[i].track) {
+      audio = null;
+      audio = new Audio(tracks[i].track.preview_url!);
+      audio.addEventListener('canplaythrough', function () {
+        //@ts-ignore
+        audio!.volume = volumeSlider.value / 100
+        //@ts-ignore
+        audio!.play();
+      });
+      artist.textContent = tracks[i].track.artists[0].name
+      songName.textContent = tracks[i].track.name;
+      albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+    } else {
+      audio = null;
+      audio = new Audio(tracks[i].preview_url!);
+      audio.addEventListener('canplaythrough', function () {
+        //@ts-ignore
+        audio!.volume = volumeSlider.value / 100
+        //@ts-ignore
+        audio!.play();
+      });
+      artist.textContent = tracks[i].artists[0].name
+      songName.textContent = tracks[i].name;
+      let element = document.querySelector('.favorite-tracks__play-list') as HTMLDivElement;
+      let album = element.style.backgroundImage;
+      albumCover.style.backgroundImage = `${album}`;
+    }
   } else if (audioIsPlaying === false) {
     audio = null;
-    audio = new Audio(tracks[i].track.preview_url!);
-    audio.addEventListener('canplaythrough', function () {
-      //@ts-ignore
-      audio!.play();
-    });
-    artist.textContent = tracks[i].track.artists[0].name
-    songName.textContent = tracks[i].track.name;
-    albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+    if (tracks[i].track) {
+      audio = new Audio(tracks[i].track.preview_url!);
+      audio.addEventListener('canplaythrough', function () {
+        //@ts-ignore
+        audio!.play();
+      });
+      artist.textContent = tracks[i].track.artists[0].name
+      songName.textContent = tracks[i].track.name;
+      albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+    } else {
+      audio = new Audio(tracks[i].preview_url!);
+      audio.addEventListener('canplaythrough', function () {
+        //@ts-ignore
+        audio!.play();
+      });
+      artist.textContent = tracks[i].artists[0].name
+      songName.textContent = tracks[i].name;
+      let element = document.querySelector('.favorite-tracks__play-list') as HTMLDivElement;
+      let album = element.style.backgroundImage;
+      albumCover.style.backgroundImage = `${album}`;
+    }
   }
   //@ts-ignore
   audio!.addEventListener('ended', () => {
-    if (repeatCondition === false) {
-      i = i + 1;
-    } else if (repeatCondition === true) {
-      i = i + 0;
+    if (randomCondition === true) {
+      i = getRandomInt(tracks.length)
+    } else {
+      if (repeatCondition === false) {
+        i = i + 1;
+      } else if (repeatCondition === true) {
+        i = i + 0;
+      }
     }
     currentAudio = onPlay(tracks, i);
     return;
@@ -190,10 +223,33 @@ function repeat() {
       repeatCondition = true;
       break;
     case true:
-      repeatBtn.setAttribute("fill", "#909090");
+      repeatBtn.setAttribute("fill", "#c9c9c9");
       repeatCondition = false;
       break;
   }
 }
 
 repeatBtn.addEventListener('click', repeat);
+
+//RANDOM MODE
+
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
+
+let randomCondition: boolean = false;
+let randomBtn = document.getElementsByClassName('randTrackBtnSvg')[0] as SVGElement;
+function random() {
+  switch (randomCondition) {
+    case false:
+      randomBtn.setAttribute("fill", "green");
+      randomCondition = true;
+      break;
+    case true:
+      randomBtn.setAttribute("fill", "#c9c9c9");
+      randomCondition = false;
+      break;
+  }
+}
+
+randomBtn.addEventListener('click', random);

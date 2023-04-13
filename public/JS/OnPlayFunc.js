@@ -8,17 +8,30 @@ import { favTracksDeleter } from "./main.js";
 import API from "./API.js";
 import { prepareTracks } from "./helpers/tracks/prepareTracksObj.js";
 import { volumeSlider } from "./player.js";
+import { refreshFavorite_track } from "./main.js";
 export function findObjectByParam(array, value, anotherArray) {
-    // favTracks =
-    for (let i = 0; i < array.length; i += 1) {
-        //@ts-ignore
-        if (array[i].track.preview_url === value) {
+    console.log(array);
+    //@ts-ignore
+    if (array[0].track) {
+        for (let i = 0; i < array.length; i += 1) {
             //@ts-ignore
-            return i;
+            if (array[i].track.preview_url === value) {
+                //@ts-ignore
+                return i;
+            }
+            else if (anotherArray) {
+                // @ts-ignore
+                if (anotherArray[i].track.preview_url === value) {
+                    return i;
+                }
+            }
         }
-        else if (anotherArray) {
-            // @ts-ignore
-            if (anotherArray[i].track.preview_url === value) {
+    }
+    else {
+        for (let i = 0; i < array.length; i += 1) {
+            //@ts-ignore
+            if (array[i].preview_url === value) {
+                //@ts-ignore
                 return i;
             }
         }
@@ -49,15 +62,42 @@ export function OnPlayFunc(tracks) {
             const refreshPlaylist = async () => {
                 // @ts-ignore
                 playlistId = target.getAttribute('data-playlist-id');
-                playlist = await API.GetPlaylist(playlistId);
-                tracksObj = await prepareTracks(playlist);
-                tracks = tracksObj;
-                if (playingAudio === null) {
+                if (target.getAttribute('data-type') === 'album') {
                     //@ts-ignore
-                    playingAudio = onPlay(tracksObj, 0);
+                    playlist = await API.getAlbum(playlistId);
+                    // @ts-ignore
+                    tracksObj = playlist.tracks.items;
+                    tracks = tracksObj;
+                    if (playingAudio === null) {
+                        //@ts-ignore
+                        playingAudio = onPlay(tracksObj, 0);
+                    }
+                    //@ts-ignore
+                    playingAudio.volume = volumeSlider.value / 100;
                 }
-                //@ts-ignore
-                playingAudio.volume = volumeSlider.value / 100;
+                else if (target.getAttribute('data-type') === 'playlist') {
+                    playlist = await API.GetPlaylist(playlistId);
+                    tracksObj = await prepareTracks(playlist);
+                    tracks = tracksObj;
+                    if (playingAudio === null) {
+                        //@ts-ignore
+                        playingAudio = onPlay(tracksObj, 0);
+                    }
+                    //@ts-ignore
+                    playingAudio.volume = volumeSlider.value / 100;
+                }
+                else if (target.getAttribute('data-type') === 'fav-tracks') {
+                    console.log(playlist);
+                    //@ts-ignore
+                    tracksObj = await refreshFavorite_track();
+                    tracks = tracksObj;
+                    if (playingAudio === null) {
+                        //@ts-ignore
+                        playingAudio = onPlay(tracksObj, 0);
+                    }
+                    //@ts-ignore
+                    playingAudio.volume = volumeSlider.value / 100;
+                }
             };
             refreshPlaylist();
             return;

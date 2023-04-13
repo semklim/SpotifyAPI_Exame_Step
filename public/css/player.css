@@ -154,7 +154,7 @@ input[type=range]:hover::-webkit-slider-thumb {
 }
 
 .prevTrackBtn {
-  fill: #a2a2a2;
+  fill: #c9c9c9;
   height: 100%;
   width: 6%;
   background-repeat: no-repeat;
@@ -169,7 +169,7 @@ input[type=range]:hover::-webkit-slider-thumb {
 }
 
 .nextTrackBtn {
-  fill: #a2a2a2;
+  fill: #c9c9c9;
   height: 100%;
   width: 6%;
   margin-left: 1vw;
@@ -178,7 +178,7 @@ input[type=range]:hover::-webkit-slider-thumb {
   justify-content: center;
   min-width: 30px;
   min-height: 30px;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .nextTrackBtn:hover {
@@ -194,7 +194,7 @@ input[type=range]:hover::-webkit-slider-thumb {
 }
 
 .randTrackBtn {
-  fill: #909090;
+  fill: #c9c9c9;
   height: 100%;
   width: 6%;
   display: flex;
@@ -202,11 +202,11 @@ input[type=range]:hover::-webkit-slider-thumb {
   justify-content: center;
   min-width: 30px;
   min-height: 30px;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .repeatTrackBtn {
-  fill: #909090;
+  fill: #c9c9c9;
   height: 100%;
   width: 6%;
   display: flex;
@@ -214,7 +214,7 @@ input[type=range]:hover::-webkit-slider-thumb {
   justify-content: center;
   min-width: 30px;
   min-height: 30px;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .randTrackBtn:hover {
@@ -268,8 +268,8 @@ input[type=range]:hover::-webkit-slider-thumb {
   background-size: cover;
   min-height: 40px;
   min-width: 40px;
-  height: 3.5vw;
-  width: 3.5vw;
-  background-color: #ffffff;
+  height: 3.7vw;
+  width: 3.7vw;
+  background-color: black;
   margin-left: 1.5vw;
 }
