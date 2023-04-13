@@ -45,12 +45,11 @@ async function prepareTracks(playlist: any) {
 		if(el.track === null){
 			return false;
 		}
-		if(el.track.preview_url === null){
-			return false;
-		}
+		// if(el.track.preview_url === null){
+		// 	return false;
+		// }
 		return true;
 	});
-	debugger;
 	if (Auth.accessToken) {
 		tracks.forEach((el: any) => {
 				idTracks.push(el.track.id);
