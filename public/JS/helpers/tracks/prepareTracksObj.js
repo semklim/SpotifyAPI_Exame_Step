@@ -29,7 +29,16 @@ async function prepareTracks(playlist) {
     let isLiked = [];
     let idTracks = [];
     let buffer = [];
-    tracks = tracks.filter((el) => el.track !== null);
+    tracks = tracks.filter((el) => {
+        if (el.track === null) {
+            return false;
+        }
+        if (el.track.preview_url === null) {
+            return false;
+        }
+        return true;
+    });
+    debugger;
     if (Auth.accessToken) {
         tracks.forEach((el) => {
             idTracks.push(el.track.id);
