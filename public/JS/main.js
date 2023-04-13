@@ -155,13 +155,13 @@ const APP = (function (API, UI) {
         let arrRes = [featured, result, newReleases];
         const html = htmlRecomm(arrRes);
         const requestBox = document.querySelector('.requestBox');
+        requestBox.innerHTML = html;
         if (APP.history.length === 0) {
-            APP.history[0] = html;
+            APP.history[0] = requestBox.innerHTML;
         }
         else {
-            APP.history.push(html);
+            APP.history.push(requestBox.innerHTML);
         }
-        requestBox.innerHTML = html;
     };
     const setLike = async (idTrack, likeCondition) => {
         const url = `https://api.spotify.com/v1/me/tracks?ids=${idTrack}`;

@@ -179,13 +179,13 @@ const APP = (function (API, UI) {
 	
 		const html = htmlRecomm(arrRes);
 		const requestBox = document.querySelector('.requestBox')!;
-		if(APP.history.length === 0){
-			APP.history[0] = html;
-		}else{
-			APP.history.push(html);
-		}
-
 		requestBox.innerHTML = html;
+
+		if(APP.history.length === 0){
+			APP.history[0] = requestBox.innerHTML;
+		}else{
+			APP.history.push(requestBox.innerHTML);
+		}
 	}
 
 	const setLike = async (idTrack: string, likeCondition: boolean) => {

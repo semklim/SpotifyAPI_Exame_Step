@@ -1,6 +1,7 @@
 import { OnPlayFunc } from "./OnPlayFunc.js";
 import { APP, favorite_track } from "./main.js";
 const requestBox = document.getElementsByClassName('requestBox')[0];
+const header = document.getElementsByClassName('header')[0];
 const pauseInMinutes = 5;
 let pausedTillDate = new Date(Date.now() + (pauseInMinutes * 60 * 1000));
 let historyIndex = 1;
@@ -9,14 +10,23 @@ function historyLogic(index) {
         APP.history[index] = requestBox.innerHTML;
     }
     else {
-        APP.history.push(requestBox.innerHTML);
-        historyIndex = APP.history.length - 1;
+        if (APP.history[historyIndex - 1] !== requestBox.innerHTML &&
+            APP.history[historyIndex] !== requestBox.innerHTML) {
+            APP.history.push(requestBox.innerHTML);
+            historyIndex = APP.history.length - 1;
+        }
     }
 }
 ;
 function keepChronology() {
     if (historyIndex !== (APP.history.length - 1) && APP.history.length !== 0) {
-        APP.history.length = historyIndex;
+        if (historyIndex === 0) {
+            APP.history.length = 1;
+            historyIndex = 1;
+        }
+        else {
+            APP.history.length = historyIndex;
+        }
     }
 }
 ;
@@ -46,6 +56,9 @@ async function mainHandler(e) {
     const className = [...target.classList];
     // HISTORY BLOCK START
     if (className.includes('btn-controls-contents__left')) {
+        if (historyIndex <= 0) {
+            return undefined;
+        }
         if (historyIndex - 1 >= 0) {
             historyIndex = historyIndex - 1;
         }
@@ -98,20 +111,19 @@ async function mainHandler(e) {
         APP.PageSearch();
     }
     if (className.includes('genres')) {
-        const searchBar = document.querySelector('.wrapper');
         // copies a page when client make a step back, to keep a history of client actions
         keepChronology();
         const genreName = (target.querySelector('.nameOfGenres')).textContent;
         const id = target.getAttribute('id');
         await APP.playlistsByGenre(genreName, id);
-        searchBar.remove();
         historyLogic();
+        header.querySelector('.wrapper').remove();
     }
     if (className.includes('shelf__content__playlist')) {
         // copies a page when client make a step back, to keep a history of client actions
         keepChronology();
         if (target.getAttribute('data-type') === 'album') {
-            await APP.tracksByAlbum(target.id);
+            APP.tracksByAlbum(target.id);
         }
         else {
             await APP.tracksByPlaylist(target.id);
