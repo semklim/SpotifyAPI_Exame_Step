@@ -289,19 +289,23 @@ function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
 
-let randomCondition: boolean = false;
+let randomCondition = Cookie.get('randomCondition') === 'true';
 let randomBtn = document.getElementsByClassName('randTrackBtnSvg')[0] as SVGElement;
+
+if (randomCondition) {
+  randomBtn.setAttribute("fill", "green");
+} else {
+  randomBtn.setAttribute("fill", "#c9c9c9");
+}
+
 function random() {
-  switch (randomCondition) {
-    case false:
-      randomBtn.setAttribute("fill", "green");
-      randomCondition = true;
-      break;
-    case true:
-      randomBtn.setAttribute("fill", "#c9c9c9");
-      randomCondition = false;
-      break;
+  randomCondition = !randomCondition;
+  if (randomCondition) {
+    randomBtn.setAttribute("fill", "green");
+  } else {
+    randomBtn.setAttribute("fill", "#c9c9c9");
   }
+  Cookie.set('randomCondition', randomCondition.toString(), 15);
 }
 
 randomBtn.addEventListener('click', random);
