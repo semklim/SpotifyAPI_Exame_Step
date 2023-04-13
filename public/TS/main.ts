@@ -121,8 +121,9 @@ const APP = (function (API, UI) {
 			const artists = resultArtistsObj
 				artists.message = 'Artists';
 			const playlists = resultPlaylistsObj;
-				playlists.message = 'Tracks';
-			const tracks = resultTracksObj.tracks.items;
+				playlists.message = 'Play-list';
+			const tracks = resultTracksObj;
+				tracks.message = 'Track'
 
 			if(searchBox.value === ''){
 				requestBox.innerHTML = ''
@@ -132,9 +133,9 @@ const APP = (function (API, UI) {
 			}
 			console.log(searchBox.value)
 
-			console.log(albums)
-			console.log(artists)
-			// console.log(playlists)
+			// console.log(albums)
+			// console.log(artists)
+			console.log(playlists)
 			// console.log(tracks)
 
 			// console.log(resultAlbumsObj);
