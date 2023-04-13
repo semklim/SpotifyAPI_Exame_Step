@@ -24,10 +24,18 @@ type result = {
 	id: string;
 	release_date?: string;
 	artists: artists;
+	album: {
+		images: [{
+			height: string | null;
+			width: string | null;
+			url: string | null;
+		}]
+	}
 }
 
 const listOfPlaylists = (list: object[], listLength: number) => {
 	let html = '';
+	if(list.length <= 0) {return '<h1>sorry not possible</h1>'}
 	// @ts-ignore
 	let type = list[0].type;
 	for (let j = 0; j < listLength; j++) {
@@ -43,10 +51,20 @@ const listOfPlaylists = (list: object[], listLength: number) => {
 			const name = el.artists[0].name;
 			description = date + ' • ' + name;
 		}
-		if(!images.length){continue}
-		const img = images[0].url ? images[0].url : '';
-		 
 
+		let img:string | null = '';
+
+		if(type === 'track') {
+			if(!el.album.images.length) {continue}
+			const name = el.artists[0].name;
+			description = name;
+			img = el.album.images[0].url ? el.album.images[0].url : '';
+		} 
+		else {
+			if(!images.length){continue}
+			img = images[0].url ? images[0].url : '';
+		}
+		
 		html += `<div class="shelf__content__playlist" id = "${id}" data-type="${type}">
 					<div class="playlist__imgBox">
 						<div class="imgBox__img">

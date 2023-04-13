@@ -97,33 +97,27 @@ const APP = (function (API, UI) {
         const SearchAPP = new Search(searchBox, queryFormatter, API);
         SearchAPP.input.addEventListener('input', async () => {
             const requestBox = document.querySelector('.requestBox');
-            const resultAlbumsObj = await SearchAPP.handleInput('album');
-            const resultArtistsObj = await SearchAPP.handleInput('artist');
-            const resultPlaylistsObj = await SearchAPP.handleInput('playlist');
-            const resultTracksObj = await SearchAPP.handleInput('track');
-            const albums = resultAlbumsObj;
-            albums.message = 'Albums';
-            const artists = resultArtistsObj;
-            artists.message = 'Artists';
-            const playlists = resultPlaylistsObj;
-            playlists.message = 'Play-list';
-            const tracks = resultTracksObj;
-            tracks.message = 'Track';
+            // const resultAlbumsObj:any = await SearchAPP.handleInput('album,artist,playlist,track');
+            const resultObj = await SearchAPP.handleInput('album,artist,playlist,track');
+            const arrHtml = [
+                { message: 'Albums' },
+                { message: 'Artists' },
+                { message: 'Playlists' },
+                { message: 'Tracks' },
+            ];
+            for (let i = 0; i < arrHtml.length; i++) {
+                const el = arrHtml[i];
+                const name = el.message.toLowerCase();
+                //@ts-ignore
+                el[name] = resultObj[name];
+            }
             if (searchBox.value === '') {
                 requestBox.innerHTML = '';
             }
             else {
-                requestBox.innerHTML = htmlRecomm([albums, playlists, artists], searchBox.value);
+                requestBox.innerHTML = htmlRecomm(arrHtml, searchBox.value);
             }
             console.log(searchBox.value);
-            // console.log(albums)
-            // console.log(artists)
-            console.log(playlists);
-            // console.log(tracks)
-            // console.log(resultAlbumsObj);
-            // console.log(resultArtistsObj);
-            // console.log(resultPlaylistsObj);
-            // console.log(resultTracksObj);
         });
     };
     const PageRecomm = async () => {
