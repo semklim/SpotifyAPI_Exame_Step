@@ -1,5 +1,8 @@
 const listOfPlaylists = (list, listLength) => {
     let html = '';
+    if (list.length <= 0) {
+        return '<h1>sorry not possible</h1>';
+    }
     // @ts-ignore
     let type = list[0].type;
     for (let j = 0; j < listLength; j++) {
@@ -16,10 +19,21 @@ const listOfPlaylists = (list, listLength) => {
             const name = el.artists[0].name;
             description = date + ' • ' + name;
         }
-        if (!images.length) {
-            continue;
+        let img = '';
+        if (type === 'track') {
+            if (!el.album.images.length) {
+                continue;
+            }
+            const name = el.artists[0].name;
+            description = name;
+            img = el.album.images[0].url ? el.album.images[0].url : '';
         }
-        const img = images[0].url ? images[0].url : '';
+        else {
+            if (!images.length) {
+                continue;
+            }
+            img = images[0].url ? images[0].url : '';
+        }
         html += `<div class="shelf__content__playlist" id = "${id}" data-type="${type}">
 					<div class="playlist__imgBox">
 						<div class="imgBox__img">

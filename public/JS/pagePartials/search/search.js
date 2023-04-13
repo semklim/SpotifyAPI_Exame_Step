@@ -78,7 +78,7 @@ class Search {
                 const url = `https://api.spotify.com/v1/search?q=${this.query}&type=${colomn}&market=ES&limit=50&offset=0`;
                 this.result = await this.apiClient.get(url);
                 res(this.result);
-            }, 200);
+            }, 500);
         });
     }
     getResult() {
