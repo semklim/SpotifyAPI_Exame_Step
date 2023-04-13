@@ -89,7 +89,6 @@ const APP = (function (API, UI) {
         const album = await API.getAlbum(id);
         const tracks = await prepareTracksForAlbum(album);
         UI.createTracks(album);
-        debugger;
         OnPlayFunc(tracks);
     };
     const PageSearch = async () => {

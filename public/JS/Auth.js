@@ -107,8 +107,8 @@ class SpotifyAuth {
                 }
                 // Close the popup window.
                 popup.close();
-            }, { once: true } /* Thats need for situation when user try login, logout, and another login.
-                        Without it will be error, 400. Not valid code */);
+            }, { once: true }); /* Thats need for situation when user try login, logout, and another login.
+                               Without it will be error, 400. Not valid code */
         });
     }
     /**
