@@ -9,6 +9,7 @@ import API from "./API.js";
 import { prepareTracks } from "./helpers/tracks/prepareTracksObj.js";
 import { volumeSlider } from "./player.js";
 import { refreshFavorite_track } from "./main.js";
+//@ts-ignore
 export function findObjectByParam(array, value, anotherArray) {
     console.log(array);
     //@ts-ignore
@@ -87,7 +88,6 @@ export function OnPlayFunc(tracks) {
                     playingAudio.volume = volumeSlider.value / 100;
                 }
                 else if (target.getAttribute('data-type') === 'fav-tracks') {
-                    console.log(playlist);
                     //@ts-ignore
                     tracksObj = await refreshFavorite_track();
                     tracks = tracksObj;

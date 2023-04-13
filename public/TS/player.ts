@@ -1,11 +1,16 @@
 //VOLUME
 export const volumeSlider = document.getElementById('volumeSlider') as HTMLInputElement;
-volumeSlider.value = '60';
+if (Cookie.get('volume') != null) {
+  //@ts-ignore
+  volumeSlider.value = Cookie.get('volume');
+}
 const muteBtn = document.getElementsByClassName('volume-icon')[0] as SVGElement;
 let muteConditon: boolean = false;
 let timeBefore: string;
 import { test } from "node:test";
 import { playingAudio } from "./OnPlayFunc.js";
+import Cookie from "./Cookies.js";
+import { type } from "os";
 muteBtn.addEventListener('click', () => {
   switch (muteConditon) {
     case false:
@@ -51,6 +56,7 @@ volumeSlider.addEventListener('input', () => {
   } else if (volumeSlider.value as unknown as number > 0 && volumeSlider.value as unknown as number <= 30) {
     muteBtn.innerHTML = '<svg role="presentation" height="16" width="16" aria-hidden="true" aria-label="Низкая громкость" class="volume-icon" id= "volume-icon" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path fill="#dddcdc" d="M9.741.85a.75.75 0 0 1 .375.65v13a.75.75 0 0 1-1.125.65l-6.925-4a3.642 3.642 0 0 1-1.33-4.967 3.639 3.639 0 0 1 1.33-1.332l6.925-4a.75.75 0 0 1 .75 0zm-6.924 5.3a2.139 2.139 0 0 0 0 3.7l5.8 3.35V2.8l-5.8 3.35zm8.683 4.29V5.56a2.75 2.75 0 0 1 0 4.88z"></path></svg>'
   }
+  Cookie.set('volume', volumeSlider.value, 15)
 })
 
 //PLAY/PAUSE
@@ -220,26 +226,62 @@ prevBtn.addEventListener('click', () => {
 })
 
 //REPEAT MODE
-let repeatCondition: number = 1;
+let repeatCondition: number | string = Cookie.get('repeatCondition') || '1';
+
 let repeatBtn = document.getElementsByClassName('repeatTrackSvg')[0] as SVGElement;
+
+switch (repeatCondition) {
+  case '1':
+    break;
+  case '2':
+    console.log('я не гнида')
+    repeatBtn!.innerHTML = '<path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h8.5A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25h-8.5A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5z"></path>'
+    repeatBtn.setAttribute("fill", "green");
+    break;
+  case '3':
+    console.log('я гнида')
+    repeatBtn.setAttribute("fill", "green");
+    repeatBtn!.innerHTML = '<path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h.75v1.5h-.75A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5zM12.25 2.5h-.75V1h.75A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25z"></path><path d="M9.12 8V1H7.787c-.128.72-.76 1.293-1.787 1.313V3.36h1.57V8h1.55z"></path>'
+    break;
+}
+
 function repeat() {
+  console.log('repet')
   switch (repeatCondition) {
     case 1:
       repeatBtn.setAttribute("fill", "green");
       repeatCondition = 2;
+      Cookie.set('repeatCondition', repeatCondition.toString(), 15)
       break;
     case 3:
       repeatBtn.setAttribute("fill", "#c9c9c9");
       repeatBtn!.innerHTML = '<path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h8.5A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25h-8.5A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5z"></path>'
       repeatCondition = 1;
+      Cookie.set('repeatCondition', repeatCondition.toString(), 15)
       break;
     case 2:
       repeatBtn!.innerHTML = '<path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h.75v1.5h-.75A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5zM12.25 2.5h-.75V1h.75A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25z"></path><path d="M9.12 8V1H7.787c-.128.72-.76 1.293-1.787 1.313V3.36h1.57V8h1.55z"></path>'
       repeatCondition = 3;
+      Cookie.set('repeatCondition', repeatCondition.toString(), 15)
+      break;
+    case '1':
+      repeatBtn.setAttribute("fill", "green");
+      repeatCondition = 2;
+      Cookie.set('repeatCondition', repeatCondition.toString(), 15)
+      break;
+    case '2':
+      repeatBtn!.innerHTML = '<path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h.75v1.5h-.75A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5zM12.25 2.5h-.75V1h.75A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25z"></path><path d="M9.12 8V1H7.787c-.128.72-.76 1.293-1.787 1.313V3.36h1.57V8h1.55z"></path>'
+      repeatCondition = 3;
+      Cookie.set('repeatCondition', repeatCondition.toString(), 15)
+      break;
+    case '3':
+      repeatBtn.setAttribute("fill", "#c9c9c9");
+      repeatBtn!.innerHTML = '<path d="M0 4.75A3.75 3.75 0 0 1 3.75 1h8.5A3.75 3.75 0 0 1 16 4.75v5a3.75 3.75 0 0 1-3.75 3.75H9.81l1.018 1.018a.75.75 0 1 1-1.06 1.06L6.939 12.75l2.829-2.828a.75.75 0 1 1 1.06 1.06L9.811 12h2.439a2.25 2.25 0 0 0 2.25-2.25v-5a2.25 2.25 0 0 0-2.25-2.25h-8.5A2.25 2.25 0 0 0 1.5 4.75v5A2.25 2.25 0 0 0 3.75 12H5v1.5H3.75A3.75 3.75 0 0 1 0 9.75v-5z"></path>'
+      repeatCondition = 1;
+      Cookie.set('repeatCondition', repeatCondition.toString(), 15)
       break;
   }
 }
-
 
 repeatBtn.addEventListener('click', repeat);
 
@@ -265,3 +307,4 @@ function random() {
 }
 
 randomBtn.addEventListener('click', random);
+

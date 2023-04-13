@@ -9,7 +9,8 @@ import API from "./API.js"
 import { prepareTracks, prepareTracksForAlbum } from "./helpers/tracks/prepareTracksObj.js"
 import { volumeSlider } from "./player.js";
 import { refreshFavorite_track } from "./main.js";
-
+import Cookie from "./Cookies.js";
+//@ts-ignore
 
 export function findObjectByParam(array: any[], value: string, anotherArray: any[]) {
     console.log(array);
@@ -86,7 +87,6 @@ export function OnPlayFunc(tracks?) {
                     //@ts-ignore
                     playingAudio.volume = volumeSlider.value / 100
                 } else if (target.getAttribute('data-type') === 'fav-tracks') {
-                    console.log(playlist);
                     //@ts-ignore
                     tracksObj = await refreshFavorite_track();
                     tracks = tracksObj!;
