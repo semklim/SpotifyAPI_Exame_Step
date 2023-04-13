@@ -93,7 +93,8 @@ const APP = (function (API, UI) {
 	const tracksByPlaylist = async (id: string) => {
 		const playlist = await API.GetPlaylist(id);
 		const tracks = await prepareTracks(playlist);
-
+		playlist.tracks.items = tracks;
+		
 		UI.createTracks(playlist);
 		OnPlayFunc(tracks);
 	}
