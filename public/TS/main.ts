@@ -10,14 +10,14 @@ function logicOfLoginBtn() {
 	removeEventListener('click', mainClickerListener);
 	APP.history.length = 0;
 	if (btn.getAttribute('data-isLoggedIn') === 'false') {
-		APP.initLogin();
+		APP.initLogin(btn);
 	}
 	else {
-		APP.initLogout();
+		APP.initLogout(btn);
 	}
 }
 
-const btn = document.querySelector('.login')!;
+const btn = <HTMLButtonElement>document.querySelector('.login')!;
 
 if ((Cookie.get('accessToken'))) {
 	Auth.refreshToken = Cookie.get('refreshToken')!;

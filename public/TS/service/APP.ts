@@ -22,7 +22,7 @@ const APP = (function (API, UI) {
 			API.expires_in = new Date(Date.now() + (expires_in * 1000));
 	}
 
-	const initLogin = async () => {
+	const initLogin = async (btn: HTMLButtonElement) => {
 		await Auth.login();
 		API.accessToken = Auth.accessToken;
 		API.expires_in = Auth.expires_in;
@@ -42,7 +42,7 @@ const APP = (function (API, UI) {
 		});
 	}
 
-	const initLogout = async () => {
+	const initLogout = async (btn: HTMLButtonElement) => {
 		const url = 'https://accounts.spotify.com/en/logout'
 		const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40')!;
 		spotifyLogoutWindow.close();
@@ -52,9 +52,9 @@ const APP = (function (API, UI) {
 		API.accessToken = null;
 		API.expires_in = null;
 		// @ts-ignore
-		this.setAttribute('data-isLoggedIn', 'false');
+		btn.setAttribute('data-isLoggedIn', 'false');
 		// @ts-ignore		
-		this.textContent = "Login";
+		btn.textContent = "Login";
 		Cookie.clearAllCookie();
 		APP.isLoggedIn = false;
 		await APP.getToken();
@@ -185,12 +185,12 @@ const APP = (function (API, UI) {
 		history: history,
 		isLoggedIn: isLoggedIn,
 
-		initLogin() {
-			initLogin();
+		initLogin(btn: HTMLButtonElement) {
+			initLogin(btn);
 		},
 
-		initLogout() {
-			initLogout();
+		initLogout(btn: HTMLButtonElement) {
+			initLogout(btn);
 		},
 
 		async getToken() {

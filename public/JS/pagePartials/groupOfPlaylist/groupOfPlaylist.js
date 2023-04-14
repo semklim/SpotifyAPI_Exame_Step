@@ -1,4 +1,4 @@
-const listOfPlaylists = (list, listLength) => {
+const cardsOfPlaylists = (list, listLength) => {
     let html = '';
     if (list.length <= 0) {
         return '<h1>sorry not possible</h1>';
@@ -88,7 +88,7 @@ function genGroupOfPlaylistsCards(arrayOfPlaylists) {
 						</div>
 					</div>
 					<div class="displayNone__moreThen shelf__content">
-					${listOfPlaylists(objOfEL.items, listLength)}
+					${cardsOfPlaylists(objOfEL.items, listLength)}
 					</div>
 				</section>`;
     }
