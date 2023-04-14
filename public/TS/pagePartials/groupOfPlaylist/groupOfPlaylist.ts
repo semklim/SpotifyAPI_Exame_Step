@@ -33,7 +33,7 @@ type result = {
 	}
 }
 
-const listOfPlaylists = (list: object[], listLength: number) => {
+const cardsOfPlaylists = (list: object[], listLength: number) => {
 	let html = '';
 	if(list.length <= 0) {return '<h1>sorry not possible</h1>'}
 	// @ts-ignore
@@ -123,7 +123,7 @@ function genGroupOfPlaylistsCards(arrayOfPlaylists: object[]){
 						</div>
 					</div>
 					<div class="displayNone__moreThen shelf__content">
-					${listOfPlaylists(objOfEL.items, listLength)}
+					${cardsOfPlaylists(objOfEL.items, listLength)}
 					</div>
 				</section>`;
 	}
