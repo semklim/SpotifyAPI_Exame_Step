@@ -1,5 +1,5 @@
-import Auth from "../../Auth.js";
-import API from "../../API.js";
+import Auth from "../../service/Auth.js";
+import API from "../../service/API.js";
 async function prepareTracksForAlbum(album) {
     let tracks = album.tracks.items;
     let isLiked = [];

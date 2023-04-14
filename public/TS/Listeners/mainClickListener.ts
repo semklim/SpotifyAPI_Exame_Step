@@ -1,5 +1,5 @@
-import { OnPlayFunc } from "./OnPlayFunc.js";
-import { APP, favorite_track } from "./main.js";
+import { OnPlayFunc } from "../OnPlayFunc.js";
+import { APP, favorite_track } from "../service/APP.js";
 const requestBox = document.getElementsByClassName('requestBox')[0];
 const header = document.getElementsByClassName('header')[0];
 const pauseInMinutes = 5;
@@ -53,7 +53,7 @@ function likeStyle(target: HTMLElement, likeCondition: boolean) {
 	}
 }
 
-async function mainHandler(e: Event) {
+async function mainClickerListener(e: Event) {
 	const target = e!.target as HTMLElement;
 	const className = [...target.classList];
 
@@ -172,4 +172,4 @@ async function mainHandler(e: Event) {
 
 }
 
-export default mainHandler;
+export default mainClickerListener;

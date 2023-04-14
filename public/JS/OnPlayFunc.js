@@ -3,12 +3,12 @@ import { onPlay } from "./player.js";
 import { playBtnSVG } from "./player.js";
 import { pauseConditionChange } from "./player.js";
 import { currentAudio } from "./player.js";
-import { favTracks } from "./main.js";
-import { favTracksDeleter } from "./main.js";
-import API from "./API.js";
+import { favTracks } from "./service/APP.js";
+import { favTracksDeleter } from "./service/APP.js";
+import API from "./service/API.js";
 import { prepareTracks } from "./helpers/tracks/prepareTracksObj.js";
 import { volumeSlider } from "./player.js";
-import { refreshFavorite_track } from "./main.js";
+import { refreshFavorite_track } from "./service/APP.js";
 //@ts-ignore
 export function findObjectByParam(array, value, anotherArray) {
     console.log(array);

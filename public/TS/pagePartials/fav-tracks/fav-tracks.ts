@@ -1,4 +1,4 @@
-import API from '../../API.js';
+import API from '../../service/API.js';
 import funcUIList from './fav-tracks-list.js';
 
 function funcUI (userSaveTracks: any)  {

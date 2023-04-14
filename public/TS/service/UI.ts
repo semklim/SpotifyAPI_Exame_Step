@@ -1,7 +1,7 @@
-import buildTracksByPlaylist from "./pagePartials/buildTracksByPlaylistOrAlbum/buildTracksByPlaylistOrAlbum.js";
-import funcUI from "./pagePartials/fav-tracks/fav-tracks.js";
-import  buildSearchPage  from "./pagePartials/searchPage/buildSearchPage.js";
-import buildPageOfPlaylists from "./pagePartials/playlistsByRequest/getPlaylists.js";
+import buildTracksByPlaylist from "../pagePartials/buildTracksByPlaylistOrAlbum/buildTracksByPlaylistOrAlbum.js";
+import funcUI from "../pagePartials/fav-tracks/fav-tracks.js";
+import  buildSearchPage  from "../pagePartials/searchPage/buildSearchPage.js";
+import buildPageOfPlaylists from "../pagePartials/playlistsByRequest/buildPageOfPlaylists.js";
 /**
 
 Represents the Assets of html pages class.
