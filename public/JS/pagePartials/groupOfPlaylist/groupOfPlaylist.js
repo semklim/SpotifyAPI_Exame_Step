@@ -64,7 +64,7 @@ const listOfPlaylists = (list, listLength) => {
     }
     return html;
 };
-function genPlaylistCards(arrayOfPlaylists) {
+function genGroupOfPlaylistsCards(arrayOfPlaylists) {
     const arrLength = arrayOfPlaylists.length;
     let html = '';
     for (let i = 0; i < arrLength; i++) {
@@ -115,7 +115,7 @@ function htmlRecomm(arrayOfPlaylists, genres) {
     html += `
 	<div class="contentSpacing resultReq">
 		<div class="resultReq__infinite-scroll-list">
-			${genPlaylistCards(arrayOfPlaylists)}
+			${genGroupOfPlaylistsCards(arrayOfPlaylists)}
 		</div>
 	</div>`;
     return html;

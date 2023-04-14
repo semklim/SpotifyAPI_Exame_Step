@@ -11,7 +11,7 @@ import { OnPlayFunc } from "./OnPlayFunc.js";
 import { addIsLikedKey } from './helpers/tracks/trackBoxFunc/trackBoxFunc.js';
 import htmlRecomm from './pagePartials/groupOfPlaylist/groupOfPlaylist.js';
 import { setNumberOfGridColumns } from "./helpers/setNumberOfColumns.js";
-import { resolve } from 'path';
+import preparePlaylists from './helpers/preparePlaylist.js';
 
 const APP = (function (API, UI) {
 	let history: string[] = [];
@@ -65,9 +65,9 @@ const APP = (function (API, UI) {
 		UI.createAccount(user);
 	}
 
-	const genGenres = async () => {
+	const buildSearchPage = async () => {
 		const genres = await API.Genres();
-		UI.createGenres(genres);
+		UI.renderSearchPage(genres);
 	}
 
 	const playlistsByGenre = async (genreName: string, genreID: string) => {
@@ -103,6 +103,8 @@ const APP = (function (API, UI) {
 	const tracksByAlbum = async (id:string) => {
 		const album = await API.getAlbum(id);
 		const tracks = await prepareTracksForAlbum(album);
+		album.tracks.items = tracks;
+
 		UI.createTracks(album);
 		OnPlayFunc(tracks);
 	}
@@ -140,45 +142,24 @@ const APP = (function (API, UI) {
 	}
 
 	const PageRecomm = async () => {
-
+		
+		const requestBox = document.querySelector('.requestBox')!;
 		const newReleases = await API.getNewReleases();
-		newReleases.message = 'New Releases';
-		console.log(newReleases);
 		const featured = await API.getFeaturedPlaylists();
 
 		const query = APP.isLoggedIn ? 'daily' : 'Spotify';
 		const type = 'playlist'
 		const url = `https://api.spotify.com/v1/search?q=${query}&type=${type}&market=ES&limit=50&offset=0`;
 		const result =  await API.get(url);
-		let count: any = [];
-
-		result.playlists.items = result.playlists.items.filter((el: any) => {
-			if(el.owner.display_name === 'Spotify'){
-				if(el.name.includes('Daily')){
-					const number = el.name.match(/\d/g) ? el.name.match(/\d/g)[0] : undefined;
-					const random = Math.round(Math.random() * 101);
-					if(number && !count[number - 1] || random > 50){
-						count[number - 1] = el;
-						return false;
-					}
-				}
-				if(el.name.includes('Daily Mix')){
-					return false;
-				}
-				return true;
-			}
-			return false;
-		});
-
-		if(count.length !== 0){
-		result.playlists.items = [...count, ...result.playlists.items];
-		}
-		result.message = `${API.user ? 'Made For ' + API.user.display_name : 'Spotify playlists'}`;
-
 		let arrRes = [featured, result, newReleases];
 	
+		result.playlists.items = preparePlaylists(result.playlists.items);
+
+		newReleases.message = 'New Releases';
+		result.message = `${API.user ? 'Made For ' + API.user.display_name : 'Spotify playlists'}`;
+
 		const html = htmlRecomm(arrRes);
-		const requestBox = document.querySelector('.requestBox')!;
+
 		requestBox.innerHTML = html;
 
 		if(APP.history.length === 0){
@@ -233,8 +214,8 @@ const APP = (function (API, UI) {
 			tracksByAlbum(id);
 		},
 
-		async genGenres() {
-			await genGenres();
+		async buildSearchPage() {
+			await buildSearchPage();
 		},
 
 		async playlistsByGenre(genreName: string, genreID: string) {

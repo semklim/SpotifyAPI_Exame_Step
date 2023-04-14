@@ -1,5 +1,7 @@
-import Assets from "./pagePartials/htmlAssets/htmlPageAssets.js";
+import buildTracksByPlaylist from "./pagePartials/buildTracksByPlaylistOrAlbum/buildTracksByPlaylistOrAlbum.js";
 import funcUI from "./pagePartials/fav-tracks/fav-tracks.js";
+import buildSearchPage from "./pagePartials/searchPage/buildSearchPage.js";
+import buildPageOfPlaylists from "./pagePartials/playlistsByRequest/getPlaylists.js";
 /**
 
 Represents the Assets of html pages class.
@@ -34,8 +36,8 @@ class UserInterface {
     Creates the genres section.
     @param {object} obj - The genres data object.
     */
-    createGenres(obj) {
-        const { box, searchBox } = Assets.genGenres(obj);
+    renderSearchPage(obj) {
+        const { box, searchBox } = buildSearchPage(obj);
         const btn__history = document.querySelector('.btn-controls-contents');
         if (btn__history.nextElementSibling.className !== 'wrapper') {
             btn__history.insertAdjacentHTML("afterend", searchBox);
@@ -44,11 +46,11 @@ class UserInterface {
         const requestBox = document.querySelector('.requestBox');
         if (root__top_bar.nextElementSibling === null) {
             const mainContent = document.querySelector('.main-content');
-            const requestBox = `<div class ="requestBox" id="GenresPage">${box}</div>`;
+            const requestBox = `<div class ="requestBox" id="searchPage">${box}</div>`;
             mainContent.innerHTML += requestBox;
         }
         else if (requestBox) {
-            requestBox.id = 'GenresPage';
+            requestBox.id = 'searchPage';
             requestBox.innerHTML = box;
         }
     }
@@ -60,12 +62,12 @@ class UserInterface {
     @param {object[]} playlists - An array of objects representing the playlists of the genre
     */
     createGenresRes(genresName, playlists) {
-        const html = Assets.playlistByGenres(genresName, playlists);
+        const html = buildPageOfPlaylists(genresName, playlists);
         const requestBox = document.querySelector('.requestBox');
         requestBox.innerHTML = html;
     }
     createTracks(playlist) {
-        const html = Assets.tracksByPlaylist(playlist);
+        const html = buildTracksByPlaylist(playlist);
         const requestBox = document.querySelector('.requestBox');
         requestBox.innerHTML = html;
     }

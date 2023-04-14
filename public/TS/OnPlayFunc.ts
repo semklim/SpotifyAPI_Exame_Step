@@ -116,7 +116,7 @@ export function OnPlayFunc(tracks?) {
                 } else {
                     const refreshPlaylist = async () => {
                         // @ts-ignore
-                        const playlistId = target.getAttribute('data-playlist-id');
+                        const playlistId = document.querySelector('.play-favorite-track__button').getAttribute('data-playlist-id');
                         const playlist = await API.GetPlaylist(playlistId!);
                         const tracksObj = await prepareTracks(playlist);
                         tracks = tracksObj!;

@@ -2,8 +2,8 @@ import Auth from "../../Auth.js";
 import API from "../../API.js";
 
 
-async function prepareTracksForAlbum (playlist: any) {
-	let tracks = playlist.tracks.items;
+async function prepareTracksForAlbum (album: any) {
+	let tracks = album.tracks.items;
 	let isLiked: boolean[] = [];
 	let idTracks: string[] = [];
 	let buffer: any = [];

@@ -97,7 +97,7 @@ const listOfPlaylists = (list: object[], listLength: number) => {
 	return html;
 }
 
-function genPlaylistCards(arrayOfPlaylists: object[]){
+function genGroupOfPlaylistsCards(arrayOfPlaylists: object[]){
 	const arrLength = arrayOfPlaylists.length;
 	let html = '';
 
@@ -152,7 +152,7 @@ function htmlRecomm(arrayOfPlaylists: Array<object>, genres?: string): string{
 	html += `
 	<div class="contentSpacing resultReq">
 		<div class="resultReq__infinite-scroll-list">
-			${genPlaylistCards(arrayOfPlaylists)}
+			${genGroupOfPlaylistsCards(arrayOfPlaylists)}
 		</div>
 	</div>`;
 

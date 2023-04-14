@@ -106,7 +106,7 @@ async function mainHandler(e) {
     if (className.includes('nav-bar__serch-link')) {
         // copies a page when client make a step back, to keep a history of client actions
         keepChronology();
-        await APP.genGenres();
+        await APP.buildSearchPage();
         historyLogic();
         APP.PageSearch();
     }

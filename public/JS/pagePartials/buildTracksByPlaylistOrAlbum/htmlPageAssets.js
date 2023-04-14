@@ -1,5 +1,5 @@
-import randomColor from "../../helpers/picColor.js";
-import { minutesSince, msToTime } from "../../helpers/tracks/trackBoxFunc/trackBoxFunc.js";
+import randomColor from "../../helpers/picColor";
+import { minutesSince, msToTime } from "../../helpers/tracks/trackBoxFunc/trackBoxFunc";
 function getTracksForAlbum(list) {
     let html = '';
     list.forEach((el, i) => {
