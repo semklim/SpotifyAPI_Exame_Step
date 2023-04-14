@@ -1,7 +1,7 @@
 
-function preparePlaylists(playlists: object[]){
+function preparePlaylists(listOfPlaylists: object[]){
 	let count: any = [];
-
+	let playlists = [...listOfPlaylists];
 	playlists = playlists.filter((el: any) => {
 		if(el.owner.display_name === 'Spotify'){
 			if(el.name.includes('Daily')){

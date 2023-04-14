@@ -1,7 +1,7 @@
 import Auth from "../../service/Auth.js";
 import API from "../../service/API.js";
 async function prepareTracksForAlbum(album) {
-    let tracks = album.tracks.items;
+    let tracks = [...album.tracks.items];
     let isLiked = [];
     let idTracks = [];
     let buffer = [];
@@ -25,7 +25,7 @@ async function prepareTracksForAlbum(album) {
     return tracks;
 }
 async function prepareTracks(playlist) {
-    let tracks = playlist.tracks.items;
+    let tracks = [...playlist.tracks.items];
     let isLiked = [];
     let idTracks = [];
     let buffer = [];

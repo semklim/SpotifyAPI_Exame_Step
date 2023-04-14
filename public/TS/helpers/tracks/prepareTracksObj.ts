@@ -3,7 +3,7 @@ import API from "../../service/API.js";
 
 
 async function prepareTracksForAlbum (album: any) {
-	let tracks = album.tracks.items;
+	let tracks = [...album.tracks.items];
 	let isLiked: boolean[] = [];
 	let idTracks: string[] = [];
 	let buffer: any = [];
@@ -36,7 +36,7 @@ async function prepareTracksForAlbum (album: any) {
 
 
 async function prepareTracks(playlist: any) {
-	let tracks = playlist.tracks.items;
+	let tracks = [...playlist.tracks.items];
 	let isLiked: boolean[] = [];
 	let idTracks: string[] = [];
 	let buffer: any = [];
