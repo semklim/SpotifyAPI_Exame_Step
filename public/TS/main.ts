@@ -135,7 +135,7 @@ const APP = (function (API, UI) {
 			} else {
 				requestBox.innerHTML = htmlRecomm(arrHtml as object[], searchBox.value);
 			}
-			console.log(searchBox.value)
+			console.log(arrHtml)
 		})
 	}
 

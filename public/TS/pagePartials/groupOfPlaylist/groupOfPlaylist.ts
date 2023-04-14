@@ -54,7 +54,7 @@ const listOfPlaylists = (list: object[], listLength: number) => {
 
 		let img:string | null = '';
 
-		if(type === 'track') {
+		if(type === 'track' ) {
 			if(!el.album.images.length) {continue}
 			const name = el.artists[0].name;
 			description = name;
@@ -63,6 +63,10 @@ const listOfPlaylists = (list: object[], listLength: number) => {
 		else {
 			if(!images.length){continue}
 			img = images[0].url ? images[0].url : '';
+		}
+
+		if(type === 'artist'){	
+			description = type.charAt(0).toUpperCase() + type.slice(1);
 		}
 		
 		html += `<div class="shelf__content__playlist" id = "${id}" data-type="${type}">

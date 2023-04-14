@@ -189,7 +189,7 @@ a {
 
 .dowload-link {
   position: absolute;
-  bottom: 0px;
+  bottom: 8px;
   height: 40px;
   /* padding-left: 16px; */
   padding-right: 20px;
@@ -210,6 +210,8 @@ a {
 
 
 .dowload-link__img-box {
+  display: flex;
+  /* align-self: center; */
   margin-right: 18px;
 }
 
@@ -313,6 +315,7 @@ a {
 /* ------------Search page------------ */
 
 .wrapper{
+  padding-left: 13px;
 	top: 0;
 	position: sticky;
 	z-index: 2;

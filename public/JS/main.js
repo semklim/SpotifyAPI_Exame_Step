@@ -118,7 +118,7 @@ const APP = (function (API, UI) {
             else {
                 requestBox.innerHTML = htmlRecomm(arrHtml, searchBox.value);
             }
-            console.log(searchBox.value);
+            console.log(arrHtml);
         });
     };
     const PageRecomm = async () => {

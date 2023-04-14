@@ -34,6 +34,9 @@ const listOfPlaylists = (list, listLength) => {
             }
             img = images[0].url ? images[0].url : '';
         }
+        if (type === 'artist') {
+            description = type.charAt(0).toUpperCase() + type.slice(1);
+        }
         html += `<div class="shelf__content__playlist" id = "${id}" data-type="${type}">
 					<div class="playlist__imgBox">
 						<div class="imgBox__img">
