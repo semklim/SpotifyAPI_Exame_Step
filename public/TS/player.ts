@@ -1,10 +1,11 @@
 import { playingAudio } from "./OnPlayFunc.js";
 import Cookie from "./Cookies.js";
+
 //VOLUME
 export const volumeSlider = document.getElementById('volumeSlider') as HTMLInputElement;
-if (Cookie.get('volume') != null) {
-  //@ts-ignore
-  volumeSlider.value = Cookie.get('volume');
+const volume = Cookie.get('volume');
+if (volume !== null) {
+  volumeSlider.value = volume;
 }
 const muteBtn = document.getElementsByClassName('volume-icon')[0] as SVGElement;
 let muteConditon: boolean = false;
@@ -41,7 +42,6 @@ muteBtn.addEventListener('click', () => {
 })
 
 volumeSlider.addEventListener('input', () => {
-  //@ts-ignore
   if (audio) {
     //@ts-ignore
     audio!.volume = volumeSlider.value / 100
@@ -79,8 +79,8 @@ playBtn.addEventListener('click', () => {
       case false: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
         pauseCondition = true;
         playingAudio?.pause()
-        //@ts-ignore
-        audio!.pause();
+        if (audio instanceof HTMLAudioElement) {
+        audio!.pause();}
         break;
       case true: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
         playingAudio?.play()
@@ -111,16 +111,9 @@ let audioIsPlaying = false;
 let testTracks: any[];
 let testI: number;
 
-if (localStorage.getItem('tracks')) {
-  //@ts-ignore
-  testTracks = JSON.parse(localStorage.getItem('tracks'));
-}
-if (localStorage.getItem('i')) {
-  //@ts-ignore
-  testI = JSON.parse(localStorage.getItem('i'));
-}
 if (localStorage.getItem('i') && localStorage.getItem('tracks')) {
-  //@ts-ignore
+  testTracks = JSON.parse(localStorage.getItem('tracks') as string);
+  testI = JSON.parse(localStorage.getItem('i') as string);
   audio = onPlay(testTracks, testI);
   //@ts-ignore
   audio!.addEventListener('canplaythrough', function () {
