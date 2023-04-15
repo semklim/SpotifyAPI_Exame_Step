@@ -230,6 +230,7 @@ export function onPlay(tracks, i) {
     audio.addEventListener('timeupdate', timeUpdate);
     audioIsPlaying = true;
     Cookie.set('audio', JSON.stringify(audio), 15);
+    console.log(tracks);
     Cookie.set('tracks', JSON.stringify(tracks), 15);
     return audio;
 }
