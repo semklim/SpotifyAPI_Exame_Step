@@ -78,9 +78,13 @@ playBtn.addEventListener('click', () => {
       case false: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
         pauseCondition = true;
         playingAudio?.pause()
+        //@ts-ignore
+        audio!.pause();
         break;
       case true: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
         playingAudio?.play()
+        //@ts-ignore
+        audio!.play();
         pauseCondition = false;
         break;
     }
@@ -106,23 +110,34 @@ let audioIsPlaying = false;
 let testTracks: any[];
 let testI: number;
 
-//getting audio and tracks mass from cookies
-//@ts-ignore
-console.log(JSON.parse(Cookie.get('audio')))
-//@ts-ignore
-console.log(JSON.parse(Cookie.get('tracks')))
-if (Cookie.get('audio') != null && Cookie.get('tracks') != null) {
+if (localStorage.getItem('tracks')) {
   //@ts-ignore
-  audio = JSON.parse(Cookie.get('audio'));
-  //@ts-ignore
-  testTracks = JSON.parse(Cookie.get('tracks'))
+  testTracks = JSON.parse(localStorage.getItem('tracks'));
 }
+if (localStorage.getItem('i')) {
+  //@ts-ignore
+  testI = JSON.parse(localStorage.getItem('i'));
+}
+if (localStorage.getItem('i') && localStorage.getItem('tracks')) {
+  //@ts-ignore
+  audio = onPlay(testTracks, testI);
+  //@ts-ignore
+  audio!.addEventListener('canplaythrough', function () {
+    //@ts-ignore
+    audio.pause();
+    playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
+    pauseCondition = true;
+  });
+}
+
 export function onPlay(tracks: any[], i: number) {
   currentAudio = null;
   testTracks = tracks;
   testI = i;
   if (audioIsPlaying === true) {
     if (tracks[i].track) {
+      //@ts-ignore
+      audio.pause();
       audio = null;
       audio = new Audio(tracks[i].track.preview_url!);
       audio.addEventListener('canplaythrough', function () {
@@ -223,9 +238,8 @@ export function onPlay(tracks: any[], i: number) {
 
 
   audioIsPlaying = true;
-  Cookie.set('audio', JSON.stringify(audio), 15);
-  console.log(tracks);
-  Cookie.set('tracks', JSON.stringify(tracks), 15)
+  localStorage.setItem('tracks', JSON.stringify(testTracks));
+  localStorage.setItem('i', i.toString())
   return audio;
 }
 
@@ -243,6 +257,26 @@ nextBtn.addEventListener('click', () => {
     if (testI + 1 < testTracks.length) {
       //@ts-ignore
       audio!.currentTime = audio!.duration - 0.100;
+    }
+  } else if (localStorage.getItem('i') && localStorage.getItem('tracks')) {
+    if (testI + 1 < testTracks.length) {
+      //@ts-ignore
+      if (randomCondition === true) {
+        testI = getRandomInt(testTracks.length)
+      } else {
+        if (repeatCondition === 1 || repeatCondition === '1') {
+          testI = testI + 1;
+        } else if (repeatCondition === 2) {
+          testI = testI + 0;
+        } else if (repeatCondition === 3) {
+          if (testI > 0) {
+            testI = testI - 1;
+          } else if (testI <= 0) {
+            testI = testI - 0;
+          }
+        }
+      }
+      audio = onPlay(testTracks, testI)
     }
   }
 })
@@ -264,6 +298,13 @@ prevBtn.addEventListener('click', () => {
     currentAudio! = null;
     currentAudio! = onPlay(testTracks, testI);
     return;
+  } else if (localStorage.getItem('i') && localStorage.getItem('tracks')) {
+    if (testI - 1 >= 0) {
+      //@ts-ignore
+      audio != onPlay(testTracks, testI - 1)
+    } else {
+      audio != onPlay(testTracks, testI)
+    }
   }
 })
 
