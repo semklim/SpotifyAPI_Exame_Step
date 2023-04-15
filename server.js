@@ -4,6 +4,31 @@ const path = require('path');
 const PORT = 8888;
 const link = `http://localhost:${PORT}/`;
 
+function getContentType (fileExtension) {
+	switch (fileExtension) { // determine the content type based on the file extension
+		case '.html':
+			return 'text/html';
+		case '.css':
+			return 'text/css';
+		case '.js':
+			return 'text/javascript';
+		default:
+			return 'text/plain';
+	}
+}
+
+function getCacheControl (contentType) {
+	switch (contentType) { // determine the cache control header based on the content type
+		case 'text/html':
+			return 'no-cache';
+		case 'text/css':
+		case 'text/javascript':
+			return 'max-age=86400';
+		default:
+			return 'public, max-age=86400';
+	}
+}
+
 const server = http.createServer((req, res) => {
 	let filePath = '.' + req.url;
 	if (filePath === './') {
@@ -14,14 +39,20 @@ const server = http.createServer((req, res) => {
 	}
 
 	// Set the content-type header based on the file type
-	const extname = String(path.extname(filePath)).toLowerCase();
-	let contentType = 'text/html';
-	if (extname === '.js') {
-		contentType = 'text/javascript';
-	}
-	if (extname === '.css') {
-		contentType = 'text/css';
-	}
+	const fileExtension = String(path.extname(filePath)).toLowerCase();
+	const contentType = getContentType(fileExtension);
+	// let contentType = 'text/html';
+	const cacheControl = getCacheControl(contentType); // determine the cache control header based on the content type
+
+
+	// if (extname === '.js') {
+	// 	contentType = 'text/javascript';
+	// }
+	// if (extname === '.css') {
+	// 	contentType = 'text/css';
+	// }
+
+
 	// Read the file contents from disk
 	fs.readFile(filePath, (err, content) => {
 		if (err) {
@@ -33,7 +64,10 @@ const server = http.createServer((req, res) => {
 				res.end('<h1>500 Internal Server Error</h1><p>Sorry, there was a problem with the server.</p>');
 			}
 		} else {
-			res.writeHead(200, { 'Content-Type': contentType });
+			res.writeHead(200, {
+				'Content-Type': contentType,
+				'Cache-Control': cacheControl
+			});
 			res.end(content, 'utf-8');
 		}
 	});
