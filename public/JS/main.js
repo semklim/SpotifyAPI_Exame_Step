@@ -41,3 +41,4 @@ else {
 btn.addEventListener('click', logicOfLoginBtn);
 setNumberOfGridColumns();
 window.addEventListener('resize', setNumberOfGridColumns);
+API.UserProfile().then(data => { console.log(data); });

@@ -276,6 +276,11 @@ a {
   opacity: 1;
 }
 
+.header-content{
+  display: flex;
+  align-items: center;
+}
+
 .login-in-box {
   display: flex;
   align-items: center;
@@ -311,6 +316,44 @@ a {
 }
 
 
+
+.loginBox-when-auth{
+  /* display: flex;
+  align-items: center; */
+  justify-content: space-between;
+  background-color: #000;
+  color: white;
+  height: 32px;
+  line-height: 0;
+  font-size: 16px;
+  border-radius: 15px;
+  padding-left: 3px;
+  padding-right: 10px;
+}
+
+.login-info-button {
+  display: flex;
+  align-items: center;
+
+}
+
+.figure{
+  width: 30px;
+  height: 30px;
+  display: flex;
+  border-radius: 50%;
+  background-color: #a7a7a7;
+}
+
+.login-name-profile{
+  display: flex;
+  margin-left: 10px;
+}
+
+.burgger-login-svg {
+  margin-top: 3px;
+  margin-left: 10px;
+}
 
 /* ------------Search page------------ */
 
