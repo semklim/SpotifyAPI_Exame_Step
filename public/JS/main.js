@@ -38,6 +38,21 @@ else {
         });
     });
 }
+////////// изза новой линейки архитектуры, не понял куда это засутунь
+///это всплытие блока кнопок при нажатии на блок юзера в хедере
+let loginBox = document.querySelector('.loginBox-when-auth');
+let burgerButtons = document.querySelector('.burger-buttons-login');
+loginBox.addEventListener('click', function (event) {
+    burgerButtons.classList.add('active');
+    event.stopPropagation(); // предотвращает всплытие события
+});
+// обработчик событий для клика на документе
+document.addEventListener('click', function (event) {
+    if (!loginBox.contains(event.target)) {
+        burgerButtons.classList.remove('active');
+    }
+});
+//////////////////////////////
 btn.addEventListener('click', logicOfLoginBtn);
 setNumberOfGridColumns();
 window.addEventListener('resize', setNumberOfGridColumns);

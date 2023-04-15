@@ -32,6 +32,7 @@ if ((Cookie.get('accessToken'))) {
 	APP.PageRecomm().then(() => {
 		window.addEventListener('click', mainClickerListener);
 	});
+
 } else {
 	Cookie.clearAllCookie();
 	APP.getToken().then(() => {
@@ -41,6 +42,24 @@ if ((Cookie.get('accessToken'))) {
 		});
 	});
 }
+
+////////// изза новой линейки архитектуры, не понял куда это засутунь
+///это всплытие блока кнопок при нажатии на блок юзера в хедере
+let loginBox = document.querySelector('.loginBox-when-auth') as HTMLAreaElement;
+let burgerButtons = document.querySelector('.burger-buttons-login') as HTMLAreaElement;
+
+	loginBox.addEventListener('click', function(event) {
+  burgerButtons.classList.add('active');
+  event.stopPropagation(); // предотвращает всплытие события
+});
+
+// обработчик событий для клика на документе
+document.addEventListener('click', function(event:any) {
+  if (!loginBox.contains(event.target)) {
+    burgerButtons.classList.remove('active');
+  }
+});
+//////////////////////////////
 
 btn.addEventListener('click', logicOfLoginBtn);
 
