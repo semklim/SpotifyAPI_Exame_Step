@@ -67,7 +67,7 @@ playBtn.addEventListener('click', () => {
     switch (pauseCondition) {
       case false: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
         pauseCondition = true;
-        currentAudio?.pause()
+        currentAudio?.pause();
         break;
       case true: playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
         currentAudio?.play()
@@ -99,8 +99,7 @@ export function pauseConditionChange() {
 
 //CHOSEN SONG ON PLAY
 let inputChangedByUser = false;
-//@ts-ignore
-export let currentAudio;
+export let currentAudio: any;
 let audioCurrTime = document.getElementsByClassName('songOnPlayCurrTime')[0] as HTMLSpanElement;
 let audioFullDuration = document.getElementsByClassName('songOnEndCurrTime')[0] as HTMLSpanElement;
 let albumCover = document.getElementsByClassName('albumCover')[0] as HTMLDivElement;
@@ -140,13 +139,7 @@ export function onPlay(tracks: any[], i: number) {
         //@ts-ignore
         audio!.play();
       });
-      const totalSeconds = Math.floor(tracks[i].track.duration_ms / 1000);
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = totalSeconds % 60;
-      audioFullDuration.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`
-      artist.textContent = tracks[i].track.artists[0].name
-      songName.textContent = tracks[i].track.name;
-      albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+     addToPlayer();
     } else {
       audio = null;
       audio = new Audio(tracks[i].preview_url!);
@@ -174,13 +167,7 @@ export function onPlay(tracks: any[], i: number) {
         //@ts-ignore
         audio!.play();
       });
-      const totalSeconds = Math.floor(tracks[i].track.duration_ms / 1000);
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = totalSeconds % 60;
-      audioFullDuration.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`
-      artist.textContent = tracks[i].track.artists[0].name
-      songName.textContent = tracks[i].track.name;
-      albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+      addToPlayer();
     } else {
       audio = new Audio(tracks[i].preview_url!);
       audio.addEventListener('canplaythrough', function () {
@@ -198,6 +185,7 @@ export function onPlay(tracks: any[], i: number) {
       albumCover.style.backgroundImage = `${album}`;
     }
   }
+  
   //@ts-ignore
   audio!.addEventListener('ended', () => {
     if (randomCondition === true) {
@@ -218,22 +206,31 @@ export function onPlay(tracks: any[], i: number) {
     currentAudio = onPlay(tracks, i);
     return;
   })
+
   //@ts-ignore
   audio!.addEventListener('loadedmetadata', () => {
     //@ts-ignore
     const duration = audio!.duration;
-    // Установка максимального значения input range
+
     trackTimeSlider.max = duration.toString();
   });
 
   //@ts-ignore
   audio!.addEventListener('timeupdate', timeUpdate);
 
-
-
   audioIsPlaying = true;
   localStorage.setItem('tracks', JSON.stringify(testTracks));
   localStorage.setItem('i', i.toString())
+
+  function addToPlayer() {
+    const totalSeconds = Math.floor(tracks[i].track.duration_ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    audioFullDuration.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`
+    artist.textContent = tracks[i].track.artists[0].name
+    songName.textContent = tracks[i].track.name;
+    albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
+  }
   return audio;
 }
 
@@ -247,14 +244,12 @@ nextBtn.addEventListener('click', () => {
     playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
   }
   if (playingAudio) {
-    //@ts-ignore
     if (testI + 1 < testTracks.length) {
       //@ts-ignore
       audio!.currentTime = audio!.duration - 0.100;
     }
   } else if (localStorage.getItem('i') && localStorage.getItem('tracks')) {
     if (testI + 1 < testTracks.length) {
-      //@ts-ignore
       if (randomCondition === true) {
         testI = getRandomInt(testTracks.length)
       } else {
