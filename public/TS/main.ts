@@ -1,6 +1,7 @@
 import Cookie from "./Cookies.js";
 import mainClickerListener from "./Listeners/mainClickListener.js";
 import { setNumberOfGridColumns } from "./helpers/setNumberOfColumns.js";
+import { burgerUserBox, giveMeLoginBox, giveMeUserBox } from "./pagePartials/login/loginBox.js";
 import API from "./service/API.js";
 import { APP } from "./service/APP.js";
 import Auth from "./service/Auth.js";
@@ -9,6 +10,7 @@ import Auth from "./service/Auth.js";
 function logicOfLoginBtn() {
 	removeEventListener('click', mainClickerListener);
 	APP.history.length = 0;
+	
 	if (btn.getAttribute('data-isLoggedIn') === 'false') {
 		APP.initLogin(btn);
 	}
@@ -16,8 +18,8 @@ function logicOfLoginBtn() {
 		APP.initLogout(btn);
 	}
 }
-
-const btn = <HTMLButtonElement>document.querySelector('.login')!;
+const loginMainBox = document.querySelector('.header-content') as HTMLElement;
+let btn = <HTMLButtonElement>document.querySelector('.login')!;
 
 if ((Cookie.get('accessToken'))) {
 	Auth.refreshToken = Cookie.get('refreshToken')!;
@@ -26,8 +28,17 @@ if ((Cookie.get('accessToken'))) {
 	API.accessToken = Auth.accessToken;
 	API.expires_in = Auth.expires_in;
 	API.user = JSON.parse(Cookie.get('userProfile')!);
-	btn.textContent = "Logout";
+	//
+	loginMainBox.innerHTML = giveMeUserBox()
+	let userName = document.querySelector('.login-name-profile')
+	//@ts-ignore
+	API.UserProfile().then(data => {userName.textContent = data.display_name})
+	btn = <HTMLButtonElement>document.querySelector('.logout')!;
+	// loginBoxHtml.style.display = 'none'
+	// btn.textContent = "Logout";
 	btn.setAttribute('data-isLoggedIn', 'true');
+
+	burgerUserBox();
 	APP.isLoggedIn = true;
 	APP.PageRecomm().then(() => {
 		window.addEventListener('click', mainClickerListener);
@@ -35,6 +46,8 @@ if ((Cookie.get('accessToken'))) {
 
 } else {
 	Cookie.clearAllCookie();
+	loginMainBox.innerHTML = giveMeLoginBox()
+	btn = <HTMLButtonElement>document.querySelector('.login');
 	APP.getToken().then(() => {
 		APP.PageRecomm()
 		.then(() => {
@@ -42,28 +55,7 @@ if ((Cookie.get('accessToken'))) {
 		});
 	});
 }
-
-////////// изза новой линейки архитектуры, не понял куда это засутунь
-///это всплытие блока кнопок при нажатии на блок юзера в хедере
-let loginBox = document.querySelector('.loginBox-when-auth') as HTMLAreaElement;
-let burgerButtons = document.querySelector('.burger-buttons-login') as HTMLAreaElement;
-
-	loginBox.addEventListener('click', function(event) {
-  burgerButtons.classList.add('active');
-  event.stopPropagation(); // предотвращает всплытие события
-});
-
-// обработчик событий для клика на документе
-document.addEventListener('click', function(event:any) {
-  if (!loginBox.contains(event.target)) {
-    burgerButtons.classList.remove('active');
-  }
-});
-//////////////////////////////
-
 btn.addEventListener('click', logicOfLoginBtn);
 
 setNumberOfGridColumns();
 window.addEventListener('resize',setNumberOfGridColumns);
-
-API.UserProfile().then(data => {console.log(data)});

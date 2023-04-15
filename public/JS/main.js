@@ -1,6 +1,7 @@
 import Cookie from "./Cookies.js";
 import mainClickerListener from "./Listeners/mainClickListener.js";
 import { setNumberOfGridColumns } from "./helpers/setNumberOfColumns.js";
+import { burgerUserBox, giveMeLoginBox, giveMeUserBox } from "./pagePartials/login/loginBox.js";
 import API from "./service/API.js";
 import { APP } from "./service/APP.js";
 import Auth from "./service/Auth.js";
@@ -14,7 +15,8 @@ function logicOfLoginBtn() {
         APP.initLogout(btn);
     }
 }
-const btn = document.querySelector('.login');
+const loginMainBox = document.querySelector('.header-content');
+let btn = document.querySelector('.login');
 if ((Cookie.get('accessToken'))) {
     Auth.refreshToken = Cookie.get('refreshToken');
     Auth.accessToken = Cookie.get('accessToken');
@@ -22,8 +24,16 @@ if ((Cookie.get('accessToken'))) {
     API.accessToken = Auth.accessToken;
     API.expires_in = Auth.expires_in;
     API.user = JSON.parse(Cookie.get('userProfile'));
-    btn.textContent = "Logout";
+    //
+    loginMainBox.innerHTML = giveMeUserBox();
+    let userName = document.querySelector('.login-name-profile');
+    //@ts-ignore
+    API.UserProfile().then(data => { userName.textContent = data.display_name; });
+    btn = document.querySelector('.logout');
+    // loginBoxHtml.style.display = 'none'
+    // btn.textContent = "Logout";
     btn.setAttribute('data-isLoggedIn', 'true');
+    burgerUserBox();
     APP.isLoggedIn = true;
     APP.PageRecomm().then(() => {
         window.addEventListener('click', mainClickerListener);
@@ -31,6 +41,8 @@ if ((Cookie.get('accessToken'))) {
 }
 else {
     Cookie.clearAllCookie();
+    loginMainBox.innerHTML = giveMeLoginBox();
+    btn = document.querySelector('.login');
     APP.getToken().then(() => {
         APP.PageRecomm()
             .then(() => {
@@ -38,22 +50,6 @@ else {
         });
     });
 }
-////////// изза новой линейки архитектуры, не понял куда это засутунь
-///это всплытие блока кнопок при нажатии на блок юзера в хедере
-let loginBox = document.querySelector('.loginBox-when-auth');
-let burgerButtons = document.querySelector('.burger-buttons-login');
-loginBox.addEventListener('click', function (event) {
-    burgerButtons.classList.add('active');
-    event.stopPropagation(); // предотвращает всплытие события
-});
-// обработчик событий для клика на документе
-document.addEventListener('click', function (event) {
-    if (!loginBox.contains(event.target)) {
-        burgerButtons.classList.remove('active');
-    }
-});
-//////////////////////////////
 btn.addEventListener('click', logicOfLoginBtn);
 setNumberOfGridColumns();
 window.addEventListener('resize', setNumberOfGridColumns);
-API.UserProfile().then(data => { console.log(data); });

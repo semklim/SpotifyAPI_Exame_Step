@@ -10,6 +10,7 @@ import { OnPlayFunc } from "../OnPlayFunc.js";
 import { addIsLikedKey } from '../helpers/tracks/trackBoxFunc/trackBoxFunc.js';
 import htmlRecomm from '../pagePartials/groupOfPlaylist/groupOfPlaylist.js';
 import preparePlaylists from '../helpers/preparePlaylist.js';
+import { giveMeLoginBox } from '../pagePartials/login/loginBox.js';
 const APP = (function (API, UI) {
     let history = [];
     let isLoggedIn = false;
@@ -18,6 +19,7 @@ const APP = (function (API, UI) {
         API.accessToken = access_token;
         API.expires_in = new Date(Date.now() + (expires_in * 1000));
     };
+    const loginMainBox = document.querySelector('.header-content');
     const initLogin = async (btn) => {
         await Auth.login();
         API.accessToken = Auth.accessToken;
@@ -27,10 +29,11 @@ const APP = (function (API, UI) {
         Cookie.set('refreshToken', Auth.refreshToken, 15);
         Cookie.set('expires_in', Auth.expires_in.toUTCString(), 15);
         Cookie.set('userProfile', JSON.stringify(API.user), 15);
+        loginMainBox.innerHTML = giveMeLoginBox();
         // @ts-ignore
         btn.setAttribute('data-isLoggedIn', 'true');
         // @ts-ignore
-        btn.textContent = "Logout";
+        // btn.textContent = "Logout";
         APP.isLoggedIn = true;
         APP.PageRecomm().then(() => {
             window.addEventListener('click', mainHandler);
@@ -45,10 +48,11 @@ const APP = (function (API, UI) {
         API.user = null;
         API.accessToken = null;
         API.expires_in = null;
+        loginMainBox.innerHTML = giveMeLoginBox();
         // @ts-ignore
         btn.setAttribute('data-isLoggedIn', 'false');
         // @ts-ignore		
-        btn.textContent = "Login";
+        // btn.textContent = "Login";
         Cookie.clearAllCookie();
         APP.isLoggedIn = false;
         await APP.getToken();
