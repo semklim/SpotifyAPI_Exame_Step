@@ -134,6 +134,10 @@ export function onPlay(tracks, i) {
                 //@ts-ignore
                 audio.play();
             });
+            const totalSeconds = Math.floor(tracks[i].track.duration_ms / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            audioFullDuration.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
             artist.textContent = tracks[i].track.artists[0].name;
             songName.textContent = tracks[i].track.name;
             albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
@@ -147,6 +151,10 @@ export function onPlay(tracks, i) {
                 //@ts-ignore
                 audio.play();
             });
+            const totalSeconds = Math.floor(tracks[i].track.duration_ms / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            audioFullDuration.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
             artist.textContent = tracks[i].artists[0].name;
             songName.textContent = tracks[i].name;
             let element = document.querySelector('.favorite-tracks__play-list');
@@ -162,6 +170,10 @@ export function onPlay(tracks, i) {
                 //@ts-ignore
                 audio.play();
             });
+            const totalSeconds = Math.floor(tracks[i].track.duration_ms / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            audioFullDuration.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
             artist.textContent = tracks[i].track.artists[0].name;
             songName.textContent = tracks[i].track.name;
             albumCover.style.backgroundImage = `url("${tracks[i].track.album.images[0].url}")`;
@@ -172,6 +184,10 @@ export function onPlay(tracks, i) {
                 //@ts-ignore
                 audio.play();
             });
+            const totalSeconds = Math.floor(tracks[i].track.duration_ms / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            audioFullDuration.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
             artist.textContent = tracks[i].artists[0].name;
             songName.textContent = tracks[i].name;
             let element = document.querySelector('.favorite-tracks__play-list');
@@ -185,7 +201,7 @@ export function onPlay(tracks, i) {
             i = getRandomInt(tracks.length);
         }
         else {
-            if (repeatCondition === 1) {
+            if (repeatCondition === 1 || repeatCondition === '1') {
                 i = i + 1;
             }
             else if (repeatCondition === 2) {
@@ -268,7 +284,6 @@ switch (repeatCondition) {
         break;
 }
 function repeat() {
-    console.log('repet');
     switch (repeatCondition) {
         case 1:
             repeatBtn.setAttribute("fill", "green");
@@ -342,17 +357,13 @@ function timeUpdate() {
     const seconds = Math.floor(currentTime % 60);
     const timeString = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     audioCurrTime.textContent = timeString;
-    // Установка значения input range
     trackTimeSlider.value = currentTime.toString();
 }
 ;
 trackTimeSlider.addEventListener('input', () => {
-    // Получение нового значения input range
     const value = trackTimeSlider.value;
-    // Преобразование значения в число
     const time = parseFloat(value);
     //@ts-ignore
     audio.currentTime = time;
-    // Установка флага, указывающего, что значение input range было изменено пользователем
     inputChangedByUser = true;
 });
