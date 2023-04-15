@@ -1,3 +1,5 @@
+import { playingAudio } from "./OnPlayFunc.js";
+import Cookie from "./Cookies.js";
 //VOLUME
 export const volumeSlider = document.getElementById('volumeSlider') as HTMLInputElement;
 if (Cookie.get('volume') != null) {
@@ -7,8 +9,7 @@ if (Cookie.get('volume') != null) {
 const muteBtn = document.getElementsByClassName('volume-icon')[0] as SVGElement;
 let muteConditon: boolean = false;
 let timeBefore: string;
-import { playingAudio } from "./OnPlayFunc.js";
-import Cookie from "./Cookies.js";
+
 muteBtn.addEventListener('click', () => {
   switch (muteConditon) {
     case false:
