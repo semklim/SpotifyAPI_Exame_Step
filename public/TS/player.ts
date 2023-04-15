@@ -93,7 +93,9 @@ export function pauseConditionChange() {
   pauseCondition = false;
 }
 
+
 //CHOSEN SONG ON PLAY
+let inputChangedByUser = false;
 //@ts-ignore
 export let currentAudio;
 let audioCurrTime = document.getElementsByClassName('songOnPlayCurrTime')[0] as HTMLSpanElement;
@@ -105,6 +107,18 @@ let audio: string | HTMLAudioElement | null;
 let audioIsPlaying = false;
 let testTracks: any[];
 let testI: number;
+
+//getting audio and tracks mass from cookies
+//@ts-ignore
+console.log(JSON.parse(Cookie.get('audio')))
+//@ts-ignore
+console.log(JSON.parse(Cookie.get('tracks')))
+if (Cookie.get('audio') != null && Cookie.get('tracks') != null) {
+  //@ts-ignore
+  audio = JSON.parse(Cookie.get('audio'));
+  //@ts-ignore
+  testTracks = JSON.parse(Cookie.get('tracks'))
+}
 export function onPlay(tracks: any[], i: number) {
   currentAudio = null;
   testTracks = tracks;
@@ -181,9 +195,22 @@ export function onPlay(tracks: any[], i: number) {
     currentAudio = onPlay(tracks, i);
     return;
   })
+  //@ts-ignore
+  audio!.addEventListener('loadedmetadata', () => {
+    //@ts-ignore
+    const duration = audio!.duration;
+    // Установка максимального значения input range
+    trackTimeSlider.max = duration.toString();
+  });
+
+  //@ts-ignore
+  audio!.addEventListener('timeupdate', timeUpdate);
+
 
 
   audioIsPlaying = true;
+  Cookie.set('audio', JSON.stringify(audio), 15);
+  Cookie.set('tracks', JSON.stringify(tracks), 15)
   return audio;
 }
 
@@ -310,3 +337,34 @@ function random() {
 
 randomBtn.addEventListener('click', random);
 
+// TRACK PROGRESS LOGICK SYNC WITH INPUT TYPE RANGE
+let trackTimeSlider = document.getElementById('trackTimeSlider') as HTMLInputElement;
+
+function timeUpdate() {
+  //@ts-ignore
+  if (inputChangedByUser) {
+    inputChangedByUser = false;
+    return;
+  }
+  //@ts-ignore
+  const currentTime = audio!.currentTime;
+  const minutes = Math.floor(currentTime / 60);
+  const seconds = Math.floor(currentTime % 60);
+  const timeString = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+  audioCurrTime.textContent = timeString;
+  // Установка значения input range
+  trackTimeSlider.value = currentTime.toString();
+};
+
+
+trackTimeSlider.addEventListener('input', () => {
+  // Получение нового значения input range
+  const value = trackTimeSlider.value;
+  // Преобразование значения в число
+  const time = parseFloat(value);
+  //@ts-ignore
+  audio!.currentTime = time;
+  // Установка флага, указывающего, что значение input range было изменено пользователем
+  inputChangedByUser = true;
+});

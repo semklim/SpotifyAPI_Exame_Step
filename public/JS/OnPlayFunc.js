@@ -11,7 +11,6 @@ import { volumeSlider } from "./player.js";
 import { refreshFavorite_track } from "./service/APP.js";
 //@ts-ignore
 export function findObjectByParam(array, value, anotherArray) {
-    console.log(array);
     //@ts-ignore
     if (array[0].track) {
         for (let i = 0; i < array.length; i += 1) {

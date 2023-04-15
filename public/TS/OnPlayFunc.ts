@@ -13,7 +13,6 @@ import Cookie from "./Cookies.js";
 //@ts-ignore
 
 export function findObjectByParam(array: any[], value: string, anotherArray: any[]) {
-    console.log(array);
     //@ts-ignore
     if (array[0].track) {
         for (let i = 0; i < array.length; i += 1) {
