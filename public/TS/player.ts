@@ -8,6 +8,8 @@ export const volumeSlider = document.getElementById(
 const volume = Cookie.get("volume");
 if (volume !== null) {
   volumeSlider.value = volume;
+} else {
+  volumeSlider.value = "60";
 }
 const muteBtn = document.getElementsByClassName("volume-icon")[0] as SVGElement;
 let muteConditon: boolean = false;
