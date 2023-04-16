@@ -2,12 +2,12 @@
   "name": "spotify_demo",
   "version": "1.0.0",
   "description": "spotify_demo",
-  "main": "./public/JS/main.js",
+  "main": "electronMain.js",
   "scripts": {
     "server": "nodemon server.js -e html,js,css",
-    "start": "electron ./electronMain.js",
-    "dev": "electronmon ./electronMain.js",
-    "build": "electron-builder ./electronMain.js"
+    "start": "electron .",
+    "dev": "electronmon .",
+    "build": "electron-builder"
   },
   "keywords": [],
   "author": "Klymashenko Roman <romanklimashenko@gmail.com> (https://github.com/semklim)",
@@ -35,7 +35,7 @@
     "appId": "spotify_demo",
     "win": {
       "target": "nsis",
-      "icon": "./public/img/logoElectron/ico/logo32x32.ico"
+      "icon": "./public/img/logoElectron/ico/logo256x256.ico"
     },
     "directories": {
       "output": "./electron-build"
