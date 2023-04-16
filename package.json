@@ -4,7 +4,7 @@
   "description": "spotify_demo",
   "main": "./public/JS/main.js",
   "scripts": {
-    "server": "nodemon server.js -e html,js,css",
+    "server": "nodemon server.js 8888",
     "start": "electron ./electronMain.js",
     "dev": "electronmon ./electronMain.js",
     "build": "electron-builder ./electronMain.js"

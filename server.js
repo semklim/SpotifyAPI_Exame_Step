@@ -1,8 +1,9 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const PORT = 8888;
+const PORT = process.argv[2] === '8888' ? 8888 : 8883;
 const link = `http://localhost:${PORT}/`;
+
 
 function getContentType (fileExtension) {
 	switch (fileExtension) { // determine the content type based on the file extension

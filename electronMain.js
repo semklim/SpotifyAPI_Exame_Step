@@ -1,6 +1,5 @@
 const { app, BrowserWindow, Tray, Menu, ipcMain } = require('electron');
 const server = require('./server.js');
-
 app.on('ready', () => {
 	const win = new BrowserWindow({
 		show: false,
@@ -21,8 +20,7 @@ app.on('ready', () => {
 		win.maximize();
 	});
 
-	win.loadURL('http://localhost:8888/');
-
+	win.loadURL(`http://localhost:8883/`);
 });
 
 
