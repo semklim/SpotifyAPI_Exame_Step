@@ -13,8 +13,6 @@ app.on('ready', () => {
 		icon: './public/img/logoElectron/png/Spotify_Icon_RGB_Green32x32.png'
 	});
 
-
-
 	win.once('ready-to-show', () => {
 		win.show();
 		win.maximize();
@@ -24,10 +22,8 @@ app.on('ready', () => {
 });
 
 
-app.on('window-all-closed', () => {
-	app.quit();
-});
-
 app.on('before-quit', () => {
-	server.close();
+  server.close(() => {
+    app.exit();
+  });
 });
