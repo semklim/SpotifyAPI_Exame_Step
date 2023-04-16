@@ -1,28 +1,52 @@
 {
   "name": "spotify_demo",
   "version": "1.0.0",
-  "description": "",
+  "description": "spotify_demo",
   "main": "./public/JS/main.js",
   "scripts": {
-    "server": "nodemon server.js -e html,js,css"
+    "server": "nodemon server.js -e html,js,css",
+    "start": "electron ./electronMain.js",
+    "dev": "electronmon ./electronMain.js",
+    "build": "electron-builder ./electronMain.js"
   },
   "keywords": [],
   "author": "Klymashenko Roman <romanklimashenko@gmail.com> (https://github.com/semklim)",
   "contributors": [
-	{
-		"name" : "Nikita",
-		"email" : "example@a.com",
-		"url" : "https://github.com/DeepWeep"
-	  },
-	  {
-		"name" : "Vlad",
-		"email" : "example@a.com",
-		"url" : "https://github.com/DorianNet93"
-	  }
+    {
+      "name": "Nikita",
+      "email": "example@a.com",
+      "url": "https://github.com/DeepWeep"
+    },
+    {
+      "name": "Vladislav Poslavskiy",
+      "email": "lifebsfg@gmail.com",
+      "url": "https://github.com/DorianNet93"
+    }
   ],
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^18.15.3",
+    "electron": "^24.1.2",
+    "electron-builder": "^23.6.0",
+    "electronmon": "^2.0.2",
     "nodemon": "^2.0.22"
+  },
+  "build": {
+    "appId": "spotify_demo",
+    "win": {
+      "target": "nsis",
+      "icon": "./public/img/logoElectron/ico/logo32x32.ico"
+    },
+    "directories": {
+      "output": "./electron-build"
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "./public/img/logoElectron/ico/logo64x64.ico",
+      "uninstallerIcon": "./public/img/logoElectron/ico/logo64x64.ico",
+      "uninstallDisplayName": "don't click here",
+      "license": "./README.md",
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
