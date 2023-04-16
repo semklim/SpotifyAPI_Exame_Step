@@ -1,27 +1,15 @@
 export let playingAudio: HTMLAudioElement | null = null;
-import { onPlay } from "./player.js";
-import { playBtnSVG } from "./player.js";
-import { pauseConditionChange } from "./player.js";
-import { currentAudio } from "./player.js";
-import { favTracks } from "./service/APP.js";
-import { favTracksDeleter } from "./service/APP.js";
+import { onPlay, playBtnSVG, pauseConditionChange, currentAudio, volumeSlider } from "./player.js";
+import { favTracks, favTracksDeleter, refreshFavorite_track } from "./service/APP.js";
 import API from "./service/API.js"
-import { prepareTracks, prepareTracksForAlbum } from "./helpers/tracks/prepareTracksObj.js"
-import { volumeSlider } from "./player.js";
-import { refreshFavorite_track } from "./service/APP.js";
-import Cookie from "./Cookies.js";
-//@ts-ignore
+import { prepareTracks} from "./helpers/tracks/prepareTracksObj.js"
 
 export function findObjectByParam(array: any[], value: string, anotherArray: any[]) {
-    //@ts-ignore
     if (array[0].track) {
         for (let i = 0; i < array.length; i += 1) {
-            //@ts-ignore
             if (array[i].track.preview_url === value) {
-                //@ts-ignore
                 return i;
             } else if (anotherArray) {
-                // @ts-ignore
                 if (anotherArray[i].track.preview_url === value) {
                     return i;
                 }
@@ -29,9 +17,7 @@ export function findObjectByParam(array: any[], value: string, anotherArray: any
         }
     } else {
         for (let i = 0; i < array.length; i += 1) {
-            //@ts-ignore
             if (array[i].preview_url === value) {
-                //@ts-ignore
                 return i;
             }
         }
@@ -42,8 +28,8 @@ export function findObjectByParam(array: any[], value: string, anotherArray: any
 let tracksObj: Array<object> | null
 let playlistId: Array<object> | null | string;
 let playlist: Array<object> | null
-//@ts-ignore
-export function OnPlayFunc(tracks?) {
+
+export function OnPlayFunc(tracks?: any[]) {
     if (tracks) {
         tracksObj = tracks;
         favTracksDeleter()
@@ -61,10 +47,8 @@ export function OnPlayFunc(tracks?) {
         const target = (event!.target as HTMLElement);
         if (target.className.includes("play-favorite-track__button")) {
             const refreshPlaylist = async () => {
-                // @ts-ignore
                 playlistId = target.getAttribute('data-playlist-id');
                 if (target.getAttribute('data-type') === 'album') {
-                    //@ts-ignore
                     playlist = await API.getAlbum(playlistId!);
                     // @ts-ignore
                     tracksObj = playlist!.tracks.items
@@ -86,7 +70,6 @@ export function OnPlayFunc(tracks?) {
                     //@ts-ignore
                     playingAudio.volume = volumeSlider.value / 100
                 } else if (target.getAttribute('data-type') === 'fav-tracks') {
-                    //@ts-ignore
                     tracksObj = await refreshFavorite_track();
                     tracks = tracksObj!;
                     if (playingAudio === null) {
@@ -114,8 +97,7 @@ export function OnPlayFunc(tracks?) {
                     playingAudio.volume = volumeSlider.value / 100
                 } else {
                     const refreshPlaylist = async () => {
-                        // @ts-ignore
-                        const playlistId = document.querySelector('.play-favorite-track__button').getAttribute('data-playlist-id');
+                        const playlistId = document.querySelector('.play-favorite-track__button')!.getAttribute('data-playlist-id');
                         const playlist = await API.GetPlaylist(playlistId!);
                         const tracksObj = await prepareTracks(playlist);
                         tracks = tracksObj!;
@@ -131,4 +113,4 @@ export function OnPlayFunc(tracks?) {
             }
         }
     }
-};
+}
