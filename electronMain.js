@@ -11,7 +11,7 @@ app.on('ready', () => {
 			contextIsolation: false
 		},
 		resizable: true,
-		icon: './public/img/logoElectron/png/logo32x32.png'
+		icon: './public/img/logoElectron/png/Spotify_Icon_RGB_Green32x32.png'
 	});
 
 
