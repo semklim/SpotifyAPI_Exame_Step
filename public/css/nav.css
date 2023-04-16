@@ -336,7 +336,7 @@ a {
 .login-info-button {
   display: flex;
   align-items: center;
-
+  pointer-events: none;
 }
 
 .figure{

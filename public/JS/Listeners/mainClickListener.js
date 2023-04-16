@@ -78,6 +78,25 @@ async function mainClickerListener(e) {
             requestBox.innerHTML = html;
         }
     }
+    if (target.className === 'login') {
+        removeEventListener('click', mainClickerListener);
+        APP.history.length = 0;
+        APP.initLogin(target);
+    }
+    if (!className.includes('loginBox-when-auth') && target.className !== 'login') {
+        let burgerButtons = document.querySelector('.burger-buttons-login');
+        burgerButtons.classList.remove('active');
+    }
+    if (className.includes('loginBox-when-auth')) {
+        let burgerButtons = document.querySelector('.burger-buttons-login');
+        burgerButtons.classList.add('active');
+        e.stopPropagation(); // предотвращает всплытие события
+    }
+    if (className.includes('burger-buttons-login__box--button')) {
+        removeEventListener('click', mainClickerListener);
+        APP.history.length = 0;
+        APP.initLogout(target);
+    }
     if (className.includes('nav-bar__main-page-link')) {
         if (pausedTillDate && pausedTillDate > new Date()) {
             keepChronology();
