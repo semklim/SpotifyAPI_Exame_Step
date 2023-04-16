@@ -1,32 +1,35 @@
-const { app, BrowserWindow, Tray, Menu, ipcMain} = require('electron');
-
-let tray;
+const { app, BrowserWindow, Tray, Menu, ipcMain } = require('electron');
+const server = require('./server.js');
 
 app.on('ready', () => {
-  const win = new BrowserWindow({
-    show: false,
-    autoHideMenuBar: true,
-    // frame: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
-    },
-    resizable: true,
-    icon: './public/img/logoElectron/png/logo32x32.png'
-  });
+	const win = new BrowserWindow({
+		show: false,
+		autoHideMenuBar: true,
+		// frame: false,
+		webPreferences: {
+			nodeIntegration: true,
+			contextIsolation: false
+		},
+		resizable: true,
+		icon: './public/img/logoElectron/png/logo32x32.png'
+	});
 
-  
 
-  win.once('ready-to-show', () => {
-    win.show();
-    win.maximize()
-  });
 
-  win.loadFile('./index.html');
+	win.once('ready-to-show', () => {
+		win.show();
+		win.maximize();
+	});
 
-})
+	win.loadURL('http://localhost:8888/');
+
+});
 
 
 app.on('window-all-closed', () => {
-  app.quit();
-}) 
+	app.quit();
+});
+
+app.on('before-quit', () => {
+	server.close();
+});

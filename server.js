@@ -22,35 +22,34 @@ function getCacheControl (contentType) {
 		case 'text/html':
 			return 'no-cache';
 		case 'text/css':
-		case 'text/javascript':
-			return 'max-age=86400';
+		case 'text/javascript': {
+			return 'must-revalidate, max-age=18000';
+		}
 		default:
-			return 'public, max-age=86400';
+			return 'public, max-age=18000';
 	}
 }
 
+
 const server = http.createServer((req, res) => {
 	let filePath = '.' + req.url;
+
 	if (filePath === './') {
-		filePath = './index.html';
+		filePath = path.join(__dirname, '/index.html');
+	} else {
+		filePath = path.join(__dirname, req.url);
 	}
-	if (filePath.includes('./callback.html?code')) {
-		filePath = './callback.html';
+
+	if (filePath.includes('?code')) {
+		filePath = path.join(__dirname, '/callback.html');
 	}
+
 
 	// Set the content-type header based on the file type
 	const fileExtension = String(path.extname(filePath)).toLowerCase();
 	const contentType = getContentType(fileExtension);
-	// let contentType = 'text/html';
+
 	const cacheControl = getCacheControl(contentType); // determine the cache control header based on the content type
-
-
-	// if (extname === '.js') {
-	// 	contentType = 'text/javascript';
-	// }
-	// if (extname === '.css') {
-	// 	contentType = 'text/css';
-	// }
 
 
 	// Read the file contents from disk

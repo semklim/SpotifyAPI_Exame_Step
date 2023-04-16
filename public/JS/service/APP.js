@@ -30,7 +30,6 @@ const APP = (function (API, UI) {
         Cookie.set('expires_in', Auth.expires_in.toUTCString(), 15);
         Cookie.set('userProfile', JSON.stringify(API.user), 15);
         loginMainBox.innerHTML = giveMeUserBox();
-        btn.setAttribute('data-isLoggedIn', 'true');
         APP.isLoggedIn = true;
         APP.PageRecomm().then(() => {
             window.addEventListener('click', mainHandler);
@@ -46,7 +45,6 @@ const APP = (function (API, UI) {
         API.accessToken = null;
         API.expires_in = null;
         loginMainBox.innerHTML = giveMeLoginBox();
-        btn.setAttribute('data-isLoggedIn', 'false');
         Cookie.clearAllCookie();
         APP.isLoggedIn = false;
         await APP.getToken();

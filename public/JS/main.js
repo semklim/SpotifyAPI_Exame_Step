@@ -5,16 +5,7 @@ import { giveMeLoginBox, giveMeUserBox } from "./pagePartials/login/loginBox.js"
 import API from "./service/API.js";
 import { APP } from "./service/APP.js";
 import Auth from "./service/Auth.js";
-function logicOfLoginBtn() {
-    if (APP.isLoggedIn) {
-        removeEventListener('click', mainClickerListener);
-        APP.history.length = 0;
-        APP.initLogout(btnLogaut);
-    }
-}
 const loginMainBox = document.querySelector('.header-content');
-let btn = document.getElementsByClassName('login')[0];
-let btnLogaut;
 if ((Cookie.get('accessToken'))) {
     Auth.refreshToken = Cookie.get('refreshToken');
     Auth.accessToken = Cookie.get('accessToken');

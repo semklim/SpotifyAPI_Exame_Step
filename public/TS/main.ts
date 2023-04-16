@@ -7,18 +7,8 @@ import { APP } from "./service/APP.js";
 import Auth from "./service/Auth.js";
 
 
-function logicOfLoginBtn() {
-	
-	
-	if (APP.isLoggedIn) {
-		removeEventListener('click', mainClickerListener);
-		APP.history.length = 0;
-		APP.initLogout(btnLogaut as HTMLButtonElement);
-	}
-}
 const loginMainBox = document.querySelector('.header-content') as HTMLElement;
-let btn = <HTMLButtonElement>document.getElementsByClassName('login')![0];
-let btnLogaut:HTMLButtonElement;
+
 
 if ((Cookie.get('accessToken'))) {
 	Auth.refreshToken = Cookie.get('refreshToken')!;

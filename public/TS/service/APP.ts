@@ -11,7 +11,7 @@ import { OnPlayFunc } from "../OnPlayFunc.js";
 import { addIsLikedKey } from '../helpers/tracks/trackBoxFunc/trackBoxFunc.js';
 import htmlRecomm from '../pagePartials/groupOfPlaylist/groupOfPlaylist.js';
 import preparePlaylists from '../helpers/preparePlaylist.js';
-import { burgerUserBox, giveMeLoginBox, giveMeUserBox } from '../pagePartials/login/loginBox.js';
+import { giveMeLoginBox, giveMeUserBox } from '../pagePartials/login/loginBox.js';
 
 const APP = (function (API, UI) {
 	let history: string[] = [];
@@ -35,7 +35,6 @@ const APP = (function (API, UI) {
 		Cookie.set('expires_in', Auth.expires_in!.toUTCString(), 15);
 		Cookie.set('userProfile', JSON.stringify(API.user!), 15);
 		loginMainBox.innerHTML = giveMeUserBox()
-		btn.setAttribute('data-isLoggedIn', 'true');
 		APP.isLoggedIn = true;
 		APP.PageRecomm().then(() => {
 			window.addEventListener('click', mainHandler);
@@ -52,7 +51,6 @@ const APP = (function (API, UI) {
 		API.accessToken = null;
 		API.expires_in = null;
 		loginMainBox.innerHTML = giveMeLoginBox()
-		btn.setAttribute('data-isLoggedIn', 'false');
 		Cookie.clearAllCookie();
 		APP.isLoggedIn = false;
 		await APP.getToken();
