@@ -1,6 +1,6 @@
 export let playingAudio = null;
-import { onPlay, playBtnSVG, pauseConditionChange, currentAudio, volumeSlider } from "./player.js";
-import { favTracks, favTracksDeleter, refreshFavorite_track } from "./service/APP.js";
+import { onPlay, playBtnSVG, pauseConditionChange, currentAudio, volumeSlider, } from "./player.js";
+import { favTracks, favTracksDeleter, refreshFavorite_track, } from "./service/APP.js";
 import API from "./service/API.js";
 import { prepareTracks } from "./helpers/tracks/prepareTracksObj.js";
 export function findObjectByParam(array, value, anotherArray) {
@@ -34,7 +34,8 @@ export function OnPlayFunc(tracks) {
     }
     else {
         let tracks = tracksObj;
-        playBtnSVG.innerHTML = '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
+        playBtnSVG.innerHTML =
+            '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
         pauseConditionChange();
         if (playingAudio != null) {
             playingAudio.pause();
@@ -46,8 +47,8 @@ export function OnPlayFunc(tracks) {
         const target = event.target;
         if (target.className.includes("play-favorite-track__button")) {
             const refreshPlaylist = async () => {
-                playlistId = target.getAttribute('data-playlist-id');
-                if (target.getAttribute('data-type') === 'album') {
+                playlistId = target.getAttribute("data-playlist-id");
+                if (target.getAttribute("data-type") === "album") {
                     playlist = await API.getAlbum(playlistId);
                     // @ts-ignore
                     tracksObj = playlist.tracks.items;
@@ -59,7 +60,7 @@ export function OnPlayFunc(tracks) {
                     //@ts-ignore
                     playingAudio.volume = volumeSlider.value / 100;
                 }
-                else if (target.getAttribute('data-type') === 'playlist') {
+                else if (target.getAttribute("data-type") === "playlist") {
                     playlist = await API.GetPlaylist(playlistId);
                     tracksObj = await prepareTracks(playlist);
                     tracks = tracksObj;
@@ -70,7 +71,7 @@ export function OnPlayFunc(tracks) {
                     //@ts-ignore
                     playingAudio.volume = volumeSlider.value / 100;
                 }
-                else if (target.getAttribute('data-type') === 'fav-tracks') {
+                else if (target.getAttribute("data-type") === "fav-tracks") {
                     tracksObj = await refreshFavorite_track();
                     tracks = tracksObj;
                     if (playingAudio === null) {
@@ -85,11 +86,11 @@ export function OnPlayFunc(tracks) {
             return;
         }
         if (target.className === "trackPlayBtn") {
-            const url = target.getAttribute('href');
+            const url = target.getAttribute("href");
             if (favTracks) {
                 tracks = favTracks;
             }
-            if (url !== 'null') {
+            if (url !== "null") {
                 const index = findObjectByParam(tracks, url, favTracks);
                 if (typeof index === "number") {
                     //@ts-ignore
@@ -99,7 +100,9 @@ export function OnPlayFunc(tracks) {
                 }
                 else {
                     const refreshPlaylist = async () => {
-                        const playlistId = document.querySelector('.play-favorite-track__button').getAttribute('data-playlist-id');
+                        const playlistId = document
+                            .querySelector(".play-favorite-track__button")
+                            .getAttribute("data-playlist-id");
                         const playlist = await API.GetPlaylist(playlistId);
                         const tracksObj = await prepareTracks(playlist);
                         tracks = tracksObj;
@@ -112,7 +115,7 @@ export function OnPlayFunc(tracks) {
                 }
             }
             else {
-                console.log('Sorry track is not found');
+                console.log("Sorry track is not found");
             }
         }
     }
