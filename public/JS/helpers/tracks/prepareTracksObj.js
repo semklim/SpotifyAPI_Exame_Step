@@ -33,9 +33,9 @@ async function prepareTracks(playlist) {
         if (el.track === null) {
             return false;
         }
-        // if(el.track.preview_url === null){
-        // 	return false;
-        // }
+        if (el.track.preview_url === null) {
+            return false;
+        }
         return true;
     });
     if (Auth.accessToken) {
