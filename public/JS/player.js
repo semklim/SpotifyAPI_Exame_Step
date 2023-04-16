@@ -149,9 +149,11 @@ export function onPlay(tracks, i) {
     testTracks = tracks;
     testI = i;
     if (audioIsPlaying === true) {
-        if (tracks[i].track) {
-            //@ts-ignore
-            audio.pause();
+        if (tracks[i].track != undefined) {
+            if (audio !== null) {
+                //@ts-ignore
+                audio.pause();
+            }
             audio = null;
             audio = new Audio(tracks[i].track.preview_url);
             audio.addEventListener("canplaythrough", function () {
@@ -176,7 +178,7 @@ export function onPlay(tracks, i) {
                     audio.play();
                 }
             });
-            const totalSeconds = Math.floor(tracks[i].track.duration_ms / 1000);
+            const totalSeconds = Math.floor(tracks[i].duration_ms / 1000);
             const minutes = Math.floor(totalSeconds / 60);
             const seconds = totalSeconds % 60;
             audioFullDuration.textContent = `${minutes}:${seconds
@@ -209,15 +211,18 @@ export function onPlay(tracks, i) {
                     audio.play();
                 }
             });
-            const totalSeconds = Math.floor(tracks[i].track.duration_ms / 1000);
+            const totalSeconds = Math.floor(tracks[i].duration_ms / 1000);
             const minutes = Math.floor(totalSeconds / 60);
             const seconds = totalSeconds % 60;
-            audioFullDuration.textContent = `${minutes}:${seconds
-                .toString()
-                .padStart(2, "0")}`;
+            audioFullDuration.textContent = `${minutes}:${seconds}
+        .toString()
+        .padStart(2, "0")}`;
             artist.textContent = tracks[i].artists[0].name;
             songName.textContent = tracks[i].name;
             let element = document.querySelector(".favorite-tracks__play-list");
+            if (element === null) {
+                element = document.querySelector(".favorite-tracks__play-list"); //Рома добавь сюда имя селектора!
+            }
             let album = element.style.backgroundImage;
             albumCover.style.backgroundImage = `${album}`;
         }
