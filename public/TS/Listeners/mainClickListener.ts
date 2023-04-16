@@ -90,7 +90,9 @@ async function mainClickerListener(e: Event) {
 
 	if(!className.includes('loginBox-when-auth') && target.className !== 'login' ){
 		let burgerButtons = document.querySelector('.burger-buttons-login') as HTMLAreaElement;
-    burgerButtons.classList.remove('active');
+    	if (burgerButtons) {
+			burgerButtons.classList.remove('active');
+		}
 	}
 
 	if(className.includes('loginBox-when-auth')){
