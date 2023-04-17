@@ -183,9 +183,7 @@ export function onPlay(tracks, i) {
             let element = document.querySelector(".favorite-tracks__play-list");
             if (element === null) {
                 element = document.querySelector(".albumImg");
-                console.log(element);
                 let album = element.getAttribute("src");
-                console.log(album);
                 albumCover.style.backgroundImage = `${album}`;
             }
             else {
@@ -215,18 +213,20 @@ export function onPlay(tracks, i) {
             const totalSeconds = Math.floor(tracks[i].duration_ms / 1000);
             const minutes = Math.floor(totalSeconds / 60);
             const seconds = totalSeconds % 60;
-            audioFullDuration.textContent = `${minutes}:${seconds}
-        .toString()
-        .padStart(2, "0")}`;
+            audioFullDuration.textContent = `${minutes}:${seconds
+                .toString()
+                .padStart(2, "0")}`;
             artist.textContent = tracks[i].artists[0].name;
             songName.textContent = tracks[i].name;
             let element = document.querySelector(".favorite-tracks__play-list");
             if (element === null) {
                 element = document.querySelector(".albumImg");
-                console.log(element);
-                let album = element.getAttribute("src");
-                console.log(album);
-                albumCover.style.backgroundImage = `url(${album})`;
+                if (element === null) {
+                }
+                else {
+                    let album = element.getAttribute("src");
+                    albumCover.style.backgroundImage = `url(${album})`;
+                }
             }
             else {
                 let album = element.style.backgroundImage;
@@ -270,8 +270,8 @@ export function onPlay(tracks, i) {
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
         //like logic
-        const like = document.querySelector('.player .like');
-        like.setAttribute('data-like-id', tracks[i].track.id);
+        const like = document.querySelector(".player .like");
+        like.setAttribute("data-like-id", tracks[i].track.id);
         likeStyle(like, tracks[i].track.isLiked);
         //like logic end
         audioFullDuration.textContent = `${minutes}:${seconds

@@ -203,9 +203,7 @@ export function onPlay(tracks: any[], i: number) {
       ) as HTMLDivElement;
       if (element === null) {
         element = document.querySelector(".albumImg") as HTMLImageElement;
-        console.log(element);
         let album = element.getAttribute("src");
-        console.log(album);
         albumCover.style.backgroundImage = `${album}`;
       } else {
         let album = element.style.backgroundImage;
@@ -232,7 +230,7 @@ export function onPlay(tracks: any[], i: number) {
       const totalSeconds = Math.floor(tracks[i].duration_ms / 1000);
       const minutes = Math.floor(totalSeconds / 60);
       const seconds = totalSeconds % 60;
-      audioFullDuration.textContent = `${minutes}:${seconds}
+      audioFullDuration.textContent = `${minutes}:${seconds
         .toString()
         .padStart(2, "0")}`;
       artist.textContent = tracks[i].artists[0].name;
@@ -242,10 +240,11 @@ export function onPlay(tracks: any[], i: number) {
       ) as HTMLDivElement;
       if (element === null) {
         element = document.querySelector(".albumImg") as HTMLImageElement;
-        console.log(element);
-        let album = element.getAttribute("src");
-        console.log(album);
-        albumCover.style.backgroundImage = `url(${album})`;
+        if (element === null) {
+        } else {
+          let album = element.getAttribute("src");
+          albumCover.style.backgroundImage = `url(${album})`;
+        }
       } else {
         let album = element.style.backgroundImage;
         albumCover.style.backgroundImage = `${album}`;
@@ -285,16 +284,15 @@ export function onPlay(tracks: any[], i: number) {
   localStorage.setItem("i", i.toString());
 
   function addToPlayer() {
-
     const totalSeconds = Math.floor(tracks[i].track.duration_ms / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-	//like logic
-	const like = <HTMLElement>document.querySelector('.player .like')!;
+    //like logic
+    const like = <HTMLElement>document.querySelector(".player .like")!;
 
-	like.setAttribute('data-like-id', tracks[i].track.id);
-	likeStyle(like, tracks[i].track.isLiked);
-	//like logic end
+    like.setAttribute("data-like-id", tracks[i].track.id);
+    likeStyle(like, tracks[i].track.isLiked);
+    //like logic end
     audioFullDuration.textContent = `${minutes}:${seconds
       .toString()
       .padStart(2, "0")}`;
