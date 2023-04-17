@@ -36,6 +36,12 @@ npm run server
 ``` 
 And open in browser http://localhost:8888
 
+_________OR_________
+
+If u want to start desktop application write command:
+```bash
+npm run start
+``` 
 ## Features 
 The application includes the following features:
 - Authentication with the Spotify Web API using OAuth 2.0
