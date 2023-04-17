@@ -30,13 +30,13 @@ function getTracksForAlbum(list) {
 					</div>
 					<div class="trackPreview">
 						<div class="trackPreview__name">
-							<a draggable="false" class="trackPreview__name__link" data-testid="internal-track-link" href="" tabindex="-1">
+							<a draggable="false" class="trackPreview__name__link" data-testid="internal-track-link" tabindex="-1">
 								<div dir="auto" class="trackPreview__name__link trackPreview__name__txt" data-encore-id="type" aria-expanded="false">
 									${name}
 								</div>
 							</a>
 						<span class="trackPreview__description" data-encore-id="type">
-							<a draggable="true" dir="auto" href="" tabindex="-1">
+							<a draggable="true" dir="auto"  tabindex="-1">
 								${artists[0].name}
 							</a>
 						</span>
@@ -98,13 +98,13 @@ function getTracks(list) {
 					<div class="trackPreview">
 						<img aria-hidden="false" draggable="false" loading="eager" src="${images[2].url}" alt="" class="trackPreview__img" width="40" height="40">
 						<div class="trackPreview__name">
-							<a draggable="false" class="trackPreview__name__link" data-testid="internal-track-link" href="" tabindex="-1">
+							<a draggable="false" class="trackPreview__name__link" data-testid="internal-track-link" tabindex="-1">
 								<div dir="auto" class="trackPreview__name__link trackPreview__name__txt" data-encore-id="type" aria-expanded="false">
 									${name}
 								</div>
 							</a>
 						<span class="trackPreview__description" data-encore-id="type">
-							<a draggable="true" dir="auto" href="" tabindex="-1">
+							<a draggable="true" dir="auto"  tabindex="-1">
 								${artists[0].name}
 							</a>
 						</span>
@@ -112,7 +112,7 @@ function getTracks(list) {
 					</div>
 					<div class="trackNameBox">
 						<span data-encore-id="type" class="Type__TypeElement-sc-goli3j-0 bNyYSN">
-							<a draggable="true" class="standalone-ellipsis-one-line" dir="auto" href="/" tabindex="-1">
+							<a draggable="true" class="standalone-ellipsis-one-line" dir="auto" tabindex="-1">
 							${name}
 							</a>
 						</span>
