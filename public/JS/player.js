@@ -1,5 +1,6 @@
 import { playingAudio } from "./OnPlayFunc.js";
 import Cookie from "./Cookies.js";
+import likeStyle from "./helpers/likeStyle/likeStyle.js";
 //VOLUME
 export const volumeSlider = document.getElementById("volumeSlider");
 const volume = Cookie.get("volume");
@@ -268,6 +269,11 @@ export function onPlay(tracks, i) {
         const totalSeconds = Math.floor(tracks[i].track.duration_ms / 1000);
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
+        //like logic
+        const like = document.querySelector('.player .like');
+        like.setAttribute('data-like-id', tracks[i].track.id);
+        likeStyle(like, tracks[i].track.isLiked);
+        //like logic end
         audioFullDuration.textContent = `${minutes}:${seconds
             .toString()
             .padStart(2, "0")}`;
