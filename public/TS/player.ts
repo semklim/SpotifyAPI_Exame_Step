@@ -114,7 +114,6 @@ playBtn.addEventListener("click", () => {
         playBtnSVG.innerHTML =
           '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
         playingAudio?.play();
-        //@ts-ignore
         audio!.play();
         pauseCondition = false;
         break;
@@ -141,7 +140,7 @@ let albumCover = document.getElementsByClassName(
 )[0] as HTMLDivElement;
 let artist = document.getElementsByClassName("artist")[0] as HTMLDivElement;
 let songName = document.getElementsByClassName("songName")[0] as HTMLDivElement;
-let audio: string | HTMLAudioElement | null;
+let audio: any;
 let audioIsPlaying = false;
 let testTracks: any[];
 let testI: number;
@@ -153,9 +152,7 @@ if (localStorage.getItem("i") && localStorage.getItem("tracks")) {
   testTracks = JSON.parse(localStorage.getItem("tracks") as string);
   testI = JSON.parse(localStorage.getItem("i") as string);
   audio = onPlay(testTracks, testI);
-  //@ts-ignore
   audio!.addEventListener("canplaythrough", function () {
-    //@ts-ignore
     audio.pause();
     playBtnSVG.innerHTML =
       '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
@@ -170,7 +167,6 @@ export function onPlay(tracks: any[], i: number) {
   if (audioIsPlaying === true) {
     if (tracks[i].track != undefined) {
       if (audio !== null) {
-        //@ts-ignore
         audio.pause();
       }
       audio = null;
@@ -179,7 +175,6 @@ export function onPlay(tracks: any[], i: number) {
         //@ts-ignore
         audio!.volume = volumeSlider.value / 100;
         if (wasClicked === true) {
-          //@ts-ignore
           audio!.play();
         }
       });
@@ -190,9 +185,7 @@ export function onPlay(tracks: any[], i: number) {
       audio.addEventListener("canplaythrough", function () {
         //@ts-ignore
         audio!.volume = volumeSlider.value / 100;
-        //@ts-ignore
         if (wasClicked === true) {
-          //@ts-ignore
           audio!.play();
         }
       });
@@ -207,8 +200,16 @@ export function onPlay(tracks: any[], i: number) {
       let element = document.querySelector(
         ".favorite-tracks__play-list"
       ) as HTMLDivElement;
-      let album = element.style.backgroundImage;
-      albumCover.style.backgroundImage = `${album}`;
+      if (element === null) {
+        element = document.querySelector(".albumImg") as HTMLImageElement;
+        console.log(element);
+        let album = element.getAttribute("src");
+        console.log(album);
+        albumCover.style.backgroundImage = `${album}`;
+      } else {
+        let album = element.style.backgroundImage;
+        albumCover.style.backgroundImage = `${album}`;
+      }
     }
   } else if (audioIsPlaying === false) {
     audio = null;
@@ -216,7 +217,6 @@ export function onPlay(tracks: any[], i: number) {
       audio = new Audio(tracks[i].track.preview_url!);
       audio.addEventListener("canplaythrough", function () {
         if (wasClicked === true) {
-          //@ts-ignore
           audio!.play();
         }
       });
@@ -225,7 +225,6 @@ export function onPlay(tracks: any[], i: number) {
       audio = new Audio(tracks[i].preview_url!);
       audio.addEventListener("canplaythrough", function () {
         if (wasClicked === true) {
-          //@ts-ignore
           audio!.play();
         }
       });
@@ -241,16 +240,18 @@ export function onPlay(tracks: any[], i: number) {
         ".favorite-tracks__play-list"
       ) as HTMLDivElement;
       if (element === null) {
-        element = document.querySelector(
-          ".favorite-tracks__play-list"
-        ) as HTMLImageElement; //Рома добавь сюда имя селектора!
+        element = document.querySelector(".albumImg") as HTMLImageElement;
+        console.log(element);
+        let album = element.getAttribute("src");
+        console.log(album);
+        albumCover.style.backgroundImage = `url(${album})`;
+      } else {
+        let album = element.style.backgroundImage;
+        albumCover.style.backgroundImage = `${album}`;
       }
-      let album = element.style.backgroundImage;
-      albumCover.style.backgroundImage = `${album}`;
     }
   }
 
-  //@ts-ignore
   audio!.addEventListener("ended", () => {
     if (randomCondition === true) {
       i = getRandomInt(tracks.length);
@@ -271,14 +272,11 @@ export function onPlay(tracks: any[], i: number) {
     return;
   });
 
-  //@ts-ignore
   audio!.addEventListener("loadedmetadata", () => {
-    //@ts-ignore
     const duration = audio!.duration;
     trackTimeSlider.max = duration.toString();
   });
 
-  //@ts-ignore
   audio!.addEventListener("timeupdate", timeUpdate);
 
   audioIsPlaying = true;
@@ -315,7 +313,6 @@ nextBtn.addEventListener("click", () => {
   }
   if (playingAudio) {
     if (testI + 1 < testTracks.length) {
-      //@ts-ignore
       audio!.currentTime = audio!.duration - 0.1;
     }
   } else if (localStorage.getItem("i") && localStorage.getItem("tracks")) {
@@ -350,7 +347,6 @@ prevBtn.addEventListener("click", () => {
     if (testI > 0) {
       testI = testI - 1;
     }
-    //@ts-ignore
     audio!.pause();
     audio = null;
     currentAudio! = null;
@@ -358,7 +354,6 @@ prevBtn.addEventListener("click", () => {
     return;
   } else if (localStorage.getItem("i") && localStorage.getItem("tracks")) {
     if (testI - 1 >= 0) {
-      //@ts-ignore
       audio != onPlay(testTracks, testI - 1);
     } else {
       audio != onPlay(testTracks, testI);
@@ -468,7 +463,6 @@ function timeUpdate() {
     inputChangedByUser = false;
     return;
   }
-  //@ts-ignore
   const currentTime = audio!.currentTime;
   const minutes = Math.floor(currentTime / 60);
   const seconds = Math.floor(currentTime % 60);
@@ -481,7 +475,6 @@ function timeUpdate() {
 trackTimeSlider.addEventListener("input", () => {
   const value = trackTimeSlider.value;
   const time = parseFloat(value);
-  //@ts-ignore
   audio!.currentTime = time;
   inputChangedByUser = true;
 });

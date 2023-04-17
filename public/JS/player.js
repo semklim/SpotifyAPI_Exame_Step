@@ -105,7 +105,6 @@ playBtn.addEventListener("click", () => {
                 playBtnSVG.innerHTML =
                     '<svg role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16" data-encore-id="icon" class="Svg-sc-ytk21e-0 gQUQL"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>';
                 playingAudio?.play();
-                //@ts-ignore
                 audio.play();
                 pauseCondition = false;
                 break;
@@ -135,9 +134,7 @@ if (localStorage.getItem("i") && localStorage.getItem("tracks")) {
     testTracks = JSON.parse(localStorage.getItem("tracks"));
     testI = JSON.parse(localStorage.getItem("i"));
     audio = onPlay(testTracks, testI);
-    //@ts-ignore
     audio.addEventListener("canplaythrough", function () {
-        //@ts-ignore
         audio.pause();
         playBtnSVG.innerHTML =
             '<svg role="img" height="16" width="16" aria-hidden="true"viewBox = "0 0 16 16" data - encore - id="icon" class="play-pauseSVG" ><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" ></path>< /svg>';
@@ -151,7 +148,6 @@ export function onPlay(tracks, i) {
     if (audioIsPlaying === true) {
         if (tracks[i].track != undefined) {
             if (audio !== null) {
-                //@ts-ignore
                 audio.pause();
             }
             audio = null;
@@ -160,7 +156,6 @@ export function onPlay(tracks, i) {
                 //@ts-ignore
                 audio.volume = volumeSlider.value / 100;
                 if (wasClicked === true) {
-                    //@ts-ignore
                     audio.play();
                 }
             });
@@ -172,9 +167,7 @@ export function onPlay(tracks, i) {
             audio.addEventListener("canplaythrough", function () {
                 //@ts-ignore
                 audio.volume = volumeSlider.value / 100;
-                //@ts-ignore
                 if (wasClicked === true) {
-                    //@ts-ignore
                     audio.play();
                 }
             });
@@ -187,8 +180,17 @@ export function onPlay(tracks, i) {
             artist.textContent = tracks[i].artists[0].name;
             songName.textContent = tracks[i].name;
             let element = document.querySelector(".favorite-tracks__play-list");
-            let album = element.style.backgroundImage;
-            albumCover.style.backgroundImage = `${album}`;
+            if (element === null) {
+                element = document.querySelector(".albumImg");
+                console.log(element);
+                let album = element.getAttribute("src");
+                console.log(album);
+                albumCover.style.backgroundImage = `${album}`;
+            }
+            else {
+                let album = element.style.backgroundImage;
+                albumCover.style.backgroundImage = `${album}`;
+            }
         }
     }
     else if (audioIsPlaying === false) {
@@ -197,7 +199,6 @@ export function onPlay(tracks, i) {
             audio = new Audio(tracks[i].track.preview_url);
             audio.addEventListener("canplaythrough", function () {
                 if (wasClicked === true) {
-                    //@ts-ignore
                     audio.play();
                 }
             });
@@ -207,7 +208,6 @@ export function onPlay(tracks, i) {
             audio = new Audio(tracks[i].preview_url);
             audio.addEventListener("canplaythrough", function () {
                 if (wasClicked === true) {
-                    //@ts-ignore
                     audio.play();
                 }
             });
@@ -221,13 +221,18 @@ export function onPlay(tracks, i) {
             songName.textContent = tracks[i].name;
             let element = document.querySelector(".favorite-tracks__play-list");
             if (element === null) {
-                element = document.querySelector(".favorite-tracks__play-list"); //Рома добавь сюда имя селектора!
+                element = document.querySelector(".albumImg");
+                console.log(element);
+                let album = element.getAttribute("src");
+                console.log(album);
+                albumCover.style.backgroundImage = `url(${album})`;
             }
-            let album = element.style.backgroundImage;
-            albumCover.style.backgroundImage = `${album}`;
+            else {
+                let album = element.style.backgroundImage;
+                albumCover.style.backgroundImage = `${album}`;
+            }
         }
     }
-    //@ts-ignore
     audio.addEventListener("ended", () => {
         if (randomCondition === true) {
             i = getRandomInt(tracks.length);
@@ -251,13 +256,10 @@ export function onPlay(tracks, i) {
         currentAudio = onPlay(tracks, i);
         return;
     });
-    //@ts-ignore
     audio.addEventListener("loadedmetadata", () => {
-        //@ts-ignore
         const duration = audio.duration;
         trackTimeSlider.max = duration.toString();
     });
-    //@ts-ignore
     audio.addEventListener("timeupdate", timeUpdate);
     audioIsPlaying = true;
     localStorage.setItem("tracks", JSON.stringify(testTracks));
@@ -286,7 +288,6 @@ nextBtn.addEventListener("click", () => {
     }
     if (playingAudio) {
         if (testI + 1 < testTracks.length) {
-            //@ts-ignore
             audio.currentTime = audio.duration - 0.1;
         }
     }
@@ -325,7 +326,6 @@ prevBtn.addEventListener("click", () => {
         if (testI > 0) {
             testI = testI - 1;
         }
-        //@ts-ignore
         audio.pause();
         audio = null;
         currentAudio = null;
@@ -334,7 +334,6 @@ prevBtn.addEventListener("click", () => {
     }
     else if (localStorage.getItem("i") && localStorage.getItem("tracks")) {
         if (testI - 1 >= 0) {
-            //@ts-ignore
             audio != onPlay(testTracks, testI - 1);
         }
         else {
@@ -430,7 +429,6 @@ function timeUpdate() {
         inputChangedByUser = false;
         return;
     }
-    //@ts-ignore
     const currentTime = audio.currentTime;
     const minutes = Math.floor(currentTime / 60);
     const seconds = Math.floor(currentTime % 60);
@@ -441,7 +439,6 @@ function timeUpdate() {
 trackTimeSlider.addEventListener("input", () => {
     const value = trackTimeSlider.value;
     const time = parseFloat(value);
-    //@ts-ignore
     audio.currentTime = time;
     inputChangedByUser = true;
 });
