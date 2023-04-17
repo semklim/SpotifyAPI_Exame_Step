@@ -55,7 +55,7 @@ function genPlaylistCards(list: object[]){
 				<div class="shelf__content__playlist" id = "${id}">
 					<div class="playlist__imgBox">
 						<div class="imgBox__img">
-							<img aria-hidden="false" draggable="false" loading="lazy" src="${img}" alt="">
+							<img aria-hidden="false" class="${type + 'Img'}" draggable="false" loading="lazy" src="${img}" alt="">
 							<div class="imgBox__PlayButton">
 								<button class="play-favorite-track__button playBtn" data-type="${type}" data-playlist-id="${id}" aria-label="Play ${name}">
 									<span class="playBtn__body">
