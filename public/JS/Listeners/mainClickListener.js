@@ -124,7 +124,7 @@ async function mainClickerListener(e) {
         // copies a page when client make a step back, to keep a history of client actions
         keepChronology();
         if (target.getAttribute('data-type') === 'album') {
-            APP.tracksByAlbum(target.id);
+            await APP.tracksByAlbum(target.id);
         }
         else {
             await APP.tracksByPlaylist(target.id);

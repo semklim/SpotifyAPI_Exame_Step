@@ -176,8 +176,8 @@ const APP = (function (API, UI) {
         async tracksByPlaylist(id) {
             await tracksByPlaylist(id);
         },
-        tracksByAlbum(id) {
-            tracksByAlbum(id);
+        async tracksByAlbum(id) {
+            await tracksByAlbum(id);
         },
         async buildSearchPage() {
             await buildSearchPage();
