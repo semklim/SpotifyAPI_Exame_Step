@@ -1,6 +1,6 @@
 {
   "name": "spotify_demo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "spotify_demo",
   "main": "electronMain.js",
   "scripts": {
