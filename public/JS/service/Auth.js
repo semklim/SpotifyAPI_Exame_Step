@@ -1,6 +1,7 @@
-// 
-const CLIENT_ID = '797c5434ef7543e7aafc871377f6d903';
-const CLIENT_SECRET = '98995436272647b9bf3623ce6c6a2893';
+// @ts-ignore
+import { clientId, clientSecret } from "../../SPOTIFY_APP_KEYS/KEYS.js";
+const CLIENT_ID = clientId;
+const CLIENT_SECRET = clientSecret;
 const REDIRECT_URI = window.location.href.replace(/\/\w+.html$/, '/') + 'callback.html';
 const SCOPES = [
     // Playlists
