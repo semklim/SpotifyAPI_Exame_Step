@@ -38,10 +38,18 @@ And open in browser http://localhost:8888
 
 _________OR_________
 
-If u want to start desktop application write command:
+If you want to start desktop application write command:
 ```bash
 npm run start
 ``` 
+_________IF_________
+If you want to build desktop aplication, write command:
+```bash
+npm run build
+```
+Youre app will be in this directory:
+/SpotifyAPI_Exame_Step/electron-build
+
 ## Features 
 The application includes the following features:
 - Authentication with the Spotify Web API using OAuth 2.0
