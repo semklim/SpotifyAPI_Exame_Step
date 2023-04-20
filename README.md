@@ -23,11 +23,11 @@ cd SpotifyAPI_Exame_Step
 
 4) Open the file ```KEYS.js```, in directory public/SPOTIFY_APP_KEYS/
 
-    Set your ```clientId``` and ```clientSecret```
+    Set your ```clientId``` and ```clientSecret```.
 
-    ### Where this keys i can get? 
-
-    ___Visit this page___ https://developer.spotify.com/documentation/web-api/tutorials/getting-started
+    #### Where this keys I can get? 
+    
+    Visit this page [![spotify](https://img.shields.io/badge/Spotify_WEB_API-400073?style=for-the-badge&logo=spotify&logoColor=green)](https://developer.spotify.com/documentation/web-api/tutorials/getting-started)
 
 5) In terminal write command:
 
