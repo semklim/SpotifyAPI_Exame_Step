@@ -23,9 +23,11 @@ cd SpotifyAPI_Exame_Step
 
 4) Open the file ```KEYS.js```, in directory public/SPOTIFY_APP_KEYS/
 
-Set your ```clientId``` and ```clientSecret```
+    Set your ```clientId``` and ```clientSecret```
 
-(Where this keys i can get? Visit this page https://developer.spotify.com/documentation/web-api/tutorials/getting-started)
+    ### Where this keys i can get? 
+
+    ___Visit this page___ https://developer.spotify.com/documentation/web-api/tutorials/getting-started
 
 5) In terminal write command:
 
@@ -47,6 +49,7 @@ If you want to start desktop application write command:
 npm run start
 ``` 
 _________IF_________
+
 If you want to build desktop application, write command:
 ```bash
 npm run build
