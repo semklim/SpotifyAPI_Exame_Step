@@ -157,6 +157,15 @@ class SpotifyAuth {
         this.expires_in = new Date(Date.now() + (expires_in * 1000));
         return access;
     }
+    isSettingAppKeys() {
+        if (this.clientId === 'Your CLIENT_ID' ||
+            this.clientSecret === 'Your CLIENT_SECRET') {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 }
 /**
 * A module that provides methods for authenticating a user, refresh access token and making API requests to the Spotify Web API.

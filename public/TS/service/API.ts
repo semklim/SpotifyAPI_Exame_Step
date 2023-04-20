@@ -192,7 +192,11 @@ class SpotifyAPI implements APIClient {
 			this.accessToken = Auth.accessToken;
 			this.expires_in = Auth.expires_in;
 			}else{
-		  throw new Error('You must be logged in, to be able make this request.');
+				if(!Auth.isSettingAppKeys()){
+					throw new Error('Your CLIENT_SECRET or CLIENT_ID is not setting. set it in public/SPOTIFY_APP_KEYS/KEYS.js');
+				}else{
+					throw new Error('You must be logged in, to be able make this request.');
+				}
 			}
 		}
 	

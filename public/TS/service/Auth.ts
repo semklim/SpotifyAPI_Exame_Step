@@ -211,6 +211,15 @@ class SpotifyAuth {
 		return access;
 	  }
 
+	isSettingAppKeys (): boolean{
+		 
+		if( this.clientId === 'Your CLIENT_ID' ||
+			this.clientSecret === 'Your CLIENT_SECRET'){
+				return false;
+		}else{
+				return true;
+		}
+	}
 	}
 	
 	/**
