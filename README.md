@@ -3,7 +3,7 @@
 
 # Spotify Demo version
 
-This project is a exame project that aims to help me and my command learn how to use the Spotify Web API, built entirely with HTML, CSS, and JavaScript. The application uses the Spotify Web API to retrieve data about artists, albums, and tracks, and presents it in a user-friendly way.
+This project is a exam project that aims to help me and my command learn how to use the Spotify Web API, built entirely with HTML, CSS, and JavaScript. The application uses the Spotify Web API to retrieve data about artists, albums, and tracks, and presents it in a user-friendly way.
 
 ## Getting Started
 1) Download and install [![nodejs](https://img.shields.io/badge/node.js-000?style=for-the-badge&logo=nodedotjs&logoColor=green)](https://nodejs.org/en/)
@@ -21,13 +21,17 @@ git clone https://github.com/semklim/SpotifyAPI_Exame_Step.git
 cd SpotifyAPI_Exame_Step
 ```
 
-4) In terminal write command:
+4) Open the file ```KEYS.js```, in directory public/SPOTIFY_APP_KEYS/
+
+Set your ```clientId``` and ```clientSecret```
+
+(Where this keys i can get? Visit this page https://developer.spotify.com/documentation/web-api/tutorials/getting-started)
+
+5) In terminal write command:
+
 ```bash
 npm i
 ```
-5) Navigate to the file ```Auth.js``` 
-
-Set your ```CLIENT_ID ``` and ```CLIENT_SECRET```
 
 6) Finally, write command:
 
@@ -43,11 +47,11 @@ If you want to start desktop application write command:
 npm run start
 ``` 
 _________IF_________
-If you want to build desktop aplication, write command:
+If you want to build desktop application, write command:
 ```bash
 npm run build
 ```
-Youre app will be in this directory:
+Your app will be in this directory:
 /SpotifyAPI_Exame_Step/electron-build
 
 ## Features 
